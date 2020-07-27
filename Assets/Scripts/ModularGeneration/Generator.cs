@@ -66,6 +66,35 @@ public class Generator : MonoBehaviour
         }
     }
 
+    private void Connect(Connector startingObject, Connector ObjectToConnect)
+    {
+        var newModule = ObjectToConnect.transform.parent;
+
+        float singleStep = 0.01f * Time.deltaTime;
+        var targetDirection = startingObject.transform.position - ObjectToConnect.transform.position;
+        var newDirection = Vector3.RotateTowards(-startingObject.transform.forward, targetDirection, singleStep, 0f);
+        
+        newModule.rotation = Quaternion.LookRotation(newDirection);
+
+        //var forwardVector = -startingObject.transform.forward;
+        //var correctedRotation = Azimuth(forwardVector) - Azimuth(ObjectToConnect.transform.forward);
+        //newModule.RotateAround(ObjectToConnect.transform.position, Vector3.up, correctedRotation);
+
+
+
+
+
+
+
+
+        var correctPosition = startingObject.transform.position - ObjectToConnect.transform.position;
+        newModule.transform.position += correctPosition;
+        if (ObjectToConnect)
+        {
+            Destroy(startingObject.gameObject);
+            Destroy(ObjectToConnect.gameObject);
+        }
+    }
     private void SealEnds()
     {
         var ends = FindObjectsOfType<Connector>();
@@ -86,21 +115,6 @@ public class Generator : MonoBehaviour
         return array[UnityEngine.Random.Range(0, array.Length)];
     }
 
-    private void Connect(Connector startingObject, Connector ObjectToConnect)
-    {
-        var newModule = ObjectToConnect.transform.parent;
-        var forwardVector = -startingObject.transform.forward;
-        var correctedRotation = Azimuth(forwardVector) - Azimuth(ObjectToConnect.transform.forward);
-        newModule.RotateAround(ObjectToConnect.transform.position, Vector3.up, correctedRotation);
-        var correctPosition = startingObject.transform.position - ObjectToConnect.transform.position;
-        newModule.transform.position += correctPosition;
-
-        if (ObjectToConnect)
-        {
-            Destroy(startingObject.gameObject);
-            Destroy(ObjectToConnect.gameObject);
-        }
-    }
     private static float Azimuth(Vector3 vector)
     {
         return Vector3.Angle(Vector3.forward, vector) * Mathf.Sign(vector.x);
