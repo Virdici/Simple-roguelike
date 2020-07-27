@@ -10,6 +10,7 @@ public class RotatePlayer : MonoBehaviour
 
     void Start()
     {
+        //init 
         Cursor.lockState = CursorLockMode.Locked;
     }
     void Update()
