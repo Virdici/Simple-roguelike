@@ -42,9 +42,10 @@ public class Generator : MonoBehaviour
                 foreach (var selectedConnector in availableConnectors)
                 {
                     var randomType = selectedConnector.allowedTypes.ElementAt(Random.Range(0, selectedConnector.allowedTypes.Length));
-                    var newSelectedModule = GetRandomWithTag(Modules, randomType);
-                    var newModule = (Module)Instantiate(newSelectedModule, new Vector3(2, Random.Range(1, 400) * 30, 1), transform.rotation);
 
+                    var matchingModules = Modules.Where(m => m.type.Contains(randomType)).ToArray();
+                    var newSelectedModule = GetRandom(matchingModules);
+                    var newModule = (Module)Instantiate(newSelectedModule, new Vector3(2, Random.Range(1, 400) * 30, 1), transform.rotation);
                     newModule.transform.SetParent(dungeonContainter.transform);
                     var secondModuleConnectors = newModule.GetConnectors();
                     var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(Random.Range(0, secondModuleConnectors.Length));
@@ -83,11 +84,6 @@ public class Generator : MonoBehaviour
     private static TItem GetRandom<TItem>(TItem[] array)
     {
         return array[UnityEngine.Random.Range(0, array.Length)];
-    }
-    private static Module GetRandomWithTag(IEnumerable<Module> modules, string tagToMatch)
-    {
-        var matchingModules = modules.Where(m => m.type.Contains(tagToMatch)).ToArray();
-        return GetRandom(matchingModules);
     }
 
     private void Connect(Connector startingObject, Connector ObjectToConnect)
