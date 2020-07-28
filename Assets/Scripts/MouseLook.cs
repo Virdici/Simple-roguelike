@@ -8,9 +8,7 @@ public class MouseLook : MonoBehaviour
     public float distanceFromTarget = 3;
     public Vector2 verticalMinMax = new Vector2(-40, 85);
 
-    float verticalView;
     float horizontalView;
-    float xRotation = 0f;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;

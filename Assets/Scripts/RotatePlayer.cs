@@ -6,7 +6,7 @@ public class RotatePlayer : MonoBehaviour
 {
 
     public Transform player;
-    public CinemachineFreeLook camera;
+    public new CinemachineFreeLook camera ;
 
     void Start()
     {

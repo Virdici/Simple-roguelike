@@ -27,12 +27,10 @@ public class Generator : MonoBehaviour
     {
         if (collided == false)
         {
-
             dungeonContainter = GameObject.Find("DungeonContainer");
 
             var firstModule = (Module)Instantiate(startingModule, new Vector3(0, 0, 0), transform.rotation);
             firstModule.transform.SetParent(dungeonContainter.transform);
-
             var availableConnectors = new List<Connector>(firstModule.GetConnectors());
 
             for (int i = 0; i < size; i++)
@@ -66,32 +64,13 @@ public class Generator : MonoBehaviour
         }
     }
 
-    private void SealEnds()
-    {
-        var ends = FindObjectsOfType<Connector>();
-
-        foreach (var end in ends)
-        {
-
-            var newSeal = (Module)Instantiate(Seal, new Vector3(2, UnityEngine.Random.Range(1, 400) * 30, 1), transform.rotation);
-            var secondModuleConnectors = newSeal.GetConnectors();
-            var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(UnityEngine.Random.Range(0, secondModuleConnectors.Length));
-            Connect(end, connectorToConnect);
-
-        }
-    }
-
-    private static TItem GetRandom<TItem>(TItem[] array)
-    {
-        return array[UnityEngine.Random.Range(0, array.Length)];
-    }
-
     private void Connect(Connector startingObject, Connector ObjectToConnect)
     {
         var newModule = ObjectToConnect.transform.parent;
-        var forwardVector = -startingObject.transform.forward;
-        var correctedRotation = Azimuth(forwardVector) - Azimuth(ObjectToConnect.transform.forward);
-        newModule.RotateAround(ObjectToConnect.transform.position, Vector3.up, correctedRotation);
+        var objectToConnectVector = -startingObject.transform.forward;
+        var angle1 = Vector3.Angle(Vector3.forward, objectToConnectVector) * Mathf.Sign(objectToConnectVector.x);
+        var angle2 = Vector3.Angle(Vector3.forward, ObjectToConnect.transform.forward) * Mathf.Sign(ObjectToConnect.transform.forward.x);
+        newModule.RotateAround(ObjectToConnect.transform.position, Vector3.up, angle1 - angle2);
         var correctPosition = startingObject.transform.position - ObjectToConnect.transform.position;
         newModule.transform.position += correctPosition;
 
@@ -101,9 +80,21 @@ public class Generator : MonoBehaviour
             Destroy(ObjectToConnect.gameObject);
         }
     }
-    private static float Azimuth(Vector3 vector)
+    private void SealEnds()
     {
-        return Vector3.Angle(Vector3.forward, vector) * Mathf.Sign(vector.x);
+        var ends = FindObjectsOfType<Connector>();
+        foreach (var end in ends)
+        {
+            var newSeal = (Module)Instantiate(Seal, new Vector3(2, UnityEngine.Random.Range(1, 400) * 30, 1), transform.rotation);
+            var secondModuleConnectors = newSeal.GetConnectors();
+            var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(UnityEngine.Random.Range(0, secondModuleConnectors.Length));
+            Connect(end, connectorToConnect);
+        }
+    }
+
+    private static TItem GetRandom<TItem>(TItem[] array)
+    {
+        return array[UnityEngine.Random.Range(0, array.Length)];
     }
 
     public void RenewIfCollided()
