@@ -47,7 +47,7 @@ public class Generator : MonoBehaviour
                     newModule.transform.SetParent(dungeonContainter.transform);
                     var secondModuleConnectors = newModule.GetConnectors();
                     var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(Random.Range(0, secondModuleConnectors.Length));
-                     Connect(selectedConnector, connectorToConnect);
+                    Connect(selectedConnector, connectorToConnect);
 
                     allExits.AddRange(secondModuleConnectors.Where(e => e != connectorToConnect));
                 }
@@ -86,6 +86,8 @@ public class Generator : MonoBehaviour
         foreach (var end in ends)
         {
             var newSeal = (Module)Instantiate(Seal, new Vector3(2, UnityEngine.Random.Range(1, 400) * 30, 1), transform.rotation);
+            newSeal.transform.SetParent(dungeonContainter.transform);
+
             var secondModuleConnectors = newSeal.GetConnectors();
             var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(UnityEngine.Random.Range(0, secondModuleConnectors.Length));
             Connect(end, connectorToConnect);
@@ -99,13 +101,13 @@ public class Generator : MonoBehaviour
 
     public void RenewIfCollided()
     {
+        StopAllCoroutines();
         foreach (Transform child in dungeonContainter.transform)
         {
             GameObject.Destroy(child.gameObject);
         }
         collided = false;
         ClearLog();
-        StopAllCoroutines();
         StartCoroutine(Starte());
     }
     public void ClearLog()
