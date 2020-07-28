@@ -13,19 +13,36 @@ public class Generator : MonoBehaviour
     public Module startingModule;
     public int size = 1;
     public bool collided;
+    public bool done;
     public Module Seal;
 
     private float waitTime = 0.3f;
+    private GameObject levelContainer;
     private GameObject dungeonContainter;
 
     private void Start()
     {
-        StartCoroutine(Starte());
+        StartCoroutine(Generate());
+        //StartCoroutine(StartGeneration());
+        
     }
 
-    private IEnumerator Starte()
+    IEnumerator StartGeneration()
     {
-        if (collided == false)
+        dungeonContainter = GameObject.Find("DungeonContainer");
+
+        foreach (var child in dungeonContainter.transform)
+        {
+            Debug.Log(child);
+        }
+
+        yield return new WaitForSeconds(waitTime);
+
+    }
+
+    private IEnumerator Generate()
+    {
+        if (collided == false && done == false )
         {
             dungeonContainter = GameObject.Find("DungeonContainer");
 
@@ -94,7 +111,7 @@ public class Generator : MonoBehaviour
 
     private static TItem GetRandom<TItem>(TItem[] array)
     {
-        return array[UnityEngine.Random.Range(0, array.Length)];
+        return array[Random.Range(0, array.Length)];
     }
 
     public void RenewIfCollided()
@@ -106,7 +123,7 @@ public class Generator : MonoBehaviour
         collided = false;
         ClearLog();
         StopAllCoroutines();
-        StartCoroutine(Starte());
+        StartCoroutine(Generate());
     }
     public void ClearLog()
     {
