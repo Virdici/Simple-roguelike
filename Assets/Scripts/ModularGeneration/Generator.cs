@@ -77,29 +77,48 @@ public class Generator : MonoBehaviour
     }
     private void Connect(Connector startingObject, Connector ObjectToConnect)
     {
+        //var newModule = ObjectToConnect.transform.parent;
+
+
+
+
+        //var forwardVector = -startingObject.transform.forward;
+        //var angle1 = Vector3.Angle(Vector3.forward, forwardVector) * Mathf.Sign(forwardVector.x);
+        //var angle2 = Vector3.Angle(Vector3.forward, ObjectToConnect.transform.forward) * Mathf.Sign(ObjectToConnect.transform.forward.x);
+        //newModule.RotateAround(ObjectToConnect.transform.position, Vector3.up, angle1 - angle2);
+
+        //var correctPosition = startingObject.transform.position - ObjectToConnect.transform.position;
+        //newModule.transform.position += correctPosition;
+
+
+
+
+
+
+        //if (ObjectToConnect)
+        //{
+        //    Destroy(startingObject.gameObject);
+        //    Destroy(ObjectToConnect.gameObject);
+        //}
+
+
+
         var newModule = ObjectToConnect.transform.parent;
-
-
-
-
         var forwardVector = -startingObject.transform.forward;
-        var angle1 = Vector3.Angle(Vector3.forward, forwardVector) * Mathf.Sign(forwardVector.x);
-        var angle2 = Vector3.Angle(Vector3.forward, ObjectToConnect.transform.forward) * Mathf.Sign(ObjectToConnect.transform.forward.x);
-        newModule.RotateAround(ObjectToConnect.transform.position, Vector3.up, angle1 - angle2);
-
+        var correctedRotation = Azimuth(forwardVector) - Azimuth(ObjectToConnect.transform.forward);
+        newModule.RotateAround(ObjectToConnect.transform.position, Vector3.up, correctedRotation);
         var correctPosition = startingObject.transform.position - ObjectToConnect.transform.position;
         newModule.transform.position += correctPosition;
-
-
-
-
-
 
         if (ObjectToConnect)
         {
             Destroy(startingObject.gameObject);
             Destroy(ObjectToConnect.gameObject);
         }
+
+
+
+
     }
     private void SealEnds()
     {
