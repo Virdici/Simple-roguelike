@@ -13,48 +13,24 @@ public class Generator : MonoBehaviour
     public Module startingModule;
     public int size = 1;
     public bool collided;
-    public bool done;
     public Module Seal;
 
-    private float waitTime = 4f;
-    private GameObject levelContainer;
-    private GameObject currentLevel;
+    private float waitTime = 0.3f;
     private GameObject dungeonContainter;
 
     private void Start()
     {
-        //StartCoroutine(Generate());
-        currentLevel = GameObject.Find("Level1");
-        StartCoroutine(StartGeneration());
-        
+        StartCoroutine(Starte());
     }
 
-    IEnumerator StartGeneration()
+    private IEnumerator Starte()
     {
-        dungeonContainter = GameObject.Find("DungeonContainer");
-
-
-        for (int i = 0; i < 5; i++)
-        {
-            currentLevel = dungeonContainter.transform.GetChild(i).gameObject;
-            StartCoroutine(Generate(currentLevel));
-            
-            done = false;
-        }
-
-        yield return new WaitForSeconds(waitTime);
-
-    }
-
-    private IEnumerator Generate(GameObject level)
-    {
-        if (collided == false && done == false)
+        if (collided == false)
         {
             dungeonContainter = GameObject.Find("DungeonContainer");
 
-            var firstModule = (Module)Instantiate(startingModule, transform.position, transform.rotation);
-            firstModule.transform.SetParent(level.transform);
-            firstModule.transform.position = level.transform.position;
+            var firstModule = (Module)Instantiate(startingModule, new Vector3(0, 0, 0), transform.rotation);
+            firstModule.transform.SetParent(dungeonContainter.transform);
             var availableConnectors = new List<Connector>(firstModule.GetConnectors());
 
             for (int i = 0; i < size; i++)
@@ -68,10 +44,10 @@ public class Generator : MonoBehaviour
                     var matchingModules = Modules.Where(m => m.type.Contains(randomType)).ToArray();
                     var newSelectedModule = GetRandom(matchingModules);
                     var newModule = (Module)Instantiate(newSelectedModule, new Vector3(2, Random.Range(1, 400) * 30, 1), transform.rotation);
-                    newModule.transform.SetParent(level.transform);
+                    newModule.transform.SetParent(dungeonContainter.transform);
                     var secondModuleConnectors = newModule.GetConnectors();
                     var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(Random.Range(0, secondModuleConnectors.Length));
-                     Connect(selectedConnector, connectorToConnect);
+                    Connect(selectedConnector, connectorToConnect);
 
                     allExits.AddRange(secondModuleConnectors.Where(e => e != connectorToConnect));
                 }
@@ -80,14 +56,11 @@ public class Generator : MonoBehaviour
             yield return new WaitForSeconds(waitTime);
             if (collided == true)
             {
-                RenewIfCollided(level);
+                RenewIfCollided();
             }
             yield return new WaitForSeconds(waitTime);
 
             SealEnds();
-
-            done = true;
-            yield return new WaitUntil(() => done = true);
         }
     }
 
@@ -113,6 +86,8 @@ public class Generator : MonoBehaviour
         foreach (var end in ends)
         {
             var newSeal = (Module)Instantiate(Seal, new Vector3(2, UnityEngine.Random.Range(1, 400) * 30, 1), transform.rotation);
+            newSeal.transform.SetParent(dungeonContainter.transform);
+
             var secondModuleConnectors = newSeal.GetConnectors();
             var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(UnityEngine.Random.Range(0, secondModuleConnectors.Length));
             Connect(end, connectorToConnect);
@@ -121,19 +96,19 @@ public class Generator : MonoBehaviour
 
     private static TItem GetRandom<TItem>(TItem[] array)
     {
-        return array[Random.Range(0, array.Length)];
+        return array[UnityEngine.Random.Range(0, array.Length)];
     }
 
-    public void RenewIfCollided(GameObject level)
+    public void RenewIfCollided()
     {
-        foreach (Transform child in level.transform)
+        StopAllCoroutines();
+        foreach (Transform child in dungeonContainter.transform)
         {
             GameObject.Destroy(child.gameObject);
         }
         collided = false;
         ClearLog();
-        //StopAllCoroutines();
-        StartCoroutine(Generate(currentLevel));
+        StartCoroutine(Starte());
     }
     public void ClearLog()
     {

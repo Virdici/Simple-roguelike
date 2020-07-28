@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DetectCollisions : MonoBehaviour
+public class GenerateNewLevel : MonoBehaviour
 {
     public bool DidCollide = false;
     Generator generator;
@@ -15,7 +15,6 @@ public class DetectCollisions : MonoBehaviour
     private void OnCollisionEnter(Collision col)
     {
         Debug.Log("collision detected" + col.contacts[0].point);
-        generator.ChangeCollisionState();
-        //generator.RenewIfCollided();
+        generator.RenewIfCollided();
     }
 }
