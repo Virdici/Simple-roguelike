@@ -16,14 +16,16 @@ public class Generator : MonoBehaviour
     public bool done;
     public Module Seal;
 
-    private float waitTime = 0.3f;
+    private float waitTime = 4f;
     private GameObject levelContainer;
+    private GameObject currentLevel;
     private GameObject dungeonContainter;
 
     private void Start()
     {
-        StartCoroutine(Generate());
-        //StartCoroutine(StartGeneration());
+        //StartCoroutine(Generate());
+        currentLevel = GameObject.Find("Level1");
+        StartCoroutine(StartGeneration());
         
     }
 
@@ -31,23 +33,28 @@ public class Generator : MonoBehaviour
     {
         dungeonContainter = GameObject.Find("DungeonContainer");
 
-        foreach (var child in dungeonContainter.transform)
+
+        for (int i = 0; i < 5; i++)
         {
-            Debug.Log(child);
+            currentLevel = dungeonContainter.transform.GetChild(i).gameObject;
+            StartCoroutine(Generate(currentLevel));
+            
+            done = false;
         }
 
         yield return new WaitForSeconds(waitTime);
 
     }
 
-    private IEnumerator Generate()
+    private IEnumerator Generate(GameObject level)
     {
-        if (collided == false && done == false )
+        if (collided == false && done == false)
         {
             dungeonContainter = GameObject.Find("DungeonContainer");
 
-            var firstModule = (Module)Instantiate(startingModule, new Vector3(0, 0, 0), transform.rotation);
-            firstModule.transform.SetParent(dungeonContainter.transform);
+            var firstModule = (Module)Instantiate(startingModule, transform.position, transform.rotation);
+            firstModule.transform.SetParent(level.transform);
+            firstModule.transform.position = level.transform.position;
             var availableConnectors = new List<Connector>(firstModule.GetConnectors());
 
             for (int i = 0; i < size; i++)
@@ -61,7 +68,7 @@ public class Generator : MonoBehaviour
                     var matchingModules = Modules.Where(m => m.type.Contains(randomType)).ToArray();
                     var newSelectedModule = GetRandom(matchingModules);
                     var newModule = (Module)Instantiate(newSelectedModule, new Vector3(2, Random.Range(1, 400) * 30, 1), transform.rotation);
-                    newModule.transform.SetParent(dungeonContainter.transform);
+                    newModule.transform.SetParent(level.transform);
                     var secondModuleConnectors = newModule.GetConnectors();
                     var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(Random.Range(0, secondModuleConnectors.Length));
                      Connect(selectedConnector, connectorToConnect);
@@ -73,11 +80,14 @@ public class Generator : MonoBehaviour
             yield return new WaitForSeconds(waitTime);
             if (collided == true)
             {
-                RenewIfCollided();
+                RenewIfCollided(level);
             }
             yield return new WaitForSeconds(waitTime);
 
             SealEnds();
+
+            done = true;
+            yield return new WaitUntil(() => done = true);
         }
     }
 
@@ -114,16 +124,16 @@ public class Generator : MonoBehaviour
         return array[Random.Range(0, array.Length)];
     }
 
-    public void RenewIfCollided()
+    public void RenewIfCollided(GameObject level)
     {
-        foreach (Transform child in dungeonContainter.transform)
+        foreach (Transform child in level.transform)
         {
             GameObject.Destroy(child.gameObject);
         }
         collided = false;
         ClearLog();
-        StopAllCoroutines();
-        StartCoroutine(Generate());
+        //StopAllCoroutines();
+        StartCoroutine(Generate(currentLevel));
     }
     public void ClearLog()
     {
