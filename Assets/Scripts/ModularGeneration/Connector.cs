@@ -18,7 +18,7 @@ public class Connector : MonoBehaviour
         Gizmos.DrawLine(transform.position, transform.position - transform.right * 1f);
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawLine(transform.position, transform.position + transform.forward * 1f);
+        Gizmos.DrawLine(transform.position, transform.position + transform.forward * 3f);
 
         Gizmos.color = Color.green;
         Gizmos.DrawLine(transform.position, transform.position + transform.up * 1f);

@@ -65,30 +65,36 @@ public class Generator : MonoBehaviour
             SealEnds();
         }
     }
+    public static float AngleInRad(Vector3 vec1, Vector3 vec2)
+    {
+        return Mathf.Atan2(vec2.y - vec1.y, vec2.x - vec1.x);
+    }
 
+    //This returns the angle in degrees
+    public static float AngleInDeg(Vector3 vec1, Vector3 vec2)
+    {
+        return AngleInRad(vec1, vec2) * 180 / Mathf.PI;
+    }
     private void Connect(Connector startingObject, Connector ObjectToConnect)
     {
         var newModule = ObjectToConnect.transform.parent;
 
-        float singleStep = 0.01f * Time.deltaTime;
-        var targetDirection = startingObject.transform.position - ObjectToConnect.transform.position;
-        var newDirection = Vector3.RotateTowards(-startingObject.transform.forward, targetDirection, singleStep, 0f);
-        
-        newModule.rotation = Quaternion.LookRotation(newDirection);
-
-        //var forwardVector = -startingObject.transform.forward;
-        //var correctedRotation = Azimuth(forwardVector) - Azimuth(ObjectToConnect.transform.forward);
-        //newModule.RotateAround(ObjectToConnect.transform.position, Vector3.up, correctedRotation);
 
 
 
-
-
-
-
+        var forwardVector = -startingObject.transform.forward;
+        var angle1 = Vector3.Angle(Vector3.forward, forwardVector) * Mathf.Sign(forwardVector.x);
+        var angle2 = Vector3.Angle(Vector3.forward, ObjectToConnect.transform.forward) * Mathf.Sign(ObjectToConnect.transform.forward.x);
+        newModule.RotateAround(ObjectToConnect.transform.position, Vector3.up, angle1 - angle2);
 
         var correctPosition = startingObject.transform.position - ObjectToConnect.transform.position;
         newModule.transform.position += correctPosition;
+
+
+
+
+
+
         if (ObjectToConnect)
         {
             Destroy(startingObject.gameObject);
