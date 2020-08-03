@@ -28,8 +28,8 @@ public class Generator : MonoBehaviour
 
     private IEnumerator Starte()
     {
-        
         dungeonContainter = GameObject.Find("DungeonContainer");
+        
 
         var firstModule = (Module)Instantiate(startingModule, new Vector3(0, 0, 0), transform.rotation);
         firstModule.transform.SetParent(dungeonContainter.transform);
@@ -153,7 +153,6 @@ public class Generator : MonoBehaviour
 
     public void StartNewGeneration()
     {
-        StopAllCoroutines();
         RenewIfCollided();
         //StartCoroutine(Starte());
     }
