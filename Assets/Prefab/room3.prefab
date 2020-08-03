@@ -328,8 +328,14 @@ GameObject:
   - component: {fileID: 2909240524448902020}
   - component: {fileID: 4011908648340905589}
   - component: {fileID: 6994863149127616501}
+<<<<<<< Updated upstream
   - component: {fileID: 2571149749498102287}
   m_Layer: 0
+=======
+  - component: {fileID: 502802374784991452}
+  - component: {fileID: 2276714603733832936}
+  m_Layer: 8
+>>>>>>> Stashed changes
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -436,7 +442,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DidCollide: 0
+<<<<<<< Updated upstream
 --- !u!54 &2571149749498102287
+=======
+--- !u!114 &502802374784991452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4967659253853629463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddbd87011ab129a46b2b277d27cdcf1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DidCollide: 0
+--- !u!54 &2276714603733832936
+>>>>>>> Stashed changes
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
