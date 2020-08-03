@@ -12,7 +12,7 @@ public class DetectCollisions : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        Physics.IgnoreLayerCollision(8, 10);
+        //Physics.IgnoreLayerCollision(8, 10);
 
     }
     private void OnCollisionEnter(Collision col)

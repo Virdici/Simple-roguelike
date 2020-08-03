@@ -18,7 +18,7 @@ public class Generator : MonoBehaviour
     public Module Door;
     public GameObject DoorSwitch;
 
-    private float waitTime = 0.3f;
+    private float waitTime = 0.03f;
     private GameObject dungeonContainter;
 
     private void Start()
@@ -28,12 +28,13 @@ public class Generator : MonoBehaviour
 
     private IEnumerator Starte()
     {
+
         dungeonContainter = GameObject.Find("DungeonContainer");
         
 
         var firstModule = (Module)Instantiate(startingModule, new Vector3(0, 0, 0), transform.rotation);
         firstModule.transform.SetParent(dungeonContainter.transform);
-        //AddSwitch(firstModule);
+        AddSwitch(firstModule);
         var availableConnectors = new List<Connector>(firstModule.GetConnectors());
 
         for (int i = 0; i < size; i++)
@@ -46,18 +47,18 @@ public class Generator : MonoBehaviour
                 var matchingModules = Modules.Where(m => m.type.Contains(randomType)).ToArray();
                 var newSelectedModule = GetRandom(matchingModules);
                 var newModule = (Module)Instantiate(newSelectedModule, new Vector3(2, Random.Range(1, 400) * 30, 1), transform.rotation);
-                //if (newModule.GetTypeName() == "room")
-                //{
-                //    //AddSwitch(newModule);
-                //}
+                if (newModule.GetTypeName() == "room")
+                {
+                    //AddSwitch(newModule);
+                }
 
                 newModule.transform.SetParent(dungeonContainter.transform);
                 var secondModuleConnectors = newModule.GetConnectors();
                 var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(Random.Range(0, secondModuleConnectors.Length));
 
-                //var door = (Module)Instantiate(Door, new Vector3(200, Random.Range(1, 400) * 30, 1), transform.rotation);
-                //door.transform.SetParent(dungeonContainter.transform);
-                //AddDoor(selectedConnector, door.GetConnectors().FirstOrDefault());
+                var door = (Module)Instantiate(Door, new Vector3(200, Random.Range(1, 400) * 30, 1), transform.rotation);
+                door.transform.SetParent(dungeonContainter.transform);
+                AddDoor(selectedConnector, door.GetConnectors().FirstOrDefault());
 
                 Connect(selectedConnector, connectorToConnect);
 
@@ -111,7 +112,7 @@ public class Generator : MonoBehaviour
     }
     private void SealEnds()
     {
-        var ends = FindObjectsOfType<Connector>();
+        var ends = dungeonContainter.transform.GetComponentsInChildren<Connector>();
         foreach (var end in ends)
         {
             var newSeal = (Module)Instantiate(Seal, new Vector3(2, UnityEngine.Random.Range(1, 400) * 30, 1), transform.rotation);
@@ -150,5 +151,15 @@ public class Generator : MonoBehaviour
     {
         this.collided = true;
     }
-     
+
+
+    public void NewDung()
+    {
+        foreach (Transform child in dungeonContainter.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+        collided = false;
+        StartCoroutine(Starte());
+    }
 }
