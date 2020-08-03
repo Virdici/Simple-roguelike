@@ -17,7 +17,7 @@ public class Generator : MonoBehaviour
     public Module Seal;
     public Module Door;
 
-    private float waitTime = 1f;
+    private float waitTime = 0.001f;
     private GameObject dungeonContainter;
 
     private void Start()
@@ -33,7 +33,6 @@ public class Generator : MonoBehaviour
         var firstModule = (Module)Instantiate(startingModule, new Vector3(0, 0, 0), transform.rotation);
         firstModule.transform.SetParent(dungeonContainter.transform);
         var availableConnectors = new List<Connector>(firstModule.GetConnectors());
-        yield return new WaitForSeconds(waitTime);
 
         for (int i = 0; i < size; i++)
         {
@@ -50,8 +49,10 @@ public class Generator : MonoBehaviour
                 var secondModuleConnectors = newModule.GetConnectors();
                 var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(Random.Range(0, secondModuleConnectors.Length));
 
-                //var door = (Module)Instantiate(Door, new Vector3(200, Random.Range(1, 400) * 30, 1), transform.rotation);
-                //AddDoor(selectedConnector, door.GetConnectors().FirstOrDefault());
+                var door = (Module)Instantiate(Door, new Vector3(200, Random.Range(1, 400) * 30, 1), transform.rotation);
+                door.transform.SetParent(dungeonContainter.transform);
+
+                AddDoor(selectedConnector, door.GetConnectors().FirstOrDefault());
 
                 Connect(selectedConnector, connectorToConnect);
 
@@ -81,7 +82,6 @@ public class Generator : MonoBehaviour
 
         Destroy(DoorConnector);
 
-
     }
 
     private void Connect(Connector startingObject, Connector ObjectToConnect)
@@ -93,8 +93,6 @@ public class Generator : MonoBehaviour
         newModule.RotateAround(ObjectToConnect.transform.position, Vector3.up, angle1 - angle2);
         var correctPosition = startingObject.transform.position - ObjectToConnect.transform.position;
         newModule.transform.position += correctPosition;
-
-
 
         if (ObjectToConnect)
         {
@@ -121,11 +119,9 @@ public class Generator : MonoBehaviour
         return array[UnityEngine.Random.Range(0, array.Length)];
     }
 
-    public IEnumerator RenewIfCollided()
+    public void RenewIfCollided()
     {
         StopAllCoroutines();
-        yield return new WaitForSeconds(.5f);
-
         foreach (Transform child in dungeonContainter.transform)
         {
             GameObject.Destroy(child.gameObject);
