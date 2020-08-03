@@ -154,6 +154,7 @@ public class Generator : MonoBehaviour
     public void StartNewGeneration()
     {
         StopAllCoroutines();
-        StartCoroutine(Starte());
+        RenewIfCollided();
+        //StartCoroutine(Starte());
     }
 }

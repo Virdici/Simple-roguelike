@@ -11,17 +11,10 @@ public class GenerateNewLevel : MonoBehaviour
         generator = GameObject.FindObjectOfType<Generator>();
     }
 
-    private void OnCollisionStay(Collision col)
+    private void OnCollisionEnter(Collision col)
     {
         //new generation on collision
-        Debug.Log("fucking wot" + col.contacts[0].point);
-        //StartCoroutine(Start());
-        generator.StartNewGeneration();
-    }
-
-    private IEnumerator Startt()
-    {
-        yield return new WaitForSeconds(1f);
+        Debug.Log("collision detected" + col.contacts[0].point);
         generator.StartNewGeneration();
     }
 }
