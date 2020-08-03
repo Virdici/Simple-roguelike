@@ -27,49 +27,46 @@ public class Generator : MonoBehaviour
 
     private IEnumerator Starte()
     {
-        if (collided == false)
+
+        dungeonContainter = GameObject.Find("DungeonContainer");
+
+        var firstModule = (Module)Instantiate(startingModule, new Vector3(0, 0, 0), transform.rotation);
+        firstModule.transform.SetParent(dungeonContainter.transform);
+        var availableConnectors = new List<Connector>(firstModule.GetConnectors());
+        yield return new WaitForSeconds(waitTime);
+
+        for (int i = 0; i < size; i++)
         {
-            dungeonContainter = GameObject.Find("DungeonContainer");
+            var allExits = new List<Connector>();
 
-            var firstModule = (Module)Instantiate(startingModule, new Vector3(0, 0, 0), transform.rotation);
-            firstModule.transform.SetParent(dungeonContainter.transform);
-            var availableConnectors = new List<Connector>(firstModule.GetConnectors());
-            yield return new WaitForSeconds(waitTime);
-
-            for (int i = 0; i < size; i++)
+            foreach (var selectedConnector in availableConnectors)
             {
-                var allExits = new List<Connector>();
+                var randomType = selectedConnector.allowedTypes.ElementAt(Random.Range(0, selectedConnector.allowedTypes.Length));
 
-                foreach (var selectedConnector in availableConnectors)
-                {
-                    var randomType = selectedConnector.allowedTypes.ElementAt(Random.Range(0, selectedConnector.allowedTypes.Length));
+                var matchingModules = Modules.Where(m => m.type.Contains(randomType)).ToArray();
+                var newSelectedModule = GetRandom(matchingModules);
+                var newModule = (Module)Instantiate(newSelectedModule, new Vector3(2, Random.Range(1, 400) * 30, 1), transform.rotation);
+                newModule.transform.SetParent(dungeonContainter.transform);
+                var secondModuleConnectors = newModule.GetConnectors();
+                var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(Random.Range(0, secondModuleConnectors.Length));
 
-                    var matchingModules = Modules.Where(m => m.type.Contains(randomType)).ToArray();
-                    var newSelectedModule = GetRandom(matchingModules);
-                    var newModule = (Module)Instantiate(newSelectedModule, new Vector3(2, Random.Range(1, 400) * 30, 1), transform.rotation);
-                    newModule.transform.SetParent(dungeonContainter.transform);
-                    var secondModuleConnectors = newModule.GetConnectors();
-                    var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(Random.Range(0, secondModuleConnectors.Length));
+                //var door = (Module)Instantiate(Door, new Vector3(200, Random.Range(1, 400) * 30, 1), transform.rotation);
+                //AddDoor(selectedConnector, door.GetConnectors().FirstOrDefault());
 
-                    //var door = (Module)Instantiate(Door, new Vector3(200, Random.Range(1, 400) * 30, 1), transform.rotation);
-                    //AddDoor(selectedConnector, door.GetConnectors().FirstOrDefault());
+                Connect(selectedConnector, connectorToConnect);
 
-                    Connect(selectedConnector, connectorToConnect);
-
-                    allExits.AddRange(secondModuleConnectors.Where(e => e != connectorToConnect));
-                }
-                availableConnectors = allExits;
+                allExits.AddRange(secondModuleConnectors.Where(e => e != connectorToConnect));
             }
-            yield return new WaitForSeconds(waitTime);
-            
-
-            //SealEnds();
+            availableConnectors = allExits;
         }
-        else
+        yield return new WaitForSeconds(waitTime);
+        if (collided == true)
         {
             RenewIfCollided();
         }
-        collided = false;
+        yield return new WaitForSeconds(waitTime);
+
+        SealEnds();
     }
 
     private void AddDoor(Connector ExitConnector, Connector DoorConnector)
@@ -127,8 +124,8 @@ public class Generator : MonoBehaviour
     public IEnumerator RenewIfCollided()
     {
         StopAllCoroutines();
-            yield return new WaitForSeconds(.5f);
-        
+        yield return new WaitForSeconds(.5f);
+
         foreach (Transform child in dungeonContainter.transform)
         {
             GameObject.Destroy(child.gameObject);
