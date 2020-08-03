@@ -13,4 +13,9 @@ public class Module : MonoBehaviour
     {
         return type;
     }
+
+    public void SetIndex(int inde)
+    {
+        this.index = inde;
+    }
 }
