@@ -18,9 +18,8 @@ public class Generator : MonoBehaviour
     public Module Door;
     public GameObject DoorSwitch;
 
-    private float waitTime = 0.01f;
+    private float waitTime = 0.3f;
     private GameObject dungeonContainter;
-    private int index = 0;
 
     private void Start()
     {
@@ -49,10 +48,7 @@ public class Generator : MonoBehaviour
                 var newModule = (Module)Instantiate(newSelectedModule, new Vector3(2, Random.Range(1, 400) * 30, 1), transform.rotation);
                 if (newModule.GetTypeName() == "room")
                 {
-                    index++;
-                    newModule.SetIndex(index);
                     AddSwitch(newModule);
-
                 }
 
                 newModule.transform.SetParent(dungeonContainter.transform);
@@ -61,7 +57,6 @@ public class Generator : MonoBehaviour
 
                 var door = (Module)Instantiate(Door, new Vector3(200, Random.Range(1, 400) * 30, 1), transform.rotation);
                 door.transform.SetParent(dungeonContainter.transform);
-                door.SetIndex(index);
                 AddDoor(selectedConnector, door.GetConnectors().FirstOrDefault());
 
                 Connect(selectedConnector, connectorToConnect);
@@ -77,7 +72,6 @@ public class Generator : MonoBehaviour
         }
         yield return new WaitForSeconds(waitTime);
         SealEnds();
-        index++;
     }
 
     private void AddSwitch(Module module)
@@ -137,13 +131,10 @@ public class Generator : MonoBehaviour
     public void RenewIfCollided()
     {
         StopAllCoroutines();
-
-        index = 0;
         foreach (Transform child in dungeonContainter.transform)
         {
             GameObject.Destroy(child.gameObject);
         }
-        //yield return new WaitForSeconds(waitTime);
         collided = false;
         ClearLog();
         StartCoroutine(Starte());
