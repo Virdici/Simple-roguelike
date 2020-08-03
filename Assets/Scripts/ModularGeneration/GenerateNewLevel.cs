@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class GenerateNewLevel : MonoBehaviour
 {
@@ -10,11 +11,16 @@ public class GenerateNewLevel : MonoBehaviour
         generator = GameObject.FindObjectOfType<Generator>();
     }
 
-    private void OnCollisionEnter(Collision col)
+    private void OnCollisionStay(Collision col)
     {
         //new generation on collision
         Debug.Log("collision detected" + col.contacts[0].point);
-        generator.RenewIfCollided();
-        
+        //StartCoroutine(Start());
+    }
+
+    private IEnumerator Start()
+    {
+        yield return new WaitForSeconds(1f);
+        generator.StartNewGeneration();
     }
 }

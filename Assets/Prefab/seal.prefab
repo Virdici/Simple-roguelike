@@ -143,6 +143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: seal
+  index: 0
 --- !u!1 &8067335633329861134
 GameObject:
   m_ObjectHideFlags: 0
