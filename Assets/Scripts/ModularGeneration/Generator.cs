@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 
 public class Generator : MonoBehaviour
 {
@@ -14,8 +15,9 @@ public class Generator : MonoBehaviour
     public int size = 1;
     public bool collided;
     public Module Seal;
+    public Module Door;
 
-    private float waitTime = 0.3f;
+    private float waitTime = 0.1f;
     private GameObject dungeonContainter;
 
     private void Start()
@@ -47,6 +49,9 @@ public class Generator : MonoBehaviour
                     newModule.transform.SetParent(dungeonContainter.transform);
                     var secondModuleConnectors = newModule.GetConnectors();
                     var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(Random.Range(0, secondModuleConnectors.Length));
+                    AddDoor(selectedConnector, Door.GetConnectors().FirstOrDefault());
+                    yield return new WaitForSeconds(waitTime);
+
                     Connect(selectedConnector, connectorToConnect);
 
                     allExits.AddRange(secondModuleConnectors.Where(e => e != connectorToConnect));
@@ -64,6 +69,21 @@ public class Generator : MonoBehaviour
         }
     }
 
+    private void AddDoor(Connector ExitConnector, Connector DoorConnector)
+    {
+        var newModule = DoorConnector.transform.parent;
+        var objectToConnectVector = -ExitConnector.transform.forward;
+        var angle1 = Vector3.Angle(Vector3.forward, objectToConnectVector) * Mathf.Sign(objectToConnectVector.x);
+        var angle2 = Vector3.Angle(Vector3.forward, DoorConnector.transform.forward) * Mathf.Sign(DoorConnector.transform.forward.x);
+        newModule.RotateAround(DoorConnector.transform.position, Vector3.up, angle1 - angle2);
+        var correctPosition = ExitConnector.transform.position - DoorConnector.transform.position;
+        newModule.transform.position += correctPosition;
+
+        Destroy(DoorConnector);
+
+
+    }
+
     private void Connect(Connector startingObject, Connector ObjectToConnect)
     {
         var newModule = ObjectToConnect.transform.parent;
@@ -73,6 +93,8 @@ public class Generator : MonoBehaviour
         newModule.RotateAround(ObjectToConnect.transform.position, Vector3.up, angle1 - angle2);
         var correctPosition = startingObject.transform.position - ObjectToConnect.transform.position;
         newModule.transform.position += correctPosition;
+
+
 
         if (ObjectToConnect)
         {
@@ -99,9 +121,11 @@ public class Generator : MonoBehaviour
         return array[UnityEngine.Random.Range(0, array.Length)];
     }
 
-    public void RenewIfCollided()
+    public IEnumerator RenewIfCollided()
     {
         StopAllCoroutines();
+            yield return new WaitForSeconds(.5f);
+        
         foreach (Transform child in dungeonContainter.transform)
         {
             GameObject.Destroy(child.gameObject);
