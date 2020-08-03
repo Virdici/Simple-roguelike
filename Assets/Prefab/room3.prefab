@@ -134,7 +134,6 @@ MonoBehaviour:
   allowedTypes:
   - corridor
   startingConnector: 0
-  isDoor: 0
 --- !u!1 &4332522434275319683
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,7 +424,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: room
-  index: 0
 --- !u!114 &4382041815184633314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -589,7 +587,6 @@ MonoBehaviour:
   allowedTypes:
   - corridor
   startingConnector: 0
-  isDoor: 0
 --- !u!1 &6178461963272358455
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,7 +633,6 @@ MonoBehaviour:
   allowedTypes:
   - corridor
   startingConnector: 0
-  isDoor: 0
 --- !u!1 &7346869706197287348
 GameObject:
   m_ObjectHideFlags: 0
@@ -938,7 +934,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7870325132033405107}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b124efc96f64025469e992a6b8c6038a, type: 3}
+  m_Script: {fileID: 11500000, guid: bf7a83e26c048254eb8c3b9988456311, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   DidCollide: 0
