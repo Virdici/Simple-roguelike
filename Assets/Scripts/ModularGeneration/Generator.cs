@@ -16,7 +16,6 @@ public class Generator : MonoBehaviour
     public bool collided;
     public Module Seal;
     public Module Door;
-    public GameObject DoorSwitch;
 
     private float waitTime = 0.03f;
     private GameObject dungeonContainter;
@@ -34,7 +33,6 @@ public class Generator : MonoBehaviour
 
         var firstModule = (Module)Instantiate(startingModule, new Vector3(0, 0, 0), transform.rotation);
         firstModule.transform.SetParent(dungeonContainter.transform);
-        AddSwitch(firstModule);
         var availableConnectors = new List<Connector>(firstModule.GetConnectors());
 
         for (int i = 0; i < size; i++)
@@ -47,11 +45,6 @@ public class Generator : MonoBehaviour
                 var matchingModules = Modules.Where(m => m.type.Contains(randomType)).ToArray();
                 var newSelectedModule = GetRandom(matchingModules);
                 var newModule = (Module)Instantiate(newSelectedModule, new Vector3(2, Random.Range(1, 400) * 30, 1), transform.rotation);
-                if (newModule.GetTypeName() == "room")
-                {
-                    //AddSwitch(newModule);
-                }
-
                 newModule.transform.SetParent(dungeonContainter.transform);
                 var secondModuleConnectors = newModule.GetConnectors();
                 var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(Random.Range(0, secondModuleConnectors.Length));
@@ -73,13 +66,6 @@ public class Generator : MonoBehaviour
         }
         yield return new WaitForSeconds(waitTime);
         SealEnds();
-    }
-
-    private void AddSwitch(Module module)
-    {
-        var DoorSwitchh = Instantiate(DoorSwitch, new Vector3(2, Random.Range(1, 400) * 30, 10000), transform.rotation);
-        DoorSwitchh.transform.SetParent(module.transform);
-        DoorSwitchh.transform.position = new Vector3(5, 3, 0);
     }
 
     private void AddDoor(Connector ExitConnector, Connector DoorConnector)
