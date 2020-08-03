@@ -14,8 +14,9 @@ public class GenerateNewLevel : MonoBehaviour
     private void OnCollisionStay(Collision col)
     {
         //new generation on collision
-        Debug.Log("collision detected" + col.contacts[0].point);
+        Debug.Log("fucking wot" + col.contacts[0].point);
         //StartCoroutine(Start());
+        //generator.StartNewGeneration();
     }
 
     private IEnumerator Start()
