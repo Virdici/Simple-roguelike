@@ -17,7 +17,7 @@ public class Generator : MonoBehaviour
     public Module Seal;
     public Module Door;
 
-    private float waitTime = 0.001f;
+    private float waitTime = 0.0005f;
     private GameObject dungeonContainter;
 
     private void Start()
@@ -27,7 +27,6 @@ public class Generator : MonoBehaviour
 
     private IEnumerator Starte()
     {
-
         dungeonContainter = GameObject.Find("DungeonContainer");
 
         var firstModule = (Module)Instantiate(startingModule, new Vector3(0, 0, 0), transform.rotation);
@@ -37,7 +36,6 @@ public class Generator : MonoBehaviour
         for (int i = 0; i < size; i++)
         {
             var allExits = new List<Connector>();
-
             foreach (var selectedConnector in availableConnectors)
             {
                 var randomType = selectedConnector.allowedTypes.ElementAt(Random.Range(0, selectedConnector.allowedTypes.Length));
@@ -51,7 +49,6 @@ public class Generator : MonoBehaviour
 
                 var door = (Module)Instantiate(Door, new Vector3(200, Random.Range(1, 400) * 30, 1), transform.rotation);
                 door.transform.SetParent(dungeonContainter.transform);
-
                 AddDoor(selectedConnector, door.GetConnectors().FirstOrDefault());
 
                 Connect(selectedConnector, connectorToConnect);
@@ -61,12 +58,7 @@ public class Generator : MonoBehaviour
             availableConnectors = allExits;
         }
         yield return new WaitForSeconds(waitTime);
-        if (collided == true)
-        {
-            RenewIfCollided();
-        }
-        yield return new WaitForSeconds(waitTime);
-
+        if (collided == true) RenewIfCollided();
         SealEnds();
     }
 
@@ -79,9 +71,7 @@ public class Generator : MonoBehaviour
         newModule.RotateAround(DoorConnector.transform.position, Vector3.up, angle1 - angle2);
         var correctPosition = ExitConnector.transform.position - DoorConnector.transform.position;
         newModule.transform.position += correctPosition;
-
         Destroy(DoorConnector);
-
     }
 
     private void Connect(Connector startingObject, Connector ObjectToConnect)

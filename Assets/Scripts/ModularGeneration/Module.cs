@@ -8,4 +8,9 @@ public class Module : MonoBehaviour
     {
         return GetComponentsInChildren<Connector>();
     }
+
+    public string GetTypeName()
+    {
+        return type;
+    }
 }
