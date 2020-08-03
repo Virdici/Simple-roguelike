@@ -16,10 +16,10 @@ public class GenerateNewLevel : MonoBehaviour
         //new generation on collision
         Debug.Log("fucking wot" + col.contacts[0].point);
         //StartCoroutine(Start());
-        //generator.StartNewGeneration();
+        generator.StartNewGeneration();
     }
 
-    private IEnumerator Start()
+    private IEnumerator Startt()
     {
         yield return new WaitForSeconds(1f);
         generator.StartNewGeneration();

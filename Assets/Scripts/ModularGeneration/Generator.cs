@@ -48,7 +48,7 @@ public class Generator : MonoBehaviour
                 var newModule = (Module)Instantiate(newSelectedModule, new Vector3(2, Random.Range(1, 400) * 30, 1), transform.rotation);
                 if (newModule.GetTypeName() == "room")
                 {
-                    AddSwitch(newModule);
+                    //AddSwitch(newModule);
                 }
 
                 newModule.transform.SetParent(dungeonContainter.transform);
