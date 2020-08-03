@@ -46,18 +46,18 @@ public class Generator : MonoBehaviour
                 var matchingModules = Modules.Where(m => m.type.Contains(randomType)).ToArray();
                 var newSelectedModule = GetRandom(matchingModules);
                 var newModule = (Module)Instantiate(newSelectedModule, new Vector3(2, Random.Range(1, 400) * 30, 1), transform.rotation);
-                if (newModule.GetTypeName() == "room")
-                {
-                    //AddSwitch(newModule);
-                }
+                //if (newModule.GetTypeName() == "room")
+                //{
+                //    //AddSwitch(newModule);
+                //}
 
                 newModule.transform.SetParent(dungeonContainter.transform);
                 var secondModuleConnectors = newModule.GetConnectors();
                 var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(Random.Range(0, secondModuleConnectors.Length));
 
-                var door = (Module)Instantiate(Door, new Vector3(200, Random.Range(1, 400) * 30, 1), transform.rotation);
-                door.transform.SetParent(dungeonContainter.transform);
-                AddDoor(selectedConnector, door.GetConnectors().FirstOrDefault());
+                //var door = (Module)Instantiate(Door, new Vector3(200, Random.Range(1, 400) * 30, 1), transform.rotation);
+                //door.transform.SetParent(dungeonContainter.transform);
+                //AddDoor(selectedConnector, door.GetConnectors().FirstOrDefault());
 
                 Connect(selectedConnector, connectorToConnect);
 
@@ -150,10 +150,5 @@ public class Generator : MonoBehaviour
     {
         this.collided = true;
     }
-
-    public void StartNewGeneration()
-    {
-        RenewIfCollided();
-        //StartCoroutine(Starte());
-    }
+     
 }
