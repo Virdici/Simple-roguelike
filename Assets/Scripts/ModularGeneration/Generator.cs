@@ -96,13 +96,13 @@ public class Generator : MonoBehaviour
         newModule.transform.position += correctPosition;
 
         var SelectedConnectorParent = startingObject.transform.GetComponentInParent<Module>();
-        if (SelectedConnectorParent.GetTypeName() == "room" && !FinishedPlacingRooms)        
+        if (SelectedConnectorParent.GetTypeName() == "room" && !FinishedPlacingRooms)
             AddDoor(startingObject);
-        
+
         SelectedConnectorParent = ObjectToConnect.transform.GetComponentInParent<Module>();
         if (SelectedConnectorParent.GetTypeName() == "room" && !FinishedPlacingRooms)
             AddDoor(ObjectToConnect);
-        
+
         if (ObjectToConnect)
         {
             Destroy(startingObject.gameObject);

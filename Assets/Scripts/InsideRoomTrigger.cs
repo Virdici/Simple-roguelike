@@ -13,7 +13,7 @@ public class InsideRoomTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
-        //Physics.IgnoreLayerCollision(8, 10);
+        Physics.IgnoreLayerCollision(9, 10);
 
     }
 
@@ -23,7 +23,7 @@ public class InsideRoomTrigger : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         Door = transform.GetComponentInParent<Module>();
-        //Physics.IgnoreLayerCollision(8, 10);
+        Physics.IgnoreLayerCollision(9, 10);
         if (Input.GetKeyDown(KeyCode.F))
         {
             Debug.Log(other);

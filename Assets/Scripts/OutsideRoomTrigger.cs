@@ -14,13 +14,13 @@ public class OutsideRoomTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
-        Physics.IgnoreLayerCollision(8, 10);
+        Physics.IgnoreLayerCollision(9, 10);
 
     }
-
+   
     private void OnTriggerStay(Collider other)
     {
-        Physics.IgnoreLayerCollision(8, 10);
+        Physics.IgnoreLayerCollision(9, 10);
         if (Input.GetKeyDown(KeyCode.F))
         {
             Door.GetComponent<Renderer>().material.color = Color.blue;

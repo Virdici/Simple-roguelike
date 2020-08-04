@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 2950327217638140214}
   - component: {fileID: 3681743315501463061}
   - component: {fileID: 1179852765753952477}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: DoorDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -485,7 +485,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: room
-  index: 0
   Doors: []
 --- !u!114 &4382041815184633314
 MonoBehaviour:
