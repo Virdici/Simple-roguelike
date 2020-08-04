@@ -22,7 +22,6 @@ public class OutsideRoomTrigger : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         Physics.IgnoreLayerCollision(8, 10);
-        Debug.Log("fucking wut" + other.transform);
 
         if (Input.GetKeyDown(KeyCode.F))
         {

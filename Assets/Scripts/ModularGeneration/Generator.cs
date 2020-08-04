@@ -17,7 +17,7 @@ public class Generator : MonoBehaviour
     public Module Seal;
     public Module Door;
 
-    private float waitTime = 0.03f;
+    private float waitTime = 0.3f;
     private GameObject dungeonContainter;
 
     private void Start()
@@ -48,15 +48,6 @@ public class Generator : MonoBehaviour
                 newModule.transform.SetParent(dungeonContainter.transform);
                 var secondModuleConnectors = newModule.GetConnectors();
                 var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(Random.Range(0, secondModuleConnectors.Length));
-
-                //var SelectedConnectorParent = selectedConnector.transform.GetComponentInParent<Module>();
-                //if (SelectedConnectorParent.GetTypeName() == "room")
-                //{
-                //var door = (Module)Instantiate(Door, new Vector3(200, Random.Range(1, 400) * 30, 1), transform.rotation);
-                //door.transform.SetParent(dungeonContainter.transform);
-                //PlaceDoor(selectedConnector, door.GetConnectors().FirstOrDefault());
-
-                //}
 
                 Connect(selectedConnector, connectorToConnect);
 
@@ -102,18 +93,14 @@ public class Generator : MonoBehaviour
         var correctPosition = startingObject.transform.position - ObjectToConnect.transform.position;
         newModule.transform.position += correctPosition;
 
-
         var SelectedConnectorParent = startingObject.transform.GetComponentInParent<Module>();
-        if (SelectedConnectorParent.GetTypeName() == "room")
-        {
+        if (SelectedConnectorParent.GetTypeName() == "room")        
             AddDoor(startingObject);
-        }
+        
         SelectedConnectorParent = ObjectToConnect.transform.GetComponentInParent<Module>();
         if (SelectedConnectorParent.GetTypeName() == "room")
-        {
             AddDoor(ObjectToConnect);
-        }
-
+        
         if (ObjectToConnect)
         {
             Destroy(startingObject.gameObject);
