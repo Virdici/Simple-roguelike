@@ -29,7 +29,7 @@ public class Generator : MonoBehaviour
     {
 
         dungeonContainter = GameObject.Find("DungeonContainer");
-        
+
 
         var firstModule = (Module)Instantiate(startingModule, new Vector3(0, 0, 0), transform.rotation);
         firstModule.transform.SetParent(dungeonContainter.transform);
@@ -49,9 +49,14 @@ public class Generator : MonoBehaviour
                 var secondModuleConnectors = newModule.GetConnectors();
                 var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(Random.Range(0, secondModuleConnectors.Length));
 
-                var door = (Module)Instantiate(Door, new Vector3(200, Random.Range(1, 400) * 30, 1), transform.rotation);
-                door.transform.SetParent(dungeonContainter.transform);
-                AddDoor(selectedConnector, door.GetConnectors().FirstOrDefault());
+                //var SelectedConnectorParent = selectedConnector.transform.GetComponentInParent<Module>();
+                //if (SelectedConnectorParent.GetTypeName() == "room")
+                //{
+                //var door = (Module)Instantiate(Door, new Vector3(200, Random.Range(1, 400) * 30, 1), transform.rotation);
+                //door.transform.SetParent(dungeonContainter.transform);
+                //PlaceDoor(selectedConnector, door.GetConnectors().FirstOrDefault());
+
+                //}
 
                 Connect(selectedConnector, connectorToConnect);
 
@@ -68,7 +73,14 @@ public class Generator : MonoBehaviour
         SealEnds();
     }
 
-    private void AddDoor(Connector ExitConnector, Connector DoorConnector)
+    private void AddDoor(Connector connector)
+    {
+        var door = (Module)Instantiate(Door, new Vector3(200, Random.Range(1, 400) * 30, 1), transform.rotation);
+        door.transform.SetParent(dungeonContainter.transform);
+        PlaceDoor(connector, door.GetConnectors().FirstOrDefault());
+    }
+
+    private void PlaceDoor(Connector ExitConnector, Connector DoorConnector)
     {
         var newModule = DoorConnector.transform.parent;
         var objectToConnectVector = -ExitConnector.transform.forward;
@@ -89,6 +101,18 @@ public class Generator : MonoBehaviour
         newModule.RotateAround(ObjectToConnect.transform.position, Vector3.up, angle1 - angle2);
         var correctPosition = startingObject.transform.position - ObjectToConnect.transform.position;
         newModule.transform.position += correctPosition;
+
+
+        var SelectedConnectorParent = startingObject.transform.GetComponentInParent<Module>();
+        if (SelectedConnectorParent.GetTypeName() == "room")
+        {
+            AddDoor(startingObject);
+        }
+        SelectedConnectorParent = ObjectToConnect.transform.GetComponentInParent<Module>();
+        if (SelectedConnectorParent.GetTypeName() == "room")
+        {
+            AddDoor(ObjectToConnect);
+        }
 
         if (ObjectToConnect)
         {
