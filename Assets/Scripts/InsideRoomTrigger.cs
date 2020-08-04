@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class InsideRoomTrigger : MonoBehaviour
 {
-
     private Module Door;
-    
+
     void Start()
     {
         Door = transform.GetComponentInParent<Module>();
@@ -14,15 +13,20 @@ public class InsideRoomTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
-        Physics.IgnoreLayerCollision(8, 10);
-        
+        //Physics.IgnoreLayerCollision(8, 10);
+
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+    }
     private void OnTriggerStay(Collider other)
     {
-        Physics.IgnoreLayerCollision(8, 10);
+        Door = transform.GetComponentInParent<Module>();
+        //Physics.IgnoreLayerCollision(8, 10);
         if (Input.GetKeyDown(KeyCode.F))
         {
+            Debug.Log(other);
             Door.GetComponent<Renderer>().material.color = Color.red;
         }
     }

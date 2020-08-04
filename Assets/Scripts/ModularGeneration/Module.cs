@@ -4,7 +4,6 @@ using UnityEngine;
 public class Module : MonoBehaviour
 {
     public string type;
-    public int index;
     public List<GameObject> Doors = new List<GameObject>();
     public Connector[] GetConnectors()
     {
@@ -15,11 +14,4 @@ public class Module : MonoBehaviour
     {
         return type;
     }
-
-    public void SetIndex(int inde)
-    {
-        this.index = inde;
-    }
-
-
 }

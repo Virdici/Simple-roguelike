@@ -17,8 +17,9 @@ public class Generator : MonoBehaviour
     public Module Seal;
     public Module Door;
 
-    private float waitTime = 0.3f;
+    private float waitTime = 0.03f;
     private GameObject dungeonContainter;
+    private bool FinishedPlacingRooms;
 
     private void Start()
     {
@@ -61,6 +62,7 @@ public class Generator : MonoBehaviour
             RenewIfCollided();
         }
         yield return new WaitForSeconds(waitTime);
+        FinishedPlacingRooms = true;
         SealEnds();
     }
 
@@ -94,11 +96,11 @@ public class Generator : MonoBehaviour
         newModule.transform.position += correctPosition;
 
         var SelectedConnectorParent = startingObject.transform.GetComponentInParent<Module>();
-        if (SelectedConnectorParent.GetTypeName() == "room")        
+        if (SelectedConnectorParent.GetTypeName() == "room" && !FinishedPlacingRooms)        
             AddDoor(startingObject);
         
         SelectedConnectorParent = ObjectToConnect.transform.GetComponentInParent<Module>();
-        if (SelectedConnectorParent.GetTypeName() == "room")
+        if (SelectedConnectorParent.GetTypeName() == "room" && !FinishedPlacingRooms)
             AddDoor(ObjectToConnect);
         
         if (ObjectToConnect)
@@ -133,6 +135,7 @@ public class Generator : MonoBehaviour
             GameObject.Destroy(child.gameObject);
         }
         collided = false;
+        FinishedPlacingRooms = false;
         ClearLog();
         StartCoroutine(Starte());
     }
