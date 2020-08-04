@@ -103,7 +103,6 @@ public class Generator : MonoBehaviour
         {
             var newSeal = (Module)Instantiate(Seal, new Vector3(2, UnityEngine.Random.Range(1, 400) * 30, 1), transform.rotation);
             newSeal.transform.SetParent(dungeonContainter.transform);
-
             var secondModuleConnectors = newSeal.GetConnectors();
             var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(UnityEngine.Random.Range(0, secondModuleConnectors.Length));
             Connect(end, connectorToConnect);
