@@ -34,13 +34,16 @@ public class PlayerMovement : MonoBehaviour
         onSlope = OnSlope();
         if (OnSlope())
         {
-            velocity.y = gravity  *  10000f; 
+            //velocity.y = gravity  *  10f; 
 
             if (Input.GetKeyDown(KeyCode.Space) && !isGrounded)
             {
+                velocity.y = 0f;
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             }
         }
+
+
 
         if (isGrounded && velocity.y < 0)
         {
@@ -63,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            controller.Move(move * speed * 2 * Time.deltaTime);
+            controller.Move(move * speed * 1.1f * Time.deltaTime);
         }
         velocity.y += gravity * Time.deltaTime;
 

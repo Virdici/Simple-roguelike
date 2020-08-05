@@ -88,6 +88,65 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.9196167, y: 8, z: 10}
   m_Center: {x: -20.490368, y: -3.5, z: 6}
+--- !u!1 &3985406328978830580
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2950327217638140214}
+  - component: {fileID: 3681743315501463061}
+  - component: {fileID: 1179852765753952477}
+  m_Layer: 9
+  m_Name: DoorDetector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2950327217638140214
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3985406328978830580}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5590518903601955302}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3681743315501463061
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3985406328978830580}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 44.000397, y: 10.476285, z: 24.285837}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1179852765753952477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3985406328978830580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34c74047c90bb0843b5f98926ac55d57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list: []
+  ParentModule: {fileID: 3098481057918308852}
 --- !u!1 &4075002538006609115
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,6 +193,7 @@ MonoBehaviour:
   allowedTypes:
   - corridor
   startingConnector: 0
+  isDoor: 0
 --- !u!1 &4332522434275319683
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,6 +421,7 @@ Transform:
   - {fileID: 7116435097792914774}
   - {fileID: 5228022349475751258}
   - {fileID: 666571828921823881}
+  - {fileID: 2950327217638140214}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -424,6 +485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: room
+  Doors: []
 --- !u!114 &4382041815184633314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -587,6 +649,7 @@ MonoBehaviour:
   allowedTypes:
   - corridor
   startingConnector: 0
+  isDoor: 0
 --- !u!1 &6178461963272358455
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,6 +696,7 @@ MonoBehaviour:
   allowedTypes:
   - corridor
   startingConnector: 0
+  isDoor: 0
 --- !u!1 &7346869706197287348
 GameObject:
   m_ObjectHideFlags: 0
@@ -934,7 +998,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7870325132033405107}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf7a83e26c048254eb8c3b9988456311, type: 3}
+  m_Script: {fileID: 11500000, guid: b124efc96f64025469e992a6b8c6038a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   DidCollide: 0
