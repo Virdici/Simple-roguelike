@@ -23,6 +23,7 @@ public class OutsideRoomTrigger : MonoBehaviour
         Physics.IgnoreLayerCollision(9, 10);
         if (Input.GetKeyDown(KeyCode.F))
         {
+            Destroy(Door.transform.Find("ColliderPassage").gameObject);
             Door.GetComponent<Renderer>().material.color = Color.blue;
         }
     }

@@ -16,17 +16,13 @@ public class InsideRoomTrigger : MonoBehaviour
         Physics.IgnoreLayerCollision(9, 10);
 
     }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-    }
     private void OnTriggerStay(Collider other)
     {
-        Door = transform.GetComponentInParent<Module>();
         Physics.IgnoreLayerCollision(9, 10);
         if (Input.GetKeyDown(KeyCode.F))
         {
             Debug.Log(other);
+            Destroy(Door.transform.Find("ColliderPassage").gameObject);
             Door.GetComponent<Renderer>().material.color = Color.red;
         }
     }

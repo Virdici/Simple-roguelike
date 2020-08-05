@@ -11,8 +11,14 @@ public class FindDoors : MonoBehaviour
     {
         ParentModule = transform.GetComponentInParent<Module>();
     }
+    private void OnTriggerStay(Collider other)
+    {
+        Physics.IgnoreLayerCollision(9, 11);
+
+    }
     private void OnTriggerEnter(Collider other)
     {
+        Physics.IgnoreLayerCollision(9, 11);
         if (other.gameObject.tag == "door")
         {
             //Debug.Log("Doors Added");

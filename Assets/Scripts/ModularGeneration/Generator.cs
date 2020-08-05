@@ -20,7 +20,7 @@ public class Generator : MonoBehaviour
     private float waitTime = 0.03f;
     private GameObject dungeonContainter;
     private bool FinishedPlacingRooms;
-
+    private int index = 0;
     private void Start()
     {
         StartCoroutine(Starte());
@@ -28,9 +28,7 @@ public class Generator : MonoBehaviour
 
     private IEnumerator Starte()
     {
-
         dungeonContainter = GameObject.Find("DungeonContainer");
-
 
         var firstModule = (Module)Instantiate(startingModule, new Vector3(0, 0, 0), transform.rotation);
         firstModule.transform.SetParent(dungeonContainter.transform);
@@ -49,6 +47,12 @@ public class Generator : MonoBehaviour
                 newModule.transform.SetParent(dungeonContainter.transform);
                 var secondModuleConnectors = newModule.GetConnectors();
                 var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(Random.Range(0, secondModuleConnectors.Length));
+
+                if (newModule.GetTypeName() == "room")
+                {
+                    index++;
+                    newModule.index = index;
+                }
 
                 Connect(selectedConnector, connectorToConnect);
 
@@ -129,8 +133,16 @@ public class Generator : MonoBehaviour
 
     public void RenewIfCollided()
     {
+        index = 0;
         StopAllCoroutines();
         foreach (Transform child in dungeonContainter.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+
+        GameObject EnemyContainer = GameObject.Find("EnemiesContainer");
+
+        foreach (Transform child in EnemyContainer.transform)
         {
             GameObject.Destroy(child.gameObject);
         }

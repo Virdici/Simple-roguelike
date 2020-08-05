@@ -17,8 +17,8 @@ TagManager:
   - ground
   - detector
   - tirggers
-  - 
-  - 
+  - enemies
+  - player
   - 
   - 
   - 
