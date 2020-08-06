@@ -15,7 +15,7 @@ public class Generator : MonoBehaviour
     public int size = 1;
     public bool collided;
     public Module Seal;
-    public Module Door;
+    public Door Door;
 
     private float waitTime = 0.03f;
     private GameObject dungeonContainter;
@@ -72,8 +72,9 @@ public class Generator : MonoBehaviour
 
     private void AddDoor(Connector connector)
     {
-        var door = (Module)Instantiate(Door, new Vector3(200, Random.Range(1, 400) * 30, 1), transform.rotation);
+        var door = (Door)Instantiate(Door, new Vector3(200, Random.Range(1, 400) * 30, 1), transform.rotation);
         door.transform.SetParent(dungeonContainter.transform);
+        door.SetIndex(index);
         PlaceDoor(connector, door.GetConnectors().FirstOrDefault());
     }
 
