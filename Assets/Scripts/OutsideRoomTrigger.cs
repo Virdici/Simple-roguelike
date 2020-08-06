@@ -5,25 +5,20 @@ using UnityEngine;
 public class OutsideRoomTrigger : MonoBehaviour
 {
 
-    private Module Door;
+    private Door Door;
 
     void Start()
     {
-        Door = transform.GetComponentInParent<Module>();
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-
         Physics.IgnoreLayerCollision(9, 10);
 
+        Door = transform.GetComponentInParent<Door>();
     }
-   
     private void OnTriggerStay(Collider other)
     {
-        Physics.IgnoreLayerCollision(9, 10);
+        //Physics.IgnoreLayerCollision(9, 10);
         if (Input.GetKeyDown(KeyCode.F))
         {
-            Destroy(Door.transform.Find("ColliderPassage").gameObject);
+            Door.transform.Find("ColliderPassage").gameObject.SetActive(false);
             Door.GetComponent<Renderer>().material.color = Color.blue;
         }
     }
