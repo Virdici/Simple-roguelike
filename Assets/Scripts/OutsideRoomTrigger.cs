@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class OutsideRoomTrigger : MonoBehaviour
 {
-
+    //ttaj
     private Door Door;
     public Module Room;
 
