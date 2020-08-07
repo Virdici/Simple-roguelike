@@ -12,6 +12,8 @@ public class Module : MonoBehaviour
     public int DefeatedEnemies;
     private GameObject RoomSealsContainter;
 
+    public bool PlacedSeals = false;
+
     private void Start()
     {
         AllenemiesDefeated = false;

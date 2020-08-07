@@ -245,7 +245,6 @@ Transform:
   - {fileID: 6019597989131902658}
   - {fileID: 1361630668743195937}
   - {fileID: 4019036202508067009}
-  - {fileID: 4472373718287368391}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -312,66 +311,6 @@ MonoBehaviour:
   AllenemiesDefeated: 0
   DefeatedEnemies: 0
   DoorClosed: 1
---- !u!1 &4467902292960980794
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4472373718287368391}
-  - component: {fileID: 1581217820081413145}
-  - component: {fileID: 8766070465345386236}
-  m_Layer: 0
-  m_Name: CloseDoorsIfEnemiesAliveTrigger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4472373718287368391
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4467902292960980794}
-  m_LocalRotation: {x: 6.123234e-17, y: -1, z: -6.123234e-17, w: -3.7493994e-33}
-  m_LocalPosition: {x: -0, y: 0.5, z: 1.68}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 3984519721109961609}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1581217820081413145
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4467902292960980794}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3, y: 2.6251984, z: 1}
-  m_Center: {x: 0, y: 1.0031815, z: 0}
---- !u!114 &8766070465345386236
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4467902292960980794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e99da67c2187b1d4ea1b31636bb80e03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Room: {fileID: 0}
-  Seal: {fileID: 0}
-  RoomClear: 0
 --- !u!1 &7630510670341377970
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,4 +370,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Room: {fileID: 0}
   RoomClear: 0
-
+  Seal: {fileID: 0}
