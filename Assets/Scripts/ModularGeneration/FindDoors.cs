@@ -10,7 +10,7 @@ public class FindDoors : MonoBehaviour
 
     void Start()
     {
-        ParentModule = transform.GetComponentInParent<Module>();
+        ParentModule = gameObject.GetComponentInParent<Module>();
     }
     private void OnTriggerStay(Collider other)
     {

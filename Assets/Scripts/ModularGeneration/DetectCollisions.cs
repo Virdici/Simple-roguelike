@@ -12,6 +12,9 @@ public class DetectCollisions : MonoBehaviour
     }
     private void OnCollisionEnter(Collision col)
     {
+
+        Physics.IgnoreLayerCollision(9, 11);
+
         generator.ChangeCollisionState();
     }
 }

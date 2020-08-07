@@ -11,6 +11,17 @@ public class Enemy : MonoBehaviour
         Physics.IgnoreLayerCollision(9, 11);
         defeated = false;
     }
+
+    void Update()
+    {
+        Physics.IgnoreLayerCollision(9, 11);
+    }
+    private void OnCollisionStay(Collision collision)
+    {
+        Physics.IgnoreLayerCollision(9, 11);
+
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         Physics.IgnoreLayerCollision(9, 11);

@@ -15,9 +15,13 @@ public class Module : MonoBehaviour
     private void Start()
     {
         AllenemiesDefeated = false;
+
         RoomSealsContainter = GameObject.Find("RoomSeals");
 
     }
+
+
+
     public Connector[] GetConnectors()
     {
         return GetComponentsInChildren<Connector>();
