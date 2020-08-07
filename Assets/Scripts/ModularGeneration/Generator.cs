@@ -43,7 +43,7 @@ public class Generator : MonoBehaviour
 
                 var matchingModules = Modules.Where(m => m.type.Contains(randomType)).ToArray();
                 var newSelectedModule = GetRandom(matchingModules);
-                var newModule = (Module)Instantiate(newSelectedModule, new Vector3(2, Random.Range(1, 400) * 30, 1), transform.rotation);
+                var newModule = (Module)Instantiate(newSelectedModule, new Vector3(2, Random.Range(1, 400) * 30, 1), Quaternion.identity);
                 newModule.transform.SetParent(dungeonContainter.transform);
                 var secondModuleConnectors = newModule.GetConnectors();
                 var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(Random.Range(0, secondModuleConnectors.Length));

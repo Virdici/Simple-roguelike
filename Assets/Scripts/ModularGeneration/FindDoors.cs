@@ -26,6 +26,12 @@ public class FindDoors : MonoBehaviour
             other.gameObject.transform.GetComponentInParent<Door>().GetComponentsInChildren<InsideRoomTrigger>().FirstOrDefault().Room = ParentModule;
             ParentModule.Doors.Add(other.gameObject.transform.parent.gameObject);
         }
+
+        if (other.gameObject.tag == "Player")
+        {
+            var player = (Player)GameObject.FindObjectOfType<Player>();
+            player.CurrentRoomIndex = ParentModule.index;
+        }
     }
  
 }

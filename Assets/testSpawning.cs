@@ -10,18 +10,16 @@ public class testSpawning : MonoBehaviour
     private GameObject host;
     void Start()
     {
-        if (transform.GetComponentInParent<Module>().index == 0)
+        if (transform.GetComponentInParent<Module>().index != 0)
         {
-        } else
-        {
-        EnemyContainer = GameObject.Find("EnemiesContainer");
-        host = transform.GetComponentInParent<Module>().gameObject;
-        RoomSize = host.GetComponent<Renderer>().bounds.size;
-        RoomSize = RoomSize - new Vector3(6, 2, 6);
-        x = RoomSize.x / 2;
-        z = RoomSize.z / 2;
-        Spawn();
-        }
+            EnemyContainer = GameObject.Find("EnemiesContainer");
+            host = transform.GetComponentInParent<Module>().gameObject;
+            RoomSize = host.GetComponent<Renderer>().bounds.size;
+            RoomSize = RoomSize - new Vector3(10, 2, 10);
+            x = RoomSize.x / 2;
+            z = RoomSize.z / 2;
+            Spawn();
+        } 
     }
 
     public void Spawn()
