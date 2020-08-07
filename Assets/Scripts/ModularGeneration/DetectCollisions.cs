@@ -18,7 +18,6 @@ public class DetectCollisions : MonoBehaviour
     private void OnCollisionEnter(Collision col)
     {
         Physics.IgnoreLayerCollision(9, 11);
-        Debug.Log("collision detected" + col.contacts[0].point + col.transform.name);
         generator.ChangeCollisionState();
     }
 }

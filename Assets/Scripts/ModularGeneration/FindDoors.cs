@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class FindDoors : MonoBehaviour
@@ -9,7 +10,7 @@ public class FindDoors : MonoBehaviour
 
     void Start()
     {
-        ParentModule = transform.GetComponentInParent<Module>();
+        ParentModule = gameObject.GetComponentInParent<Module>();
     }
     private void OnTriggerStay(Collider other)
     {
@@ -21,8 +22,8 @@ public class FindDoors : MonoBehaviour
         Physics.IgnoreLayerCollision(9, 11);
         if (other.gameObject.tag == "door")
         {
-            //Debug.Log("Doors Added");
-            //list.Add(other.gameObject.transform.parent.gameObject);
+            other.gameObject.transform.GetComponentInParent<Door>().index = ParentModule.index;
+            other.gameObject.transform.GetComponentInParent<Door>().GetComponentsInChildren<InsideRoomTrigger>().FirstOrDefault().Room = ParentModule;
             ParentModule.Doors.Add(other.gameObject.transform.parent.gameObject);
         }
     }
