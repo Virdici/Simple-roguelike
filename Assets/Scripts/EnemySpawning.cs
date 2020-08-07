@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class testSpawning : MonoBehaviour
+public class EnemySpawning : MonoBehaviour
 {
     public Enemy enemy;
     public float x, y, z;

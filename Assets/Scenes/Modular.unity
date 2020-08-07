@@ -144,7 +144,7 @@ MonoBehaviour:
   y: 0
   z: 0
   RoomSize: {x: 0, y: 0, z: 0}
-  EnemyContainer: {fileID: 0}
+  EnemyContainer: {fileID: 1334679636}
 --- !u!1 &313423353
 GameObject:
   m_ObjectHideFlags: 3
@@ -336,7 +336,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 327329823}
-  m_LocalRotation: {x: 0.15976647, y: 0.000000007793731, z: 0.0000000029441198, w: 0.98715484}
+  m_LocalRotation: {x: 0.15976647, y: -0.000000009191631, z: 0.0000000056931224, w: 0.98715484}
   m_LocalPosition: {x: 0, y: -0.0000006198882, z: 0.0000012397765}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -978,8 +978,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1177731176}
-  m_LocalRotation: {x: 0.14183174, y: -0.000000016582264, z: -7.015417e-10, w: 0.9898908}
-  m_LocalPosition: {x: 0, y: -0.0000022729234, z: 0.0000053723647}
+  m_LocalRotation: {x: 0.14183174, y: 0.000000017482614, z: -0.000000005582364, w: 0.9898908}
+  m_LocalPosition: {x: 0, y: -0.0000028928116, z: 0.000006612141}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2039250607}
@@ -1063,7 +1063,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1197312790}
-  m_LocalRotation: {x: 0.16335678, y: 0.000000016975248, z: -0.000000002810779, w: 0.9865671}
+  m_LocalRotation: {x: 0.16335678, y: -0.000000010185148, z: 0.0000000016864671, w: 0.9865671}
   m_LocalPosition: {x: 0, y: 3.7492545, z: -4.280228}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1450,7 +1450,7 @@ BoxCollider:
   m_GameObject: {fileID: 1716954735}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.9135808, y: 0.9135808, z: 0.9135808}
   m_Center: {x: 0, y: 0, z: 0}
@@ -2553,6 +2553,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 6304146025624472721, guid: f60a38a388b182b4e810a3c73843efc0,
+        type: 3}
+      propertyPath: Seal
+      value: 
+      objectReference: {fileID: 1716954735}
     - target: {fileID: 7630510670341377970, guid: f60a38a388b182b4e810a3c73843efc0,
         type: 3}
       propertyPath: m_Layer
