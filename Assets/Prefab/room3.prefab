@@ -485,7 +485,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: room
+  index: 0
   Doors: []
+  Enemies: []
+  AllenemiesDefeated: 0
+  DefeatedEnemies: 0
 --- !u!114 &4382041815184633314
 MonoBehaviour:
   m_ObjectHideFlags: 0
