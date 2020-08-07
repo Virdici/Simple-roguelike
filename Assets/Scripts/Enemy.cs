@@ -23,7 +23,6 @@ public class Enemy : MonoBehaviour
     private void OnCollisionStay(Collision collision)
     {
         Physics.IgnoreLayerCollision(9, 11);
-        Debug.Log("Touched enemy");
 
     }
     private void OnCollisionEnter(Collision collision)

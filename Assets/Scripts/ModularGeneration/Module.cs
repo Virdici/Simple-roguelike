@@ -11,6 +11,11 @@ public class Module : MonoBehaviour
     public bool AllenemiesDefeated;
     public int DefeatedEnemies;
 
+    private void Start()
+    {
+        AllenemiesDefeated = false;
+    }
+
     public Connector[] GetConnectors()
     {
         return GetComponentsInChildren<Connector>();

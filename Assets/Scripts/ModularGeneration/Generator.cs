@@ -17,7 +17,7 @@ public class Generator : MonoBehaviour
     public Module Seal;
     public Door Door;
 
-    private float waitTime = 0.03f;
+    private float waitTime = 0.1f;
     private GameObject dungeonContainter;
     private bool FinishedPlacingRooms;
     private int index = 0;
@@ -74,7 +74,7 @@ public class Generator : MonoBehaviour
     {
         var door = (Door)Instantiate(Door, new Vector3(200, Random.Range(1, 400) * 30, 1), transform.rotation);
         door.transform.SetParent(dungeonContainter.transform);
-        door.SetIndex(index);
+        //door.SetIndex(index);
         PlaceDoor(connector, door.GetConnectors().FirstOrDefault());
     }
 
