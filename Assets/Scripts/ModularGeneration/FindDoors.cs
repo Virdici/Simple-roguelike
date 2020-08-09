@@ -14,12 +14,10 @@ public class FindDoors : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        Physics.IgnoreLayerCollision(9, 11);
 
     }
     private void OnTriggerEnter(Collider other)
     {
-        Physics.IgnoreLayerCollision(9, 11);
         if (other.gameObject.tag == "door")
         {
             other.gameObject.transform.GetComponentInParent<Door>().index = ParentModule.index;
@@ -31,6 +29,11 @@ public class FindDoors : MonoBehaviour
         {
             var player = (Player)GameObject.FindObjectOfType<Player>();
             player.CurrentRoomIndex = ParentModule.index;
+        }
+
+        if (other.gameObject.layer == 11)
+        {
+            var insideTrigger = other.bounds;
         }
     }
  

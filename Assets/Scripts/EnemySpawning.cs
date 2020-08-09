@@ -37,8 +37,9 @@ public class EnemySpawning : MonoBehaviour
 
         for (int i = 0; i < Random.Range(1, 3); i++)
         {
-            enem = (Enemy)Instantiate(enemy, HostPosition + new Vector3(Random.Range(-x, x), 1, Random.Range(-z, z)), Quaternion.identity);
+            enem = (Enemy)Instantiate(enemy, HostPosition + new Vector3(Random.Range(-x, x), 3, Random.Range(-z, z)), Quaternion.identity);
             enem.transform.SetParent(EnemyContainer.transform);
+            enem.index = transform.GetComponentInParent<Module>().index;
             transform.GetComponentInParent<Module>().Enemies.Add(enem);
         }
 
