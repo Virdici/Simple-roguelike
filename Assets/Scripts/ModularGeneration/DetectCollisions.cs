@@ -7,7 +7,7 @@ public class DetectCollisions : MonoBehaviour
 
     private void Awake()
     {
-        Physics.IgnoreLayerCollision(9, 11);
+        //Physics.IgnoreLayerCollision(9, 11);
         generator = GameObject.FindObjectOfType<Generator>();
     }
     private void OnCollisionEnter(Collision col)

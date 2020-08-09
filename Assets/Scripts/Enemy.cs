@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -7,7 +8,10 @@ public class Enemy : MonoBehaviour
 
     public bool defeated = false;
     public Player Player;
+    public GameObject PlayerMarker;
     public int index;
+
+    public Rigidbody Rigidbody;
 
     private bool flagged = false;
     int MoveSpeed = 4;
@@ -18,28 +22,28 @@ public class Enemy : MonoBehaviour
         defeated = false;
     }
 
+   
+
     void Update()
     {
 
         if (Player.CurrentRoomIndex == index && flagged != true)
         {
-            transform.GetComponent<Renderer>().material.color = Color.green;
+            //transform.GetComponent<Renderer>().material.color = Color.green;
             flagged = true;
         }
 
         if (Player.CurrentRoomIndex == index && defeated != true)
         {
-            var target = Player.transform.position;
-            target.y = 0f;
+            var target = PlayerMarker.transform;
+            //target.y = 0.0f;
             transform.LookAt(target);
 
             if (Vector3.Distance(transform.position, Player.transform.position) >= MinDist)
             {
                 var targetPosition = new Vector3(Player.transform.position.x, transform.position.y, Player.transform.position.z);
-                //transform.position += targetPosition * MoveSpeed * Time.deltaTime;
+                //transform.position += PlayerMarker.transform.position * MoveSpeed * Time.deltaTime;
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, MoveSpeed * Time.deltaTime);
-
-
 
                 if (Vector3.Distance(transform.position, Player.transform.position) <= MaxDist)
                 {
