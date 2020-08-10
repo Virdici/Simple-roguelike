@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
+using UnityEngine.AI;
 
 public class Generator : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class Generator : MonoBehaviour
     public bool collided;
     public Module Seal;
     public Door Door;
+    public List<NavMeshSurface> navMeshSurfaces;
+    public bool FinishedPlacingNavMeshes;
+
 
     private float waitTime = 0.1f;
     private GameObject dungeonContainter;
@@ -52,6 +56,7 @@ public class Generator : MonoBehaviour
                 {
                     index++;
                     newModule.index = index;
+                    //navMeshSurfaces.Add(newModule.GetComponentInChildren<NavMeshSurface>());
                 }
 
                 Connect(selectedConnector, connectorToConnect);
@@ -68,6 +73,15 @@ public class Generator : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         FinishedPlacingRooms = true;
         SealEnds();
+
+        //foreach (var room in navMeshSurfaces)
+        //{
+        //    room.BuildNavMesh();
+        //}
+        navMeshSurfaces.Add(GameObject.Find("room3").GetComponentInChildren<NavMeshSurface>());
+
+        navMeshSurfaces[0].BuildNavMesh();
+        FinishedPlacingNavMeshes = true;
     }
 
     private void AddDoor(Connector connector)
@@ -136,6 +150,12 @@ public class Generator : MonoBehaviour
     {
         index = 0;
         StopAllCoroutines();
+        foreach (var room in navMeshSurfaces)
+        {
+            room.RemoveData();
+        }
+        navMeshSurfaces.Clear();
+
         foreach (Transform child in dungeonContainter.transform)
         {
             GameObject.Destroy(child.gameObject);
@@ -147,6 +167,7 @@ public class Generator : MonoBehaviour
         {
             GameObject.Destroy(child.gameObject);
         }
+
         collided = false;
         FinishedPlacingRooms = false;
         ClearLog();

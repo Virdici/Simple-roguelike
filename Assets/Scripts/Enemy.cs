@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
@@ -12,45 +13,44 @@ public class Enemy : MonoBehaviour
     public int index;
 
     public Rigidbody Rigidbody;
+    public NavMeshAgent Agent;
 
     private bool flagged = false;
     int MoveSpeed = 4;
-    int MaxDist = 10;
-    int MinDist = 5;
+    int MaxDist = 4;
+    int MinDist = 2;
     void Start()
     {
+        Agent = GetComponent<NavMeshAgent>();
         defeated = false;
     }
 
-   
+
 
     void Update()
     {
-
-        if (Player.CurrentRoomIndex == index && flagged != true)
-        {
-            //transform.GetComponent<Renderer>().material.color = Color.green;
-            flagged = true;
-        }
+        
 
         if (Player.CurrentRoomIndex == index && defeated != true)
         {
-            var target = PlayerMarker.transform;
-            //target.y = 0.0f;
-            transform.LookAt(target);
+            transform.LookAt(PlayerMarker.transform.position);
+           
 
             if (Vector3.Distance(transform.position, Player.transform.position) >= MinDist)
             {
-                var targetPosition = new Vector3(Player.transform.position.x, transform.position.y, Player.transform.position.z);
-                //transform.position += PlayerMarker.transform.position * MoveSpeed * Time.deltaTime;
-                transform.position = Vector3.MoveTowards(transform.position, targetPosition, MoveSpeed * Time.deltaTime);
+
+                Agent.SetDestination(PlayerMarker.transform.position);
 
                 if (Vector3.Distance(transform.position, Player.transform.position) <= MaxDist)
                 {
-                    //Here Call any function U want Like Shoot at here or something
+                    Agent.SetDestination(transform.position);
                 }
             }
         }
+    }
+    private void LateUpdate()
+    {
+
     }
     private void OnCollisionStay(Collision collision)
     {
@@ -61,8 +61,10 @@ public class Enemy : MonoBehaviour
     {
         if (collision.transform.tag == "Player")
         {
-        defeated = true;
-        transform.GetComponent<Renderer>().material.color = Color.red;
+            defeated = true;
+            transform.GetComponentInChildren<GameObject>().GetComponent<Renderer>().material.color = Color.red;
+            Agent.SetDestination(transform.position);
+
 
         }
     }
