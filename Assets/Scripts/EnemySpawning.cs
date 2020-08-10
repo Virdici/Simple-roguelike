@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemySpawning : MonoBehaviour
 {
@@ -7,7 +8,9 @@ public class EnemySpawning : MonoBehaviour
     public Vector3 RoomSize;
     public GameObject EnemyContainer;
 
+
     private GameObject host;
+    
     void Start()
     {
         if (transform.GetComponentInParent<Module>().index != 0)
@@ -19,7 +22,7 @@ public class EnemySpawning : MonoBehaviour
             x = RoomSize.x / 2;
             z = RoomSize.z / 2;
             Spawn();
-        } 
+        }
     }
 
     public void Spawn()
@@ -35,10 +38,11 @@ public class EnemySpawning : MonoBehaviour
         Vector3 HostPosition = new Vector3(host.transform.position.x, host.transform.position.y, host.transform.position.z);
 
 
-        for (int i = 0; i < Random.Range(1, 3); i++)
+        for (int i = 0; i < Random.Range(2, 3); i++)
         {
-            enem = (Enemy)Instantiate(enemy, HostPosition + new Vector3(Random.Range(-x, x), 1, Random.Range(-z, z)), Quaternion.identity);
+            enem = (Enemy)Instantiate(enemy, HostPosition + new Vector3(Random.Range(-x, x), 1f, Random.Range(-z, z)), Quaternion.identity);
             enem.transform.SetParent(EnemyContainer.transform);
+            enem.index = transform.GetComponentInParent<Module>().index;
             transform.GetComponentInParent<Module>().Enemies.Add(enem);
         }
 

@@ -7,14 +7,14 @@ public class DetectCollisions : MonoBehaviour
 
     private void Awake()
     {
-        Physics.IgnoreLayerCollision(9, 11);
+        //Physics.IgnoreLayerCollision(9, 11);
         generator = GameObject.FindObjectOfType<Generator>();
     }
     private void OnCollisionEnter(Collision col)
     {
 
-        Physics.IgnoreLayerCollision(9, 11);
-
+        Debug.Log(col.contacts[0].point);
+        Debug.DrawRay(col.contacts[0].point, col.contacts[0].normal);
         generator.ChangeCollisionState();
     }
 }
