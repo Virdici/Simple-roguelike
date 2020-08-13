@@ -6,12 +6,25 @@ using System.Linq;
 public class Weapon : MonoBehaviour
 {
     public GameObject wielder;
+    public int Damage = 10;
 
 
     // Update is called once per frame
     private void OnTriggerEnter(Collider other)
     {
+       
+       Physics.IgnoreCollision(other.transform.root.Find("weapon").GetComponent<Collider>(), other);
+        
         Debug.Log(other.transform.root.name);
+        if (other.transform.root.GetComponent<Enemy>())
+        {
         other.transform.root.Find("Cube").GetComponent<Renderer>().material.color = Color.red;
+        other.transform.root.GetComponent<Enemy>().DealDamage(Damage);
+        }
+
+        if (other.transform.root.GetComponent<Player>())
+        {
+            other.transform.root.GetComponent<Player>().DealDamage(Damage);
+        }
     }
 }
