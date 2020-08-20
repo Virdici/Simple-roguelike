@@ -8,23 +8,30 @@ public class Weapon : MonoBehaviour
     public GameObject wielder;
     public int Damage = 10;
 
-
+    private bool IsWeaponIgnoringActive;
     // Update is called once per frame
     private void OnTriggerEnter(Collider other)
     {
-       
-       Physics.IgnoreCollision(other.transform.root.Find("weapon").GetComponent<Collider>(), other);
-        
-        Debug.Log(other.transform.root.name);
-        if (other.transform.root.GetComponent<Enemy>())
+
+        if (other.gameObject.tag == "weapon")
         {
-        other.transform.root.Find("Cube").GetComponent<Renderer>().material.color = Color.red;
-        other.transform.root.GetComponent<Enemy>().DealDamage(Damage);
+            Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+            IsWeaponIgnoringActive = true;
+            
         }
 
-        if (other.transform.root.GetComponent<Player>())
+        Debug.Log(other.transform.root.name);
+        if (other.transform.root.GetComponent<Enemy>() && IsWeaponIgnoringActive == true)
+        {
+            other.transform.root.Find("Cube").GetComponent<Renderer>().material.color = Color.red;
+            other.transform.root.GetComponent<Enemy>().DealDamage(Damage);
+        }
+
+        if (other.transform.root.GetComponent<Player>() && IsWeaponIgnoringActive == true)
         {
             other.transform.root.GetComponent<Player>().DealDamage(Damage);
         }
+
+
     }
 }
