@@ -20,7 +20,6 @@ public class Weapon : MonoBehaviour
             
         }
 
-        Debug.Log(other.transform.root.name);
         if (other.transform.root.GetComponent<Enemy>() )
         {
             other.transform.root.Find("Cube").GetComponent<Renderer>().material.color = Color.red;

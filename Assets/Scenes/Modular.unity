@@ -615,7 +615,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 595679907}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: DungeonContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1103,7 +1103,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 950712354}
-  m_LocalRotation: {x: 0.24145134, y: -0.000000008348648, z: 0.0000000020772515, w: 0.97041297}
+  m_LocalRotation: {x: 0.24145134, y: -0.000000008348649, z: 0.0000000020772566, w: 0.97041297}
   m_LocalPosition: {x: 0, y: -0.0000006198882, z: 0.0000012397765}
   m_LocalScale: {x: 1.4084522, y: 1.4084522, z: 1.4084522}
   m_Children:
@@ -1534,7 +1534,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1197312790}
-  m_LocalRotation: {x: 0.2449802, y: -0.000000020018488, z: 0.000000005058268, w: 0.96952814}
+  m_LocalRotation: {x: 0.2449802, y: -0.0000000066728263, z: 0.0000000016860886, w: 0.96952814}
   m_LocalPosition: {x: 0, y: 3.2024002, z: -4.280228}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1837,7 +1837,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1529102163}
   m_LocalRotation: {x: 0.2238069, y: -0, z: -0, w: 0.9746335}
-  m_LocalPosition: {x: 0, y: -0.0000012397765, z: 0.000002479553}
+  m_LocalPosition: {x: 0, y: -0.000004959106, z: 0.000011984505}
   m_LocalScale: {x: 1.4084522, y: 1.4084522, z: 1.4084522}
   m_Children:
   - {fileID: 194325587}
@@ -2045,7 +2045,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1762544217}
-  m_LocalRotation: {x: 0.2590627, y: -0.000000016618964, z: 0.00000000445753, w: 0.96586055}
+  m_LocalRotation: {x: 0.25906268, y: 0.000000016618968, z: -0.0000000044575366, w: 0.96586055}
   m_LocalPosition: {x: 0, y: -0.0000006198882, z: 0.0000012397765}
   m_LocalScale: {x: 1.4084522, y: 1.4084522, z: 1.4084522}
   m_Children:
@@ -2526,7 +2526,7 @@ MonoBehaviour:
   m_LegacyBlendHint: 0
   m_YAxis:
     Value: 0.6
-    m_MaxSpeed: 1
+    m_MaxSpeed: 3
     m_AccelTime: 0.1
     m_DecelTime: 0.1
     m_InputAxisName: Mouse Y
@@ -3350,6 +3350,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 7175541140613330082, guid: d58f1cae47ba458458e8c3cfd7825aee,
+        type: 3}
+      propertyPath: PlayerObject
+      value: 
+      objectReference: {fileID: 1369482050}
     - target: {fileID: 8983334986724207657, guid: d58f1cae47ba458458e8c3cfd7825aee,
         type: 3}
       propertyPath: m_Layer
