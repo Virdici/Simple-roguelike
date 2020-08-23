@@ -13,7 +13,6 @@ public class DetectCollisions : MonoBehaviour
     private void OnCollisionEnter(Collision col)
     {
 
-        Debug.Log(col.contacts[0].point);
         Debug.DrawRay(col.contacts[0].point, col.contacts[0].normal);
         generator.ChangeCollisionState();
     }

@@ -66,12 +66,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            controller.Move(move * speed * 1.1f * Time.deltaTime);
+            controller.Move(move * speed * 2f * Time.deltaTime);
         }
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
 
+
+       
 
     }
 
