@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     bool isGrounded;
     float slopeForceRayLength = 10f;
     bool onSlope;
-
+    bool ResetPosition = false;
     private bool OnSlope()
     {
         RaycastHit hit;
@@ -72,10 +72,17 @@ public class PlayerMovement : MonoBehaviour
 
         controller.Move(velocity * Time.deltaTime);
 
-
-       
+        if (ResetPosition == true)
+        {
+            transform.position = new Vector3(0, 1, 0);
+            ResetPosition = false;
+        }
 
     }
 
+    public void ResetPositionz()
+    {
+        ResetPosition = true;
+    }
 
 }

@@ -17,8 +17,7 @@ public class Enemy : MonoBehaviour
     public Rigidbody Rigidbody;
     public NavMeshAgent Agent;
 
-    private bool flagged = false;
-    int MoveSpeed = 4;
+ 
     int MaxDist = 4;
     int MinDist = 2;
     void Start()
@@ -49,6 +48,11 @@ public class Enemy : MonoBehaviour
                     Agent.SetDestination(transform.position);
                 }
             }
+        }
+
+        if (defeated)
+        {
+            GameObject.Destroy(gameObject);
         }
     }
    private void OnCollisionEnter(Collision collision)

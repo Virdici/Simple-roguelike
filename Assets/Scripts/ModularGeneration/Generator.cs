@@ -19,25 +19,26 @@ public class Generator : MonoBehaviour
     public Door Door;
     public List<NavMeshSurface> navMeshSurfaces;
     public bool FinishedPlacingNavMeshes;
+    public GameObject DungeonContainter;
+    public GameObject playerObject;
 
 
-    private float waitTime = 0.1f;
-    private GameObject dungeonContainter;
+    private float waitTime = 0.2f;
     private bool FinishedPlacingRooms;
     private int index = 0;
     private void Start()
     {
-        StartCoroutine(Starte());
+        //StartCoroutine(Starte(DungeonContainter));
     }
 
-    private IEnumerator Starte()
+    public IEnumerator Starte(GameObject dungeonContainter)
     {
-        dungeonContainter = GameObject.Find("DungeonContainer");
-
-        var firstModule = (Module)Instantiate(startingModule, new Vector3(0, 0, 0), transform.rotation);
+        DungeonContainter = dungeonContainter;
+        var firstModule = (Module)Instantiate(startingModule, dungeonContainter.transform.position, transform.rotation);
         firstModule.transform.SetParent(dungeonContainter.transform);
         var availableConnectors = new List<Connector>(firstModule.GetConnectors());
-
+        playerObject.transform.position = new Vector3(firstModule.transform.position.x, firstModule.transform.position.y + 1, firstModule.transform.position.z);
+        playerObject.transform.rotation = Quaternion.identity;
         for (int i = 0; i < size; i++)
         {
             var allExits = new List<Connector>();
@@ -56,7 +57,6 @@ public class Generator : MonoBehaviour
                 {
                     index++;
                     newModule.index = index;
-                    //navMeshSurfaces.Add(newModule.GetComponentInChildren<NavMeshSurface>());
                 }
 
                 Connect(selectedConnector, connectorToConnect);
@@ -74,21 +74,19 @@ public class Generator : MonoBehaviour
         FinishedPlacingRooms = true;
         SealEnds();
 
-        //foreach (var room in navMeshSurfaces)
-        //{
-        //    room.BuildNavMesh();
-        //}
         navMeshSurfaces.Add(GameObject.Find("room3").GetComponentInChildren<NavMeshSurface>());
 
         navMeshSurfaces[0].BuildNavMesh();
         FinishedPlacingNavMeshes = true;
+        
+        GameController.IsDoneLoading = true;
+
     }
 
     private void AddDoor(Connector connector)
     {
         var door = (Door)Instantiate(Door, new Vector3(200, Random.Range(1, 400) * 30, 1), transform.rotation);
-        door.transform.SetParent(dungeonContainter.transform);
-        //door.SetIndex(index);
+        door.transform.SetParent(DungeonContainter.transform);
         PlaceDoor(connector, door.GetConnectors().FirstOrDefault());
     }
 
@@ -130,11 +128,11 @@ public class Generator : MonoBehaviour
     }
     private void SealEnds()
     {
-        var ends = dungeonContainter.transform.GetComponentsInChildren<Connector>();
+        var ends = DungeonContainter.transform.GetComponentsInChildren<Connector>();
         foreach (var end in ends)
         {
             var newSeal = (Module)Instantiate(Seal, new Vector3(2, UnityEngine.Random.Range(1, 400) * 30, 1), transform.rotation);
-            newSeal.transform.SetParent(dungeonContainter.transform);
+            newSeal.transform.SetParent(DungeonContainter.transform);
             var secondModuleConnectors = newSeal.GetConnectors();
             var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(UnityEngine.Random.Range(0, secondModuleConnectors.Length));
             Connect(end, connectorToConnect);
@@ -156,7 +154,7 @@ public class Generator : MonoBehaviour
         }
         navMeshSurfaces.Clear();
 
-        foreach (Transform child in dungeonContainter.transform)
+        foreach (Transform child in DungeonContainter.transform)
         {
             GameObject.Destroy(child.gameObject);
         }
@@ -171,7 +169,7 @@ public class Generator : MonoBehaviour
         collided = false;
         FinishedPlacingRooms = false;
         ClearLog();
-        StartCoroutine(Starte());
+        StartCoroutine(Starte(DungeonContainter));
     }
     public void ClearLog()
     {
@@ -188,11 +186,11 @@ public class Generator : MonoBehaviour
 
     public void NewDung()
     {
-        foreach (Transform child in dungeonContainter.transform)
+        foreach (Transform child in DungeonContainter.transform)
         {
             GameObject.Destroy(child.gameObject);
         }
         collided = false;
-        StartCoroutine(Starte());
+        StartCoroutine(Starte(DungeonContainter));
     }
 }

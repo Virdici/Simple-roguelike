@@ -14,9 +14,21 @@ public class Player : MonoBehaviour
     {
         CurrentHP = HP;
     }
+
+    public void resetPosition()
+    {
+            Debug.Log("???");
+
+        transform.position = new Vector3(0, 1, 0);
+
+    }
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            transform.position = new Vector3(0, 1, 0);
+
+        }
     }
 
     public void DealDamage(int damage)

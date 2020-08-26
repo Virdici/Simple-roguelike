@@ -8,7 +8,6 @@ public class Weapon : MonoBehaviour
     public GameObject wielder;
     public int Damage = 10;
 
-    private bool IsWeaponIgnoringActive = false;
     // Update is called once per frame
     private void OnTriggerEnter(Collider other)
     {
@@ -16,7 +15,6 @@ public class Weapon : MonoBehaviour
         if (other.gameObject.tag == "weapon")
         {
             Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
-            IsWeaponIgnoringActive = true;
             
         }
 
