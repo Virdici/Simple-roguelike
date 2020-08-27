@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -15,11 +16,11 @@ public class GameController : MonoBehaviour
 
     public Generator generator;
     public PlayerMovement playerObject;
-
+    public int currentLevel =1;
+    public int maxLevel = 5;
     void Start()
     {
         DoneLoading = IsDoneLoading;
-        //generator = GameObject.Find("GeneratorGO").GetComponent<Generator>();
         StartCoroutine(Begin());
     }
 
@@ -43,7 +44,13 @@ public class GameController : MonoBehaviour
             GameController.IsDoneLoading = false;
             generator.NewDung();
             playerObject.ResetPositionz();
+            currentLevel++;
 
+        }
+
+        if (currentLevel == 3)
+        {
+            SceneManager.LoadSceneAsync(2);
         }
 
         DoneLoading = IsDoneLoading;
@@ -52,11 +59,7 @@ public class GameController : MonoBehaviour
             //Debug.Log("Done");
         }
 
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            playerObject.ResetPositionz();
-
-        }
+        
 
     }
 }

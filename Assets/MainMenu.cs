@@ -14,6 +14,15 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Quit");
         Application.Quit();
     }
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadSceneAsync(0);
+    }
 
     IEnumerator LoadAsync()
     {
