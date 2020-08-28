@@ -8,15 +8,14 @@ public class GameController : MonoBehaviour
 {
     public static bool IsDoneLoading = false;
     public bool DoneLoading;
-    public List<GameObject> Dungeons;
-    public GameObject dung1;
+    public GameObject DungeonContainter;
 
     public bool enemiesDefeated = false;
     public GameObject Enemies;
 
     public Generator generator;
     public PlayerMovement playerObject;
-    public int currentLevel =1;
+    public int currentLevel = 1;
     public int maxLevel = 5;
     void Start()
     {
@@ -26,26 +25,19 @@ public class GameController : MonoBehaviour
 
     IEnumerator Begin()
     {
-        StartCoroutine(generator.Starte(dung1));
+        StartCoroutine(generator.Starte(DungeonContainter));
         yield return null;
 
     }
-    // Update is called once per frame
 
-    public void NewDungen()
-    {
-
-    }
     void Update()
     {
-
         if (Enemies.GetComponentsInChildren<Enemy>().Length == 0)
         {
             GameController.IsDoneLoading = false;
             generator.NewDung();
             playerObject.ResetPositionz();
             currentLevel++;
-
         }
 
         if (currentLevel == 3)
@@ -58,8 +50,5 @@ public class GameController : MonoBehaviour
         {
             //Debug.Log("Done");
         }
-
-        
-
     }
 }

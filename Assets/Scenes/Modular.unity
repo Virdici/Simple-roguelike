@@ -1058,7 +1058,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DoneLoading: 0
   Dungeons: []
-  dung1: {fileID: 1743356973}
+  dung1: {fileID: 798134234}
   enemiesDefeated: 0
   Enemies: {fileID: 1334679636}
   generator: {fileID: 798134237}
@@ -2038,7 +2038,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1529102163}
   m_LocalRotation: {x: 0.22380689, y: -0, z: -0, w: 0.9746335}
-  m_LocalPosition: {x: 0, y: -0.000004959106, z: 0.000006612141}
+  m_LocalPosition: {x: 0, y: -0.0000033060705, z: 0.000004545847}
   m_LocalScale: {x: 1.4084522, y: 1.4084522, z: 1.4084522}
   m_Children:
   - {fileID: 194325587}
