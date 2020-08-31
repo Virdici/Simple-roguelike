@@ -18,7 +18,7 @@ public class Module : MonoBehaviour
     {
         AllenemiesDefeated = false;
 
-        RoomSealsContainter = GameObject.Find("RoomSeals");
+        RoomSealsContainter = GameObject.Find("RoomSeals Container");
 
     }
 

@@ -11,8 +11,7 @@ public class Enemy : MonoBehaviour
     public Player Player;
     public GameObject PlayerMarker;
     public int index;
-    public int HP = 100;
-    public int CurrentHP;
+
 
     public Rigidbody Rigidbody;
     public NavMeshAgent Agent;
@@ -22,7 +21,7 @@ public class Enemy : MonoBehaviour
     int MinDist = 2;
     void Start()
     {
-        CurrentHP = HP;
+        
         Agent = GetComponent<NavMeshAgent>();
         defeated = false;
     }
@@ -55,29 +54,29 @@ public class Enemy : MonoBehaviour
             GameObject.Destroy(gameObject);
         }
     }
-   private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.transform.tag == "Player")
-        {
-            defeated = true;
-            //transform.GetComponentInChildren<GameObject>().GetComponent<Renderer>().material.color = Color.red;
-            Agent.SetDestination(transform.position);
+   //private void OnCollisionEnter(Collision collision)
+   // {
+   //     if (collision.transform.tag == "Player")
+   //     {
+   //         defeated = true;
+   //         //transform.GetComponentInChildren<GameObject>().GetComponent<Renderer>().material.color = Color.red;
+   //         Agent.SetDestination(transform.position);
 
 
-        }
-    }
+   //     }
+   // }
 
-    public void DealDamage(int damage)
-    {
-        if (this.CurrentHP >= 0)
-        {
-        this.HP -= damage;
-        }
-        else
-        {
-            defeated = true;
-            //transform.GetComponentInChildren<GameObject>().GetComponent<Renderer>().material.color = Color.red;
-            Agent.SetDestination(transform.position);
-        }
-    }
+    //public void DealDamage(int damage)
+    //{
+    //    if (this.CurrentHP >= 0)
+    //    {
+    //    this.HP -= damage;
+    //    }
+    //    else
+    //    {
+    //        defeated = true;
+    //        //transform.GetComponentInChildren<GameObject>().GetComponent<Renderer>().material.color = Color.red;
+    //        Agent.SetDestination(transform.position);
+    //    }
+    //}
 }
