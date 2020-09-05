@@ -34,7 +34,10 @@ public class Enemy : MonoBehaviour
 
         if (Player.CurrentRoomIndex == index && defeated != true)
         {
-            transform.LookAt(PlayerMarker.transform.position);
+            var target = PlayerMarker.transform.position - transform.position;
+            var look = Quaternion.LookRotation(target);
+            transform.rotation = Quaternion.Lerp(transform.rotation, look, 2f * Time.deltaTime);
+            //transform.LookAt(PlayerMarker.transform.position);
            
 
             if (Vector3.Distance(transform.position, Player.transform.position) >= MinDist)
@@ -54,23 +57,23 @@ public class Enemy : MonoBehaviour
             GameObject.Destroy(gameObject);
         }
     }
-   //private void OnCollisionEnter(Collision collision)
-   // {
-   //     if (collision.transform.tag == "Player")
-   //     {
-   //         defeated = true;
-   //         //transform.GetComponentInChildren<GameObject>().GetComponent<Renderer>().material.color = Color.red;
-   //         Agent.SetDestination(transform.position);
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.tag == "Player")
+        {
+            defeated = true;
+            //transform.GetComponentInChildren<GameObject>().GetComponent<Renderer>().material.color = Color.red;
+            Agent.SetDestination(transform.position);
 
 
-   //     }
-   // }
+        }
+    }
 
     //public void DealDamage(int damage)
     //{
     //    if (this.CurrentHP >= 0)
     //    {
-    //    this.HP -= damage;
+    //        this.HP -= damage;
     //    }
     //    else
     //    {

@@ -10,6 +10,7 @@ public class Weapon : MonoBehaviour
     public GameObject hit;
     public Health health;
 
+    private bool hasCollided = false;
     // Update is called once per frame
     private void OnTriggerEnter(Collider other)
     {
@@ -32,22 +33,31 @@ public class Weapon : MonoBehaviour
         //}
         try
         {
-        hit = other.GetComponentInParent<Enemy>().gameObject;
+            hit = other.GetComponentInParent<Enemy>().gameObject;
         }
         catch (System.Exception){}
+        
         try
         {
             hit = other.GetComponentInParent<Player>().gameObject;
         }
         catch (System.Exception) { }
+       
         health = hit.GetComponent<Health>();
-        Debug.Log(hit);
+
         if (health.CurrentHP != 0)
         {
-            Debug.Log("im here");
-            health.TakeDamage(50);
+            if (hasCollided == false)
+            {
+                hasCollided = true;
+                Debug.Log("ouch");
+                health.TakeDamage(2);
+            }
         }
+    }
 
-
+    private void OnTriggerExit(Collider other)
+    {
+        hasCollided = false;
     }
 }

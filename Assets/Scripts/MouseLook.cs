@@ -6,7 +6,7 @@ public class MouseLook : MonoBehaviour
     public Transform target;
     public Transform playerBody;
     public float distanceFromTarget = 3;
-    public Vector2 verticalMinMax = new Vector2(-40, 85);
+    public Vector2 verticalMinMax = new Vector2(-50, 90);
 
     float horizontalView;
     void Start()
@@ -25,7 +25,10 @@ public class MouseLook : MonoBehaviour
 
         //transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         //transform.position = target.position - transform.forward * distanceFromTarget;
-        playerBody.Rotate(Vector3.up * horizontalView);
+
+       // playerBody.Rotate(Vector3.up * horizontalView);
+        
+        //playerBody.rotation = Quaternion.Lerp(playerBody.rotation, Quaternion.Euler(Vector3.up * horizontalView), 1f*Time.deltaTime);
     }
 
 }

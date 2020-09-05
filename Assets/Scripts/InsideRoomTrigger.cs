@@ -16,7 +16,7 @@ public class InsideRoomTrigger : MonoBehaviour
     {
         Physics.IgnoreLayerCollision(9, 10);
         Door = transform.GetComponentInParent<Door>();
-        RoomSealsContainter = GameObject.Find("RoomSeals");
+        RoomSealsContainter = GameObject.Find("RoomSeals Container");
 
         Room = (Module)GameObject.FindObjectsOfType<Module>().Where(m => m.index == Door.index && m.type == "room").FirstOrDefault();
     }

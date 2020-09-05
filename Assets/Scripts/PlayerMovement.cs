@@ -19,6 +19,12 @@ public class PlayerMovement : MonoBehaviour
     float slopeForceRayLength = 10f;
     bool onSlope;
     bool ResetPosition = false;
+    Animator animator;
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
     private bool OnSlope()
     {
         RaycastHit hit;
@@ -43,8 +49,6 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-
-
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = 0f;
@@ -56,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = transform.right * x  + transform.forward * z;
 
         controller.Move(move * speed * Time.deltaTime);
-
+        animator.SetFloat("speed", z);
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
