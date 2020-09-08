@@ -20,25 +20,27 @@ public class GameController : MonoBehaviour
     void Start()
     {
         DoneLoading = IsDoneLoading;
-        StartCoroutine(Begin());
+        //StartCoroutine(Begin());
+        Begin();
     }
 
-    IEnumerator Begin()
+    void Begin()
     {
-        StartCoroutine(generator.Starte(DungeonContainter));
-        yield return null;
+        //StartCoroutine(generator.Starte(DungeonContainter));
+        generator.Starte(DungeonContainter);
+        //yield return null;
 
     }
 
     void Update()
     {
-        if (Enemies.GetComponentsInChildren<Enemy>().Length == 0)
-        {
-            GameController.IsDoneLoading = false;
-            generator.NewDung();
-            playerObject.ResetPositionz();
-            currentLevel++;
-        }
+        //if (Enemies.GetComponentsInChildren<Enemy>().Length == 0)
+        //{
+        //    GameController.IsDoneLoading = false;
+        //    generator.NewDung();
+        //    playerObject.ResetPositionz();
+        //    currentLevel++;
+        //}
 
         if (currentLevel == 3)
         {

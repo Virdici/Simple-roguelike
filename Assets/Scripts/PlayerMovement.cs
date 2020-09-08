@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = transform.right * x  + transform.forward * z;
 
         controller.Move(move * speed * Time.deltaTime);
-        animator.SetFloat("speed", z);
+        //animator.SetFloat("speed", z);
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {

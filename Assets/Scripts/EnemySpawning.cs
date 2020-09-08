@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemySpawning : MonoBehaviour
@@ -21,12 +22,13 @@ public class EnemySpawning : MonoBehaviour
             RoomSize = RoomSize - new Vector3(10, 2, 10);
             x = RoomSize.x / 2;
             z = RoomSize.z / 2;
-            Spawn();
+            StartCoroutine( Spawn());
         }
     }
 
-    public void Spawn()
+    public IEnumerator Spawn()
     {
+        yield return new WaitForSeconds(0.1f);
         EnemyContainer = GameObject.Find("EnemiesContainer");
         host = transform.GetComponentInParent<Module>().gameObject;
         RoomSize = host.GetComponent<Renderer>().bounds.size;
@@ -47,4 +49,6 @@ public class EnemySpawning : MonoBehaviour
         }
 
     }
+
+   
 }

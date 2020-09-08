@@ -36,11 +36,11 @@ public class ladder : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.W))
             {
-                PlayerObject.transform.Translate(new Vector3(0, 10, 0) * Time.deltaTime * ClimbSpeed);
+                PlayerObject.transform.Translate(new Vector3(0, 15, 0) * Time.deltaTime * ClimbSpeed);
             }
             if (Input.GetKey(KeyCode.S))
             {
-                PlayerObject.transform.Translate(new Vector3(0, -10, 0) * Time.deltaTime * ClimbSpeed);
+                PlayerObject.transform.Translate(new Vector3(0, -15, 0) * Time.deltaTime * ClimbSpeed);
             }
         }
     }
