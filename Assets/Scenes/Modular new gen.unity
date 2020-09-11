@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 194325590}
   - component: {fileID: 194325589}
   - component: {fileID: 194325588}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -346,7 +346,7 @@ GameObject:
   - component: {fileID: 276566374}
   - component: {fileID: 276566373}
   - component: {fileID: 276566375}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: BackgroundImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -556,7 +556,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &342025200
 Transform:
   m_ObjectHideFlags: 0
@@ -589,9 +589,9 @@ GameObject:
   - component: {fileID: 402051612}
   - component: {fileID: 402051611}
   - component: {fileID: 402051610}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: weapon
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -608,7 +608,7 @@ Transform:
   m_LocalScale: {x: 0.19001102, y: 0.43001124, z: 3.2502742}
   m_Children: []
   m_Father: {fileID: 1369482052}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &402051610
 MonoBehaviour:
@@ -698,7 +698,7 @@ GameObject:
   - component: {fileID: 481269287}
   - component: {fileID: 481269286}
   - component: {fileID: 481269285}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: HealthBar Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1080,7 +1080,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &780030697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1236,9 +1236,6 @@ MonoBehaviour:
   Door: {fileID: 1561449496}
   DungeonContainter: {fileID: 0}
   playerObject: {fileID: 1369482050}
-  roomCount: 3
-  roomsxD: []
-  roomsPlaced: 0
   Rooms:
   - {fileID: 5341051658837017795}
   passages:
@@ -1246,7 +1243,7 @@ MonoBehaviour:
   - {fileID: 7623414922799915762}
   - {fileID: 2703632608536025717}
   connectors: []
-  dobe: 0
+  roomCount: 20
 --- !u!1 &813612091
 GameObject:
   m_ObjectHideFlags: 3
@@ -1259,7 +1256,7 @@ GameObject:
   - component: {fileID: 813612095}
   - component: {fileID: 813612094}
   - component: {fileID: 813612093}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1385,7 +1382,7 @@ GameObject:
   - component: {fileID: 928262151}
   - component: {fileID: 928262150}
   m_Layer: 12
-  m_Name: Cube
+  m_Name: Head
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1475,7 +1472,7 @@ GameObject:
   m_Component:
   - component: {fileID: 950712355}
   - component: {fileID: 950712356}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: MiddleRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1876,7 +1873,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1197312790}
-  m_LocalRotation: {x: -0.32435927, y: -0.000000028191034, z: -0.00000000966666, w: 0.945934}
+  m_LocalRotation: {x: -0.32435924, y: 0.000000028191035, z: 0.0000000096666595, w: 0.94593406}
   m_LocalPosition: {x: 0, y: -1, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1960,7 +1957,7 @@ GameObject:
   - component: {fileID: 1322860457}
   - component: {fileID: 1322860459}
   - component: {fileID: 1322860458}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: ForeGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2138,13 +2135,10 @@ MonoBehaviour:
   Door: {fileID: 1561449496}
   DungeonContainter: {fileID: 595679906}
   playerObject: {fileID: 0}
-  roomCount: 10
-  roomsxD: []
-  roomsPlaced: 0
   Rooms: []
   passages: []
   connectors: []
-  dobe: 0
+  roomCount: 10
 --- !u!1 &1369482050
 GameObject:
   m_ObjectHideFlags: 0
@@ -2197,8 +2191,8 @@ Transform:
   - {fileID: 1028774708}
   - {fileID: 1510414267}
   - {fileID: 928262149}
-  - {fileID: 2068996369}
   - {fileID: 402051609}
+  - {fileID: 2068996369}
   - {fileID: 481269284}
   m_Father: {fileID: 0}
   m_RootOrder: 13
@@ -2257,7 +2251,7 @@ MonoBehaviour:
   CurrentHP: 0
   healthBar: {fileID: 1322860457}
   hit: 0
-  enemy: {fileID: 0}
+  enemy: {fileID: 708196010}
   Player: {fileID: 0}
 --- !u!1 &1447546842
 GameObject:
@@ -2329,7 +2323,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1529102164}
   - component: {fileID: 1529102165}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: BottomRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2343,7 +2337,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1529102163}
-  m_LocalRotation: {x: -0.32435924, y: 1.92081e-16, z: 1.5121799e-15, w: 0.945934}
+  m_LocalRotation: {x: -0.3243592, y: 0.000000028191034, z: 0.00000000966666, w: 0.945934}
   m_LocalPosition: {x: 0, y: 0.00000041325882, z: 0.00000041325882}
   m_LocalScale: {x: 1.4084522, y: 1.4084522, z: 1.4084522}
   m_Children:
@@ -2538,7 +2532,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1762544218}
   - component: {fileID: 1762544219}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: TopRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2739,7 +2733,7 @@ GameObject:
   - component: {fileID: 1957101281}
   - component: {fileID: 1957101280}
   - component: {fileID: 1957101279}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3110,7 +3104,7 @@ Transform:
   - {fileID: 950712355}
   - {fileID: 1529102164}
   m_Father: {fileID: 1369482052}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2068996370
 MonoBehaviour:
@@ -3253,10 +3247,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 484418832326403230, guid: 9a6de8829dae7b54991c951007bf5451,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 484418833396248850, guid: 9a6de8829dae7b54991c951007bf5451,
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 484418833396248852, guid: 9a6de8829dae7b54991c951007bf5451,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 484418833757669952, guid: 9a6de8829dae7b54991c951007bf5451,
         type: 3}
@@ -3268,6 +3272,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 484418833757669957, guid: 9a6de8829dae7b54991c951007bf5451,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 496204721309767023, guid: 9a6de8829dae7b54991c951007bf5451,
         type: 3}
       propertyPath: Player
@@ -3278,10 +3287,30 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2680707308129726580, guid: 9a6de8829dae7b54991c951007bf5451,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3324004517757217977, guid: 9a6de8829dae7b54991c951007bf5451,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 3617405329145735103, guid: 9a6de8829dae7b54991c951007bf5451,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3654525646938295122, guid: 9a6de8829dae7b54991c951007bf5451,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4484146658350001014, guid: 9a6de8829dae7b54991c951007bf5451,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a6de8829dae7b54991c951007bf5451, type: 3}
@@ -3395,6 +3424,11 @@ PrefabInstance:
     - target: {fileID: 2056103073400753134, guid: 30081bc7d4cbb9545b8553536be567b6,
         type: 3}
       propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3641566946191317444, guid: 30081bc7d4cbb9545b8553536be567b6,
+        type: 3}
+      propertyPath: startingConnector
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -3623,7 +3657,7 @@ PrefabInstance:
     - target: {fileID: 5791353574869179859, guid: 1b05ff3b05cca1e4c90775c195992205,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6178461963272358455, guid: 1b05ff3b05cca1e4c90775c195992205,
         type: 3}
@@ -4056,6 +4090,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4323468010908836147, guid: f60a38a388b182b4e810a3c73843efc0,
+        type: 3}
+      propertyPath: m_TagString
+      value: door
       objectReference: {fileID: 0}
     - target: {fileID: 4467902292960980794, guid: f60a38a388b182b4e810a3c73843efc0,
         type: 3}

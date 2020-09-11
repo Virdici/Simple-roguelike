@@ -11,26 +11,26 @@ public class EnemySpawning : MonoBehaviour
 
 
     private GameObject host;
+    private bool placed;
     
     void Start()
     {
         if (transform.GetComponentInParent<Module>().index != 0)
         {
             EnemyContainer = GameObject.Find("EnemiesContainer");
-            host = transform.GetComponentInParent<Module>().gameObject;
+            host = transform.GetComponent<Module>().gameObject;
             RoomSize = host.GetComponent<Renderer>().bounds.size;
             RoomSize = RoomSize - new Vector3(10, 2, 10);
             x = RoomSize.x / 2;
             z = RoomSize.z / 2;
-            StartCoroutine( Spawn());
+            //Spawn();
         }
     }
 
-    public IEnumerator Spawn()
+    public void Spawn()
     {
-        yield return new WaitForSeconds(0.1f);
         EnemyContainer = GameObject.Find("EnemiesContainer");
-        host = transform.GetComponentInParent<Module>().gameObject;
+        host = transform.GetComponent<Module>().gameObject;
         RoomSize = host.GetComponent<Renderer>().bounds.size;
         RoomSize = RoomSize - new Vector3(6, 2, 6);
         x = RoomSize.x / 2;
@@ -47,8 +47,15 @@ public class EnemySpawning : MonoBehaviour
             enem.index = transform.GetComponentInParent<Module>().index;
             transform.GetComponentInParent<Module>().Enemies.Add(enem);
         }
-
+        placed = true;
     }
 
-   
+    private void Update()
+    {
+        if (GameController.IsDoneLoading && !placed && transform.GetComponentInParent<Module>().index != 0)
+        {
+            Spawn();
+        }
+    }
+
 }

@@ -20,27 +20,30 @@ public class GameController : MonoBehaviour
     void Start()
     {
         DoneLoading = IsDoneLoading;
-        //StartCoroutine(Begin());
         Begin();
     }
 
     void Begin()
     {
-        //StartCoroutine(generator.Starte(DungeonContainter));
-        generator.Starte(DungeonContainter);
-        //yield return null;
+        StartCoroutine(generator.Starte(DungeonContainter));
+
 
     }
 
     void Update()
     {
-        //if (Enemies.GetComponentsInChildren<Enemy>().Length == 0)
-        //{
-        //    GameController.IsDoneLoading = false;
-        //    generator.NewDung();
-        //    playerObject.ResetPositionz();
-        //    currentLevel++;
-        //}
+        if (Enemies.GetComponentsInChildren<Enemy>().Length == 0 && DoneLoading)
+        {
+            GameController.IsDoneLoading = false;
+            generator.NewDung();
+            playerObject.ResetPositionz();
+            currentLevel++;
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            generator.RenewIfCollided();
+        }
 
         if (currentLevel == 3)
         {
@@ -48,9 +51,6 @@ public class GameController : MonoBehaviour
         }
 
         DoneLoading = IsDoneLoading;
-        if (IsDoneLoading == true)
-        {
-            //Debug.Log("Done");
-        }
+       
     }
 }

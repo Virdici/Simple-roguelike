@@ -15,35 +15,22 @@ public class Weapon : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
-        //if (other.gameObject.tag == "weapon")
-        //{
-        //    Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
-
-        //}
-
-        //if (other.transform.root.GetComponent<Enemy>() )
-        //{
-        //    other.transform.root.Find("Cube").GetComponent<Renderer>().material.color = Color.red;
-        //    //other.transform.root.GetComponent<Enemy>().DealDamage(Damage);
-        //}
-
-        //if (other.transform.root.GetComponent<Player>() )
-        //{
-        //    other.transform.root.GetComponent<Player>().DealDamage(Damage);
-        //}
-        try
-        {
-            hit = other.GetComponentInParent<Enemy>().gameObject;
-        }
-        catch (System.Exception){}
         
-        try
-        {
-            hit = other.GetComponentInParent<Player>().gameObject;
-        }
-        catch (System.Exception) { }
+        //try
+        //{
+        //    hit = other.GetComponentInParent<Enemy>().gameObject;
+        //}
+        //catch (System.Exception){}
+        
+        //try
+        //{
+        //    hit = other.GetComponentInParent<Player>().gameObject;
+        //}
+        //catch (System.Exception) { }
+
+        
        
-        health = hit.GetComponent<Health>();
+        health = other.GetComponent<Health>();
 
         if (health.CurrentHP != 0)
         {
