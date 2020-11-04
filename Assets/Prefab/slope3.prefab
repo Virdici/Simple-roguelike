@@ -405,8 +405,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.9, y: 5, z: 1}
-  m_Center: {x: 2.4979398, y: 2, z: 1.5}
+  m_Size: {x: 5.8716884, y: 5, z: 1}
+  m_Center: {x: 2.483784, y: 2, z: 1.5}
 --- !u!1 &4481270313957276066
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,8 +449,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.9, y: 5, z: 1}
-  m_Center: {x: 2.4979398, y: 2, z: 1.5}
+  m_Size: {x: 5.8716884, y: 5, z: 1}
+  m_Center: {x: 2.483784, y: 2, z: 1.5}
 --- !u!1 &5123949170323045587
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,6 +565,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: corridor
   index: 0
+  Doors: []
+  Enemies: []
+  AllenemiesDefeated: 0
+  DefeatedEnemies: 0
+  PlacedSeals: 0
 --- !u!114 &6497924437542076390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -816,8 +821,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.9717474, y: 1, z: 4}
-  m_Center: {x: 2.5120664, y: 0, z: 0}
+  m_Size: {x: 5.9144096, y: 1, z: 4}
+  m_Center: {x: 2.5407352, y: 0, z: 0}
 --- !u!1 &7243454860968284152
 GameObject:
   m_ObjectHideFlags: 0

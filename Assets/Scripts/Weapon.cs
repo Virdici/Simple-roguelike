@@ -30,17 +30,17 @@ public class Weapon : MonoBehaviour
 
         
        
-        health = other.GetComponent<Health>();
+        // health = other.GetComponent<Health>();
 
-        if (health.CurrentHP != 0)
-        {
-            if (hasCollided == false)
-            {
-                hasCollided = true;
-                Debug.Log("ouch");
-                health.TakeDamage(2);
-            }
-        }
+        // if (health.CurrentHP != 0)
+        // {
+        //     if (hasCollided == false)
+        //     {
+        //         hasCollided = true;
+        //         Debug.Log("ouch");
+        //         health.TakeDamage(2);
+        //     }
+        // }
     }
 
     private void OnTriggerExit(Collider other)

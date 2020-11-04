@@ -21,11 +21,11 @@ public class FindDoors : MonoBehaviour
             ParentModule.Doors.Add(other.gameObject.transform.parent.gameObject);
         }
 
-        if (other.gameObject.tag == "Player")
-        {
-            var player = (Player)GameObject.FindObjectOfType<Player>();
-            player.CurrentRoomIndex = ParentModule.index;
-        }
+        // if (other.gameObject.tag == "Player")
+        // {
+        //     var player = (Player)GameObject.FindObjectOfType<Player>();
+        //     player.CurrentRoomIndex = ParentModule.index;
+        // }
 
         if (other.gameObject.layer == 11)
         {

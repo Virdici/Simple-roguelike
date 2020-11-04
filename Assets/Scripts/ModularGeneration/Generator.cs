@@ -22,53 +22,7 @@ public class Generator : MonoBehaviour
     public List<Connector> connectors;
     public int roomCount = 10;
 
-    //public void Starte(GameObject dungeonContainter)
-    //{
-    //    DungeonContainter = dungeonContainter;
-    //    var firstModule = (Module)Instantiate(startingModule, dungeonContainter.transform.position, transform.rotation);
-    //    firstModule.transform.SetParent(dungeonContainter.transform);
-    //    var availableConnectors = new List<Connector>(firstModule.GetConnectors());
-    //    playerObject.transform.position = new Vector3(firstModule.transform.position.x, firstModule.transform.position.y + 1, firstModule.transform.position.z);
-    //    playerObject.transform.rotation = Quaternion.identity;
-    //    for (int i = 0; i < size; i++)
-    //    {
-    //        var allExits = new List<Connector>();
-    //        foreach (var selectedConnector in availableConnectors)
-    //        {
-    //            var randomType = selectedConnector.allowedTypes.ElementAt(Random.Range(0, selectedConnector.allowedTypes.Length));
-
-    //            var matchingModules = Modules.Where(m => m.type.Contains(randomType)).ToArray();
-    //            var newSelectedModule = GetRandom(matchingModules);
-    //            var newModule = (Module)Instantiate(newSelectedModule, new Vector3(2, Random.Range(1, 400) * 30, 1), Quaternion.identity);
-    //            newModule.transform.SetParent(dungeonContainter.transform);
-    //            var secondModuleConnectors = newModule.GetConnectors();
-    //            var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(Random.Range(0, secondModuleConnectors.Length));
-
-    //            if (newModule.GetTypeName() == "room")
-    //            {
-    //                index++;
-    //                newModule.index = index;
-    //            }
-
-    //            Connect(selectedConnector, connectorToConnect);
-
-    //            allExits.AddRange(secondModuleConnectors.Where(e => e != connectorToConnect));
-    //        }
-    //        availableConnectors = allExits;
-    //    }
-
-    //    //yield return new WaitForSeconds(waitTime);
-    //    if (collided == true)
-    //    {
-    //        RenewIfCollided();
-    //    }
-    //    //yield return new WaitForSeconds(waitTime);
-    //    StartCoroutine( SealEnds());
-
-    //    GameController.IsDoneLoading = true;
-
-    //}
-
+    public float waitTime = 0.5f;
     private void Update()
     {
         if (collided)
@@ -96,10 +50,10 @@ public class Generator : MonoBehaviour
             passage.transform.SetParent(DungeonContainter.transform);
             var passageConnector = passage.GetConnectors().ElementAt(Random.Range(0, passage.GetConnectors().Length));
 
-            AddDoor(selectedAvailableConnector, false);
+            AddDoor(selectedAvailableConnector, true);
             Connect(selectedAvailableConnector, passageConnector);
 
-            yield return new WaitForSeconds(0.0001f);
+            yield return new WaitForSeconds(waitTime);
             var passageExitConnector = passage.GetConnectors().ElementAt(Random.Range(0, passage.GetConnectors().Length));
 
             var randomRoom = Rooms[Random.Range(0, Rooms.Length)];
@@ -115,10 +69,10 @@ public class Generator : MonoBehaviour
                 room.GetComponent<Renderer>().material.color = Color.red;
             }
             room.index = i;
-            AddDoor(passageExitConnector, true);
+            AddDoor(passageExitConnector, false);
             Connect(passageExitConnector, roomConnector);
 
-            yield return new WaitForSeconds(0.0001f);
+            yield return new WaitForSeconds(waitTime);
 
             selectedAvailableConnector = DungeonContainter.GetComponentsInChildren<Connector>().ToList().ElementAt(Random.Range(0, DungeonContainter.GetComponentsInChildren<Connector>().Length));
             i++;
@@ -154,9 +108,11 @@ public class Generator : MonoBehaviour
     {
         var newModule = ObjectToConnect.transform.parent;
         var objectToConnectVector = -startingObject.transform.forward;
-        var angle1 = Vector3.Angle(Vector3.forward, objectToConnectVector) * Mathf.Sign(objectToConnectVector.x);
-        var angle2 = Vector3.Angle(Vector3.forward, ObjectToConnect.transform.forward) * Mathf.Sign(ObjectToConnect.transform.forward.x);
-        newModule.RotateAround(ObjectToConnect.transform.position, Vector3.up, angle1 - angle2);
+        
+        var desiredAngle = Vector3.Angle(Vector3.forward, -startingObject.transform.forward) * Mathf.Sign(-startingObject.transform.forward.x);
+        var actualAngle = Vector3.Angle(Vector3.forward, ObjectToConnect.transform.forward) * Mathf.Sign(ObjectToConnect.transform.forward.x);
+
+        newModule.RotateAround(ObjectToConnect.transform.position, Vector3.up, desiredAngle - actualAngle);
         var correctPosition = startingObject.transform.position - ObjectToConnect.transform.position;
         newModule.transform.position += correctPosition;
 

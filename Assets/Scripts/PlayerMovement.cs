@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundMask;
 
 
+
     Vector3 velocity;
     bool isGrounded;
     float slopeForceRayLength = 10f;
@@ -21,56 +22,84 @@ public class PlayerMovement : MonoBehaviour
     bool ResetPosition = false;
     Animator animator;
 
+
+
+    public const float maxDashTime = 1.0f;
+    public float dashDistance = 3;
+    public float dashStoppingSpeed = 0.1f;
+    float currentDashTime = maxDashTime;
+    float dashSpeed = 6;
+
+
     private void Start()
     {
         animator = GetComponent<Animator>();
     }
-    private bool OnSlope()
-    {
-        RaycastHit hit;
+    // private bool OnSlope()
+    // {
+    //     RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, controller.height / 2 * slopeForceRayLength))
-            if (hit.normal != Vector3.up)
-            return true;
-        return false;
-    }
+    //     if (Physics.Raycast(transform.position, Vector3.down, out hit, controller.height / 2 * slopeForceRayLength))
+    //         if (hit.normal != Vector3.up)
+    //         return true;
+    //     return false;
+
+
+
+
+    // onSlope = OnSlope();   pod is grounded w update
+    // if (OnSlope())
+    // {
+    //     velocity.y = gravity  *  30000f; 
+
+    //     if (Input.GetKeyDown(KeyCode.Space) && !isGrounded)
+    //     {
+    //         velocity.y = 0f;
+    //         velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+    //     }
+    // }
+    // }
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        onSlope = OnSlope();
-        if (OnSlope())
-        {
-            //velocity.y = gravity  *  10f; 
 
-            if (Input.GetKeyDown(KeyCode.Space) && !isGrounded)
-            {
-                velocity.y = 0f;
-                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            }
+
+
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            currentDashTime = 0f;
+            currentDashTime = 0;
         }
+        if (currentDashTime < maxDashTime)
+        {
+           
+            //tutaj wyłączyć hitboxy na kilka klatek chyba
+
+            velocity = transform.forward * dashDistance*2;
+            currentDashTime += dashStoppingSpeed;
+        } else
+        {
+            velocity = new Vector3(0,velocity.y,0);
+        }
+
+       
 
         if (isGrounded && velocity.y < 0)
         {
-            velocity.y = 0f;
+            velocity.y = -4f;
         }
 
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        Vector3 move = transform.right * x  + transform.forward * z;
+        Vector3 move = transform.right * x + transform.forward * z;
 
         controller.Move(move * speed * Time.deltaTime);
-        //animator.SetFloat("speed", z);
-
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
-
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            controller.Move(move * speed * 2f * Time.deltaTime);
+            controller.Move(move * speed * 1.3f * Time.deltaTime);
+            velocity.y += gravity * Time.deltaTime;
         }
         velocity.y += gravity * Time.deltaTime;
 
@@ -81,6 +110,8 @@ public class PlayerMovement : MonoBehaviour
             transform.position = new Vector3(0, 1, 0);
             ResetPosition = false;
         }
+
+        
 
     }
 

@@ -17,9 +17,15 @@ public class GameController : MonoBehaviour
     public PlayerMovement playerObject;
     public int currentLevel = 1;
     public int maxLevel = 5;
+
     void Start()
     {
         DoneLoading = IsDoneLoading;
+        // Physics.IgnoreLayerCollision(11, 16);
+        // Physics.IgnoreLayerCollision(12, 16);
+        // Physics.IgnoreLayerCollision(8, 16);
+        // Physics.IgnoreLayerCollision(13, 16);
+        // Physics.IgnoreLayerCollision(9, 16);
         Begin();
     }
 
@@ -32,13 +38,13 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-        if (Enemies.GetComponentsInChildren<Enemy>().Length == 0 && DoneLoading)
-        {
-            GameController.IsDoneLoading = false;
-            generator.NewDung();
-            playerObject.ResetPositionz();
-            currentLevel++;
-        }
+        // if (Enemies.GetComponentsInChildren<Enemy>().Length == 0 && DoneLoading)
+        // {
+        //     GameController.IsDoneLoading = false;
+        //     generator.NewDung();
+        //     playerObject.ResetPositionz();
+        //     currentLevel++;
+        // }
 
         if (Input.GetKeyDown(KeyCode.R))
         {

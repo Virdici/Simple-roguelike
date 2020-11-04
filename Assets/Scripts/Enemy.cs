@@ -16,9 +16,11 @@ public class Enemy : MonoBehaviour
     public Rigidbody Rigidbody;
     public NavMeshAgent Agent;
 
- 
-    int MaxDist = 10;
+
+    int MaxDist = 5;
     int MinDist = 5;
+
+    public float dist;
     void Start()
     {
         Agent = GetComponent<NavMeshAgent>();
@@ -27,26 +29,61 @@ public class Enemy : MonoBehaviour
 
 
 
-    void Update()
+    // void Update()
+    // {
+
+    // if (Player.CurrentRoomIndex == index && defeated != true)
+    // {
+    //     var target = PlayerMarker.transform.position - transform.position;
+    //     target.y = 0;
+    //     var look = Quaternion.LookRotation(target);
+
+    //     Vector3 correctLook = new Vector3(look.eulerAngles.x,0,look.eulerAngles.z);
+
+    //     transform.rotation = Quaternion.Lerp(transform.rotation, look, 2f * Time.deltaTime);
+
+
+    //     if (Vector3.Distance(transform.position, Player.transform.position) >= MinDist)
+    //     {
+    //         var targetPosition = new Vector3(Player.transform.position.x, transform.position.y, Player.transform.position.z);
+    //         transform.position = Vector3.MoveTowards(transform.position, targetPosition, 3f * Time.deltaTime);
+    //         if (Vector3.Distance(transform.position, Player.transform.position) <= MaxDist)
+    //         {
+    //             transform.position = transform.position;
+    //         }
+    //     }
+    // }   working chase without navmesh
+
+
+
+
+    void Update()    //navmesh navigation working
     {
 
         if (Player.CurrentRoomIndex == index && defeated != true)
         {
             var target = PlayerMarker.transform.position - transform.position;
             var look = Quaternion.LookRotation(target);
-            transform.rotation = Quaternion.Lerp(transform.rotation, look, 2f * Time.deltaTime);
-           
+            transform.rotation = Quaternion.Lerp(transform.rotation, look, 3f * Time.deltaTime);
+            dist = Vector3.Distance(transform.position, Player.transform.position);
 
-            if (Vector3.Distance(transform.position, Player.transform.position) >= MinDist)
+            // if (Vector3.Distance(transform.position, Player.transform.position) >= MinDist)
+            // {
+            //     Agent.isStopped = false;
+            Agent.SetDestination(PlayerMarker.transform.position);
+
+            if (Vector3.Distance(transform.position, Player.transform.position) <= MaxDist)
             {
-                var targetPosition = new Vector3(Player.transform.position.x, transform.position.y, Player.transform.position.z);
-                transform.position = Vector3.MoveTowards(transform.position, targetPosition, 1f * Time.deltaTime);
-
-                if (Vector3.Distance(transform.position, Player.transform.position) <= MaxDist)
-                {
-                    transform.position = transform.position;
-                }
+                Agent.isStopped = true;
             }
+            else
+            {
+                Agent.isStopped = false;
+
+            }
+
+            // }
+
         }
 
         if (defeated)
@@ -55,35 +92,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    //void Update()    navmesh navigation working
-    //{
-
-
-    //    if (Player.CurrentRoomIndex == index && defeated != true)
-    //    {
-    //        var target = PlayerMarker.transform.position - transform.position;
-    //        var look = Quaternion.LookRotation(target);
-    //        transform.rotation = Quaternion.Lerp(transform.rotation, look, 2f * Time.deltaTime);
-    //        //transform.LookAt(PlayerMarker.transform.position);
-
-
-    //        if (Vector3.Distance(transform.position, Player.transform.position) >= MinDist)
-    //        {
-
-    //            Agent.SetDestination(PlayerMarker.transform.position);
-
-    //            if (Vector3.Distance(transform.position, Player.transform.position) <= MaxDist)
-    //            {
-    //                Agent.SetDestination(transform.position);
-    //            }
-    //        }
-    //    }
-
-    //    if (defeated)
-    //    {
-    //        GameObject.Destroy(gameObject);
-    //    }
-    //}
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.tag == "Player")

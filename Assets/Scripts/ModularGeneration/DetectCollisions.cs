@@ -5,6 +5,7 @@ public class DetectCollisions : MonoBehaviour
     public bool DidCollide = false;
     Generator generator;
 
+
     private void Awake()
     {
         //Physics.IgnoreLayerCollision(8, 11);
@@ -17,8 +18,10 @@ public class DetectCollisions : MonoBehaviour
         
         if (col.gameObject.layer != 12 && col.gameObject.layer != 11)
         {
-            Debug.Log(col.gameObject.name);
+            //Debug.Log(col.gameObject.name);
             generator.ChangeCollisionState();
         }
     }
+
+    
 }

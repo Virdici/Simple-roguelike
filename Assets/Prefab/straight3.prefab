@@ -42,8 +42,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 17.9, y: 1, z: 3.9}
-  m_Center: {x: 0, y: -2, z: 0}
+  m_Size: {x: 17.792389, y: 1, z: 3.9}
+  m_Center: {x: 0.010757446, y: -2, z: 7.903e-42}
 --- !u!1 &1712333733816979796
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 919739300491030657}
   - component: {fileID: 4167460509065069746}
   - component: {fileID: 7640575677137667051}
+  - component: {fileID: 3321272203951365717}
   m_Layer: 8
   m_Name: straight3
   m_TagString: Untagged
@@ -145,6 +146,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: corridor
+  index: 0
+  Doors: []
+  Enemies: []
+  AllenemiesDefeated: 0
+  DefeatedEnemies: 0
+  PlacedSeals: 0
 --- !u!114 &7640575677137667051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,6 +165,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DidCollide: 0
+--- !u!54 &3321272203951365717
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712333733816979796}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 3
 --- !u!1 &2544372015119651109
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,8 +315,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 17.9, y: 5, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 17.813934, y: 5, z: 1}
+  m_Center: {x: -0.021530151, y: 0, z: -1.5818e-41}
 --- !u!1 &3790874129422770058
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,6 +364,7 @@ MonoBehaviour:
   - corridor
   - room
   startingConnector: 0
+  isDoor: 0
 --- !u!1 &4226835241280632905
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,7 +407,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 17.9, y: 1, z: 3.9}
+  m_Size: {x: 17.813904, y: 1, z: 3.9}
   m_Center: {x: 0, y: -2.0306454, z: 0}
 --- !u!1 &5511134204433788002
 GameObject:
@@ -427,8 +451,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 17.9, y: 5, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 17.792389, y: 5, z: 1}
+  m_Center: {x: -0.010757446, y: 0, z: -7.903e-42}
 --- !u!1 &9212004465547726790
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,3 +500,4 @@ MonoBehaviour:
   - room
   - corridor
   startingConnector: 0
+  isDoor: 0

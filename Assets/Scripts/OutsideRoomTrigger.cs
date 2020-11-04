@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class OutsideRoomTrigger : MonoBehaviour
 {
-    //ttaj
     private Door Door;
     public Module Room;
+    public Animator animator;
+    public bool RoomClear = false;
 
     void Start()
     {
@@ -17,11 +18,14 @@ public class OutsideRoomTrigger : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && RoomClear == true)
         {
-            Door.transform.Find("ColliderPassage").gameObject.SetActive(false);
-            Door.GetComponent<Renderer>().material.color = Color.blue;
+            Door.open = true;
+            animator.SetBool("opened", true);
         }
     }
-
+    private void Update()
+    {
+        RoomClear = Room.AllenemiesDefeated;
+    }
 }
