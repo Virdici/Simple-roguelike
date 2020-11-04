@@ -9,6 +9,12 @@ public class Door : MonoBehaviour
     public int DefeatedEnemies;
 
     public bool DoorClosed = true;
+    Animator animator;
+    public bool open = false;
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     public Connector[] GetConnectors()
     {
@@ -21,6 +27,17 @@ public class Door : MonoBehaviour
 
     private void Update()
     {
+        
+        //    if(open == false)
+        //    {
+        //     animator.SetBool("opened", true);
+        //     open = true;
+        //    } else
+        //    {
+        //       animator.SetBool("opened", false);
+        //     open = false;
+
+        //    }
         
     }
 }

@@ -11,69 +11,110 @@ public class Enemy : MonoBehaviour
     public Player Player;
     public GameObject PlayerMarker;
     public int index;
-    public int HP = 100;
-    public int CurrentHP;
+
 
     public Rigidbody Rigidbody;
     public NavMeshAgent Agent;
 
-    private bool flagged = false;
-    int MoveSpeed = 4;
-    int MaxDist = 4;
-    int MinDist = 2;
+
+    int MaxDist = 5;
+    int MinDist = 5;
+
+    public float dist;
     void Start()
     {
-        CurrentHP = HP;
         Agent = GetComponent<NavMeshAgent>();
         defeated = false;
     }
 
 
 
-    void Update()
+    // void Update()
+    // {
+
+    // if (Player.CurrentRoomIndex == index && defeated != true)
+    // {
+    //     var target = PlayerMarker.transform.position - transform.position;
+    //     target.y = 0;
+    //     var look = Quaternion.LookRotation(target);
+
+    //     Vector3 correctLook = new Vector3(look.eulerAngles.x,0,look.eulerAngles.z);
+
+    //     transform.rotation = Quaternion.Lerp(transform.rotation, look, 2f * Time.deltaTime);
+
+
+    //     if (Vector3.Distance(transform.position, Player.transform.position) >= MinDist)
+    //     {
+    //         var targetPosition = new Vector3(Player.transform.position.x, transform.position.y, Player.transform.position.z);
+    //         transform.position = Vector3.MoveTowards(transform.position, targetPosition, 3f * Time.deltaTime);
+    //         if (Vector3.Distance(transform.position, Player.transform.position) <= MaxDist)
+    //         {
+    //             transform.position = transform.position;
+    //         }
+    //     }
+    // }   working chase without navmesh
+
+
+
+
+    void Update()    //navmesh navigation working
     {
-        
 
         if (Player.CurrentRoomIndex == index && defeated != true)
         {
-            transform.LookAt(PlayerMarker.transform.position);
-           
+            var target = PlayerMarker.transform.position - transform.position;
+            var look = Quaternion.LookRotation(target);
+            transform.rotation = Quaternion.Lerp(transform.rotation, look, 3f * Time.deltaTime);
+            dist = Vector3.Distance(transform.position, Player.transform.position);
 
-            if (Vector3.Distance(transform.position, Player.transform.position) >= MinDist)
+            // if (Vector3.Distance(transform.position, Player.transform.position) >= MinDist)
+            // {
+            //     Agent.isStopped = false;
+            Agent.SetDestination(PlayerMarker.transform.position);
+
+            if (Vector3.Distance(transform.position, Player.transform.position) <= MaxDist)
             {
-
-                Agent.SetDestination(PlayerMarker.transform.position);
-
-                if (Vector3.Distance(transform.position, Player.transform.position) <= MaxDist)
-                {
-                    Agent.SetDestination(transform.position);
-                }
+                Agent.isStopped = true;
             }
+            else
+            {
+                Agent.isStopped = false;
+
+            }
+
+            // }
+
+        }
+
+        if (defeated)
+        {
+            GameObject.Destroy(gameObject);
         }
     }
-   private void OnCollisionEnter(Collision collision)
+
+    private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.tag == "Player")
         {
             defeated = true;
             //transform.GetComponentInChildren<GameObject>().GetComponent<Renderer>().material.color = Color.red;
-            Agent.SetDestination(transform.position);
+            //Agent.SetDestination(transform.position);
 
 
         }
     }
 
-    public void DealDamage(int damage)
-    {
-        if (this.CurrentHP >= 0)
-        {
-        this.HP -= damage;
-        }
-        else
-        {
-            defeated = true;
-            //transform.GetComponentInChildren<GameObject>().GetComponent<Renderer>().material.color = Color.red;
-            Agent.SetDestination(transform.position);
-        }
-    }
+    //public void DealDamage(int damage)
+    //{
+    //    if (this.CurrentHP >= 0)
+    //    {
+    //        this.HP -= damage;
+    //    }
+    //    else
+    //    {
+    //        defeated = true;
+    //        //transform.GetComponentInChildren<GameObject>().GetComponent<Renderer>().material.color = Color.red;
+    //        Agent.SetDestination(transform.position);
+    //    }
+    //}
 }

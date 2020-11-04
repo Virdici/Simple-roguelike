@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - door
+  - HealthBar
+  - DetectCollision
   layers:
   - Default
   - TransparentFX
@@ -22,8 +24,8 @@ TagManager:
   - DoorSeal
   - Ladder
   - DungeonContainer
-  - 
-  - 
+  - GenCollisions
+  - Obstacle
   - 
   - 
   - 

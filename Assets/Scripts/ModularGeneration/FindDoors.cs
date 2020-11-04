@@ -5,17 +5,13 @@ using UnityEngine;
 
 public class FindDoors : MonoBehaviour
 {
-    public List<GameObject> list = new List<GameObject>();
     public Module ParentModule;
 
     void Start()
     {
         ParentModule = transform.GetComponentInParent<Module>();
     }
-    private void OnTriggerStay(Collider other)
-    {
 
-    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "door")
@@ -25,11 +21,11 @@ public class FindDoors : MonoBehaviour
             ParentModule.Doors.Add(other.gameObject.transform.parent.gameObject);
         }
 
-        if (other.gameObject.tag == "Player")
-        {
-            var player = (Player)GameObject.FindObjectOfType<Player>();
-            player.CurrentRoomIndex = ParentModule.index;
-        }
+        // if (other.gameObject.tag == "Player")
+        // {
+        //     var player = (Player)GameObject.FindObjectOfType<Player>();
+        //     player.CurrentRoomIndex = ParentModule.index;
+        // }
 
         if (other.gameObject.layer == 11)
         {

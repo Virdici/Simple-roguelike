@@ -166,6 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Room: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!1 &3775256663078529997
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,7 +238,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4323468010908836147}
   m_LocalRotation: {x: -6.123234e-17, y: 1, z: 6.123234e-17, w: -3.7493994e-33}
-  m_LocalPosition: {x: 90.38985, y: 192.39534, z: 413.36176}
+  m_LocalPosition: {x: 90.38985, y: 192.39534, z: 413.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6220118762020505822}
@@ -311,6 +312,7 @@ MonoBehaviour:
   AllenemiesDefeated: 0
   DefeatedEnemies: 0
   DoorClosed: 1
+  open: 0
 --- !u!1 &7630510670341377970
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,3 +373,4 @@ MonoBehaviour:
   Room: {fileID: 0}
   RoomClear: 0
   Seal: {fileID: 0}
+  animator: {fileID: 0}

@@ -5,15 +5,23 @@ public class DetectCollisions : MonoBehaviour
     public bool DidCollide = false;
     Generator generator;
 
+
     private void Awake()
     {
-        //Physics.IgnoreLayerCollision(9, 11);
+        //Physics.IgnoreLayerCollision(8, 11);
         generator = GameObject.FindObjectOfType<Generator>();
     }
     private void OnCollisionEnter(Collision col)
     {
 
         Debug.DrawRay(col.contacts[0].point, col.contacts[0].normal);
-        generator.ChangeCollisionState();
+        
+        if (col.gameObject.layer != 12 && col.gameObject.layer != 11)
+        {
+            //Debug.Log(col.gameObject.name);
+            generator.ChangeCollisionState();
+        }
     }
+
+    
 }

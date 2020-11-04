@@ -14,16 +14,13 @@ public class Module : MonoBehaviour
 
     public bool PlacedSeals = false;
 
-    private void Start()
+    private void Awake()
     {
         AllenemiesDefeated = false;
 
-        RoomSealsContainter = GameObject.Find("RoomSeals");
+        RoomSealsContainter = GameObject.Find("RoomSeals Container");
 
     }
-
-
-
     public Connector[] GetConnectors()
     {
         return GetComponentsInChildren<Connector>();
@@ -39,10 +36,14 @@ public class Module : MonoBehaviour
 
     private void Update()
     {
-       DefeatedEnemies = Enemies.Where(e => e.defeated == true).Count();
+        DefeatedEnemies = Enemies.Where(e => e.defeated == true).Count();
         if (Enemies.Count == DefeatedEnemies)
         {
             AllenemiesDefeated = true;
+        }
+        else
+        {
+            AllenemiesDefeated = false;
         }
         var player = (Player)GameObject.FindObjectOfType<Player>();
 

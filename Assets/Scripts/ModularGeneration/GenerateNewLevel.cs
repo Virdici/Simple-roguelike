@@ -4,18 +4,14 @@ using UnityEngine;
 public class GenerateNewLevel : MonoBehaviour
 {
     public bool DidCollide = false;
-    Generator generator;
-
-    private void Awake()
-    {
-        generator = GameObject.FindObjectOfType<Generator>();
-    }
-
-    private void OnCollisionEnter(Collision col)
+    public Generator generator;
+   
+    private void OnCollisionExit(Collision col)
     {
         //new generation on collision
-        Debug.Log("collision detected" + col.contacts[0].point);
-        //generator.RenewIfCollided();
+        GameController.IsDoneLoading = false;
+        Debug.Log("collision detected" + col.gameObject.name);
         generator.NewDung();
     }
+
 }
