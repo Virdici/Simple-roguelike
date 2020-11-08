@@ -117,31 +117,22 @@ using UnityEngine.AI;
 public class test : MonoBehaviour
 {
     
-   Animator animator;
-   public bool open = false;
-    void Start()
-    {
+//    Rigidbody rigidbody;
+//    public bool open = false;
+//     void Start()
+//     {
         
-        animator = GetComponent<Animator>();
+//         rigidbody = GetComponent<Rigidbody>();
         
-    }
+//     }
     
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-           if(open == false)
-           {
-            animator.SetBool("opened", true);
-            open = true;
-           } else
-           {
-              animator.SetBool("opened", false);
-            open = false;
-
-           }
-        }
-    }
+//     private void Update()
+//     {
+//         if (Input.GetKeyDown(KeyCode.J))
+//         {
+//            rigidbody.AddForce(transform.forward*30,ForceMode.Impulse);
+//         }
+//     }
 }
 
 

@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        
         DoneLoading = IsDoneLoading;
         // Physics.IgnoreLayerCollision(11, 16);
         // Physics.IgnoreLayerCollision(12, 16);
@@ -46,10 +47,7 @@ public class GameController : MonoBehaviour
         //     currentLevel++;
         // }
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            generator.RenewIfCollided();
-        }
+        
 
         if (currentLevel == 3)
         {

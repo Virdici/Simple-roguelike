@@ -18,9 +18,15 @@ public class Enemy : MonoBehaviour
 
 
     int MaxDist = 5;
-    int MinDist = 5;
+    //int MinDist = 5;
 
     public float dist;
+    public const float maxDashTime = 1f;
+    private float currentDashTime= maxDashTime;
+    private float dashStoppingSpeed = 0.05f;
+
+    private bool attacking = false;
+
     void Start()
     {
         Agent = GetComponent<NavMeshAgent>();
@@ -60,16 +66,14 @@ public class Enemy : MonoBehaviour
     void Update()    //navmesh navigation working
     {
 
-        if (Player.CurrentRoomIndex == index && defeated != true)
+        if (Player.CurrentRoomIndex == index && defeated != true && attacking != true)
         {
             var target = PlayerMarker.transform.position - transform.position;
             var look = Quaternion.LookRotation(target);
             transform.rotation = Quaternion.Lerp(transform.rotation, look, 3f * Time.deltaTime);
             dist = Vector3.Distance(transform.position, Player.transform.position);
 
-            // if (Vector3.Distance(transform.position, Player.transform.position) >= MinDist)
-            // {
-            //     Agent.isStopped = false;
+            
             Agent.SetDestination(PlayerMarker.transform.position);
 
             if (Vector3.Distance(transform.position, Player.transform.position) <= MaxDist)
@@ -82,7 +86,7 @@ public class Enemy : MonoBehaviour
 
             }
 
-            // }
+            
 
         }
 
@@ -90,6 +94,38 @@ public class Enemy : MonoBehaviour
         {
             GameObject.Destroy(gameObject);
         }
+
+        if (Input.GetKeyDown(KeyCode.C)) //enemy dash
+        {   
+            currentDashTime = 0f;
+            currentDashTime = 0;
+            Agent.enabled = false;
+            attacking = true;
+
+        }
+
+        if(currentDashTime < maxDashTime*2)
+        {
+            // var target = PlayerMarker.transform.position - transform.position;
+            // target.y = 0;
+            // var look = Quaternion.LookRotation(target);
+
+            // Vector3 direction = new Vector3(look.eulerAngles.x,0,look.eulerAngles.z);
+            // transform.rotation = Quaternion.Lerp(transform.rotation, look, 2f * Time.deltaTime);
+
+            // Vector3 movement = transform.forward * Time.deltaTime * 10f;
+
+            // Agent.Move(movement);
+
+            Rigidbody.AddForce(transform.forward/2,ForceMode.Impulse);
+            currentDashTime += dashStoppingSpeed;     
+        } else {
+            Agent.enabled = true;
+            Rigidbody.velocity = Vector3.zero;
+            attacking = false;
+
+        }
+        
     }
 
     private void OnCollisionEnter(Collision collision)

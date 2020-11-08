@@ -9,6 +9,7 @@ public class EnemySpawning : MonoBehaviour
     public Vector3 RoomSize;
     public GameObject EnemyContainer;
     public MeshFilter Filter;
+    public int maxEnemies;
 
 
     private GameObject host;
@@ -28,11 +29,12 @@ public class EnemySpawning : MonoBehaviour
             SpawnMesh = Filter.transform.GetComponent<MeshFilter>().mesh;
             Spawn();
         }
+        EnemyContainer = GameObject.Find("EnemiesContainer");
+
     }
 
     public void Spawn()
     {
-        EnemyContainer = GameObject.Find("EnemiesContainer");
         // host = transform.GetComponent<Module>().gameObject;
         // RoomSize = host.GetComponent<Renderer>().bounds.size;
         // RoomSize = RoomSize - new Vector3(6, 2, 6);
@@ -54,7 +56,7 @@ public class EnemySpawning : MonoBehaviour
         SpawnMesh = Filter.transform.GetComponent<MeshFilter>().mesh;
         vertices = SpawnMesh.vertices;
          
-         for (int i = 0; i < 2; i++)
+         for (int i = 0; i <= Random.Range(2,maxEnemies); i++)
          {
             Vector3 randVex = transform.TransformPoint(vertices[Random.Range(0,vertices.Length)]);
             Vector3 rand = new Vector3(randVex.x,randVex.y-1,randVex.z);
