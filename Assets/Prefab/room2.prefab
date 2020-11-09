@@ -440,12 +440,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 0}
-  x: 0
-  y: 0
-  z: 0
-  RoomSize: {x: 0, y: 0, z: 0}
+  boss: {fileID: 0}
   EnemyContainer: {fileID: 0}
   Filter: {fileID: 8840878188320519056}
+  maxEnemies: 0
 --- !u!64 &5960115191386781022
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -486,7 +484,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.5
+  m_VoxelSize: 0.41333333
   m_BuildHeightMesh: 0
   m_NavMeshData: {fileID: 23800000, guid: cd97813ea5c25c144829b6429c415475, type: 2}
 --- !u!1 &5101298080517056446

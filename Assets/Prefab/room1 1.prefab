@@ -509,10 +509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 484418832326403229, guid: 9a6de8829dae7b54991c951007bf5451, type: 3}
-  x: 0
-  y: 0
-  z: 0
-  RoomSize: {x: 0, y: 0, z: 0}
+  boss: {fileID: 0}
   EnemyContainer: {fileID: 0}
   Filter: {fileID: 3091412022732616462}
   maxEnemies: 0
@@ -544,11 +541,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AgentTypeID: 0
   m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
+  m_Size: {x: 34.497925, y: 3.742279, z: 23.459625}
+  m_Center: {x: -0.1071167, y: -1.1288605, z: -0.80345154}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 1073872695
+    m_Bits: 256
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_IgnoreNavMeshAgent: 1
@@ -558,7 +555,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.41333333
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: 68579e4080f9f4d40b932704fdcd768b, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 23d8e1d897f11e149b80124116988a14, type: 2}
 --- !u!114 &7797546294888206840
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6498301522147053867}
   - component: {fileID: 8524510803419561629}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 484418832326403230}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_Children:
   - {fileID: 484418833757669956}
   - {fileID: 484418833396248851}
@@ -90,7 +90,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 122
-  m_CollisionDetection: 3
+  m_CollisionDetection: 2
 --- !u!195 &8524510803419561629
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -100,7 +100,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 484418832326403230}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1.42
+  m_Radius: 1.5
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -109,7 +109,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2.48
+  m_Height: 2.5
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
