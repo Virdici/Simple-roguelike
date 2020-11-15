@@ -62,7 +62,7 @@
 //     {
 //         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        
+
 
 //         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
 //         {
@@ -149,28 +149,49 @@ public class PlayerMovement : MonoBehaviour
     public float dashStoppingSpeed = 0.1f;
     float currentDashTime = maxDashTime;
     float dashSpeed = 2;
+    public float horizontal;
+    public float vertical;
+    public bool isAttacking = false;
     private void Start()
     {
         animator = GetComponentInChildren<Animator>();
+        Cursor.lockState = CursorLockMode.Locked;
+
     }
-  
+
     void Update()
     {
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontal,0,vertical).normalized;
-
-        if(direction.magnitude >= 0.1f) 
+        if (isAttacking)
         {
-            float targetAngle = Mathf.Atan2(direction.x,direction.z)*Mathf.Rad2Deg + cam.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y,targetAngle,ref currentVelocity,smoothTime);
-            transform.rotation = Quaternion.Euler(0,angle,0);
+            horizontal = 0;
+            vertical = 0;
+        }
+        else
+        {
+            horizontal = Input.GetAxisRaw("Horizontal");
+            vertical = Input.GetAxisRaw("Vertical");
+        }
+        Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
 
-            Vector3 moveDirection = Quaternion.Euler(0,targetAngle,0) * Vector3.forward;
+        if (direction.magnitude >= 0.1f)
+        {
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref currentVelocity, smoothTime);
+            transform.rotation = Quaternion.Euler(0, angle, 0);
+
+            Vector3 moveDirection = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
             controller.Move(moveDirection.normalized * speed * Time.deltaTime);
+
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                controller.Move(moveDirection.normalized * speed * 1.3f * Time.deltaTime);
+                vertical *=2;
+                horizontal*=2;
+            }
+
         }
         if (isGrounded && velocity.y < 0)
         {
@@ -194,8 +215,12 @@ public class PlayerMovement : MonoBehaviour
             velocity = new Vector3(0, velocity.y, 0);
         }
 
+
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+        animator.SetFloat("y", vertical);
+        animator.SetFloat("x", horizontal);
+
 
     }
 

@@ -117,22 +117,15 @@ using UnityEngine.AI;
 public class test : MonoBehaviour
 {
     
-//    Rigidbody rigidbody;
-//    public bool open = false;
-//     void Start()
-//     {
-        
-//         rigidbody = GetComponent<Rigidbody>();
-        
-//     }
-    
-//     private void Update()
-//     {
-//         if (Input.GetKeyDown(KeyCode.J))
-//         {
-//            rigidbody.AddForce(transform.forward*30,ForceMode.Impulse);
-//         }
-//     }
+private void OnTriggerEnter(Collider other) 
+    {
+        if (other.gameObject.layer == 11)
+        {
+            Debug.Log("hit enemy" + other);
+            other.GetComponentInParent<Health>().TakeDamage(10);
+        }
+
+    }
 }
 
 
