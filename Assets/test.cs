@@ -22,7 +22,7 @@
 //     void Start()
 //     {
 //         StartCoroutine(Starte(DungeonContainter));
-        
+
 //     }
 //     public IEnumerator Starte(GameObject dungeonContainter)
 //     {
@@ -69,7 +69,7 @@
 //             i++;
 //         }
 //         connectors = DungeonContainter.GetComponentsInChildren<Connector>().ToList();
-        
+
 
 //     }
 //     private void Connect(Connector startingObject, Connector ObjectToConnect)
@@ -79,7 +79,7 @@
 
 //         var angle1 = Vector3.Angle(Vector3.forward, -startingObject.transform.forward) * Mathf.Sign(-startingObject.transform.forward.x);
 //         var angle2 = Vector3.Angle(Vector3.forward, ObjectToConnect.transform.forward) * Mathf.Sign(ObjectToConnect.transform.forward.x);
-  
+
 //         newModule.RotateAround(ObjectToConnect.transform.position, Vector3.up, angle1 - angle2);
 //         var correctPosition = startingObject.transform.position - ObjectToConnect.transform.position;
 //         newModule.transform.position += correctPosition;
@@ -95,7 +95,7 @@
 //     {
 //         if (Input.GetKeyDown(KeyCode.J))
 //         {
-        
+
 //             var foots = PlayerObject.transform.Find("GroundCheck").gameObject;
 
 
@@ -116,15 +116,14 @@ using UnityEngine.AI;
 
 public class test : MonoBehaviour
 {
-    
-private void OnTriggerEnter(Collider other) 
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 11)
+        if (other.gameObject.layer == 18)
         {
-            Debug.Log("hit enemy" + other);
+            Debug.Log("hit " + other.gameObject.transform.root.name);
             other.GetComponentInParent<Health>().TakeDamage(10);
         }
-
     }
 }
 

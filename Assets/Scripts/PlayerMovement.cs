@@ -171,8 +171,8 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            horizontal = Input.GetAxisRaw("Horizontal");
-            vertical = Input.GetAxisRaw("Vertical");
+            horizontal = Input.GetAxis("Horizontal");
+            vertical = Input.GetAxis("Vertical");
         }
         Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
 
@@ -187,7 +187,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                controller.Move(moveDirection.normalized * speed * 1.3f * Time.deltaTime);
+                controller.Move(moveDirection.normalized * speed * 1.6f * Time.deltaTime);
                 vertical *=2;
                 horizontal*=2;
             }
@@ -218,8 +218,8 @@ public class PlayerMovement : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
-        animator.SetFloat("y", vertical);
-        animator.SetFloat("x", horizontal);
+        animator.SetFloat("y", vertical,1f,Time.deltaTime *10f);
+        animator.SetFloat("x", horizontal,1f,Time.deltaTime *10f);
 
 
     }

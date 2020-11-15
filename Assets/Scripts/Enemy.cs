@@ -16,8 +16,9 @@ public class Enemy : MonoBehaviour
     public Rigidbody Rigidbody;
     public NavMeshAgent Agent;
 
+    public Animator animator;
 
-    int MaxDist = 5;
+    int MaxDist = 2;
     //int MinDist = 5;
 
     public float dist;
@@ -26,6 +27,7 @@ public class Enemy : MonoBehaviour
     private float dashStoppingSpeed = 0.05f;
 
     private bool attacking = false;
+    
 
     void Start()
     {
@@ -79,11 +81,13 @@ public class Enemy : MonoBehaviour
             if (Vector3.Distance(transform.position, Player.transform.position) <= MaxDist)
             {
                 Agent.isStopped = true;
+               animator.SetBool("isWalking",false);
+               animator.SetTrigger("Attack");
             }
             else
             {
                 Agent.isStopped = false;
-
+                animator.SetBool("isWalking",true);
             }
 
             
