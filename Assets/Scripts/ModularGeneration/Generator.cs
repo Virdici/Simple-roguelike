@@ -16,6 +16,7 @@ public class Generator : MonoBehaviour
     public GameObject playerObject;
 
     public Module[] Rooms;
+    public Module BossRoom;
     public Module[] passages;
     public List<Connector> connectors;
     public int roomCount = 10;
@@ -26,13 +27,17 @@ public class Generator : MonoBehaviour
         if (collided)
         {
             RenewIfCollided();
+            
         }
+
     }
 
     public IEnumerator Starte(GameObject dungeonContainter)
     {
 
-        //Random.InitState(999999999); //seedowanie do zapisu danego układu
+        //Random.InitState(999); //seedowanie do zapisu danego układu WAŻNEE!!!! poprawić przy kolizjach (np 999)
+
+
         DungeonContainter = dungeonContainter;
 
         var firstModule = (Module)Instantiate(startingModule, dungeonContainter.transform.position, Quaternion.identity);
@@ -46,20 +51,34 @@ public class Generator : MonoBehaviour
         {
 
             var randomPassage = passages[Random.Range(0, passages.Length)];
-            var passage = (Module)Instantiate(randomPassage, new Vector3(2, Random.Range(1, 400) * 30, 1), Quaternion.identity);
+            var passage = (Module)Instantiate(randomPassage, new Vector3(2,  30, 1), Quaternion.identity);
             passage.transform.SetParent(DungeonContainter.transform);
             var passageConnector = passage.GetConnectors().ElementAt(Random.Range(0, passage.GetConnectors().Length));
-
+            
             AddDoor(selectedAvailableConnector, true);
             Connect(selectedAvailableConnector, passageConnector);
 
             yield return new WaitForSeconds(waitTime);
-            var passageExitConnector = passage.GetConnectors().ElementAt(Random.Range(0, passage.GetConnectors().Length));
 
-            var randomRoom = Rooms[Random.Range(0, Rooms.Length)];
-            var room = (Module)Instantiate(randomRoom, new Vector3(2, Random.Range(1, 400) * 30, 1), Quaternion.identity);
+            var passageExitConnector = passage.GetConnectors().ElementAt(Random.Range(0, passage.GetConnectors().Length));
+                  
+
+            Module randomRoom ;
+            if (i == roomCount)
+            {
+                randomRoom = BossRoom;
+                randomRoom.GetComponent<EnemySpawning>().isBossRoom = true;
+            }
+            else
+            {
+                randomRoom = Rooms[Random.Range(0, Rooms.Length)];
+            }
+            var room = (Module)Instantiate(randomRoom, new Vector3(2,  30, 1), Quaternion.identity);
             room.transform.SetParent(DungeonContainter.transform);
             var roomConnector = room.GetConnectors().ElementAt(Random.Range(0, room.GetConnectors().Length));
+
+            
+
             if (i == 4)
             {
                 room.GetComponent<Renderer>().material.color = Color.blue;
@@ -69,7 +88,13 @@ public class Generator : MonoBehaviour
                 room.GetComponent<Renderer>().material.color = Color.red;
             }
             room.index = i;
-            room.GetComponent<EnemySpawning>().maxEnemies = 6;
+
+            if(room.GetComponent<EnemySpawning>().maxEnemies == 0) 
+            {
+                room.GetComponent<EnemySpawning>().maxEnemies = 2;
+            }
+            
+            
             AddDoor(passageExitConnector, false);
             Connect(passageExitConnector, roomConnector);
 
@@ -79,7 +104,7 @@ public class Generator : MonoBehaviour
             i++;
         }
         connectors = DungeonContainter.GetComponentsInChildren<Connector>().ToList();
-        StartCoroutine( SealEnds());
+        StartCoroutine(SealEnds());
 
     }
     private void AddDoor(Connector connector, bool reverse)
@@ -99,7 +124,7 @@ public class Generator : MonoBehaviour
         var correctPosition = ExitConnector.transform.position - DoorConnector.transform.position;
         if (reverse)
         {
-            newModule.Rotate(Vector3.up,180f);
+            newModule.Rotate(Vector3.up, 180f);
         }
         newModule.transform.position += correctPosition;
         Destroy(DoorConnector);
@@ -109,7 +134,7 @@ public class Generator : MonoBehaviour
     {
         var newModule = ObjectToConnect.transform.parent;
         var objectToConnectVector = -startingObject.transform.forward;
-        
+
         var desiredAngle = Vector3.Angle(Vector3.forward, -startingObject.transform.forward) * Mathf.Sign(-startingObject.transform.forward.x);
         var actualAngle = Vector3.Angle(Vector3.forward, ObjectToConnect.transform.forward) * Mathf.Sign(ObjectToConnect.transform.forward.x);
 
@@ -162,6 +187,7 @@ public class Generator : MonoBehaviour
 
         collided = false;
         //ClearLog();
+        
         StartCoroutine(Starte(DungeonContainter));
     }
     // public void ClearLog()
@@ -184,7 +210,7 @@ public class Generator : MonoBehaviour
             GameObject.Destroy(child.gameObject);
         }
         collided = false;
-        StartCoroutine( Starte(DungeonContainter));
+        StartCoroutine(Starte(DungeonContainter));
     }
 }
 

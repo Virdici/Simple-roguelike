@@ -154,8 +154,10 @@ MonoBehaviour:
   enemy: {fileID: 0}
   boss: {fileID: 0}
   EnemyContainer: {fileID: 0}
+  BossContainer: {fileID: 0}
   Filter: {fileID: 2219447497435778494}
   maxEnemies: 1
+  isBossRoom: 0
 --- !u!64 &5912513807515790331
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -198,7 +200,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.41333333
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 48e6a85ef64050f4e8ed98b902bede99, type: 2}
 --- !u!114 &8191238493251557897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,7 +518,7 @@ Transform:
   m_GameObject: {fileID: 6394443326465007882}
   m_LocalRotation: {x: 6.123234e-17, y: -1, z: -6.123234e-17, w: -3.7493994e-33}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.99, y: 0.99, z: 0.99}
+  m_LocalScale: {x: 0.98, y: 0.98, z: 0.98}
   m_Children: []
   m_Father: {fileID: 1648844322130953405}
   m_RootOrder: 2
