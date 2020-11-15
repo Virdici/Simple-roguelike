@@ -76,12 +76,12 @@ private void OnCollisionEnter(Collision collision)
 
 
             CanClimb = true;
-            PlayerObject.GetComponent<PlayerMovement>().gravity = 0;
+            //PlayerObject.GetComponent<PlayerMovement>().gravity = 0;
     }
     private void OnCollisionExit(Collision collision)
     {
             CanClimb = false;
-            PlayerObject.GetComponent<PlayerMovement>().gravity = -29.43f;
+            //PlayerObject.GetComponent<PlayerMovement>().gravity = -29.43f;
             PlayerObject = null;
     }
     // private void OnTriggerEnter(Collider other)

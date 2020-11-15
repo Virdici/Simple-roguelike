@@ -10,7 +10,7 @@ public class Weapon : MonoBehaviour
     public GameObject hit;
     public Health health;
 
-    private bool hasCollided = false;
+    //private bool hasCollided = false;
     // Update is called once per frame
     private void OnTriggerEnter(Collider other)
     {
@@ -43,8 +43,8 @@ public class Weapon : MonoBehaviour
         // }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        hasCollided = false;
-    }
+    // private void OnTriggerExit(Collider other)
+    // {
+    //     hasCollided = false;
+    // }
 }
