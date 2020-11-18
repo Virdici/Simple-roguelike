@@ -117,14 +117,18 @@ using UnityEngine.AI;
 public class test : MonoBehaviour
 {
 
+    public bool active = false;
+    
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 18)
+        if (other.gameObject.layer == 18 && GetComponentInParent<Combat>().active)
         {
             Debug.Log("hit " + other.gameObject.transform.root.name);
             other.GetComponentInParent<Health>().TakeDamage(10);
         }
     }
+
+    
 }
 
 

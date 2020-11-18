@@ -7,9 +7,7 @@ public class Health : MonoBehaviour
     public int HP = 100;
     public int CurrentHP;
     public RectTransform healthBar;
-    public bool hit = false;
-    public Enemy enemy;
-    public Player Player;
+
     void Start()
     {
         CurrentHP = HP;
@@ -26,9 +24,6 @@ public class Health : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (CurrentHP == 0)
-        {
-            enemy.defeated = true;
-        }
+      
     }
 }
