@@ -5,6 +5,7 @@ public class PlayerMovement : MonoBehaviour
     bool ResetPosition = false;
     public Animator animator;
     public float speed = 5f;
+    public float runMultiplier = 2;
     public float smoothTime = 0.1f;
     float currentVelocity;
     public Transform cam;
@@ -49,9 +50,10 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                controller.Move(moveDirection.normalized * speed * 1.6f * Time.deltaTime);
+                controller.Move(moveDirection.normalized * speed * runMultiplier * Time.deltaTime);
                 vertical *= 2;
                 horizontal *= 2;
+                animator.SetTrigger("Run"); 
             }
 
         }
@@ -81,8 +83,10 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime * dashSpeed);
 
-        animator.SetFloat("y", vertical, 1f, Time.deltaTime * 10f);
-        animator.SetFloat("x", horizontal, 1f, Time.deltaTime * 10f);
+        // animator.SetFloat("y", vertical, 1f, Time.deltaTime * 10f);
+        // animator.SetFloat("x", horizontal, 1f, Time.deltaTime * 10f);
+        animator.SetFloat("y", vertical);
+        animator.SetFloat("x", horizontal);
 
 
     }

@@ -57,21 +57,21 @@ public class Enemy : MonoBehaviour
                     {
                         case var expression when (randomAction < 10 ):
                             animator.SetFloat("y", 1, 1f, Time.deltaTime * 10f);
-                            Debug.Log("forward");
+                            // Debug.Log("forward");
                             break;
                         case var expression when (randomAction > 10 && randomAction < 12):
                             animator.SetFloat("x", 1, 1f, Time.deltaTime * 10f);
-                            Debug.Log("right");
+                            // Debug.Log("right");
 
                             break;
                         case var expression when (randomAction > 12 && randomAction < 14):
                             animator.SetFloat("y", -1, 1f, Time.deltaTime * 10f);
-                            Debug.Log("back");
+                            // Debug.Log("back");
 
                             break;
                         case var expression when (randomAction > 14 && randomAction < 16):
                             animator.SetFloat("x", -1, 1f, Time.deltaTime * 10f);
-                            Debug.Log("left");
+                            // Debug.Log("left");
 
                             break;
                     }

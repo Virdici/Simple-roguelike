@@ -20,23 +20,22 @@ public class Generator : MonoBehaviour
     public Module[] passages;
     public List<Connector> connectors;
     public int roomCount = 10;
-
     public float waitTime = 0.5f;
+    public string seed = "aaasdddf";
+
+
     private void Update()
     {
         if (collided)
         {
             RenewIfCollided();
-            
         }
 
     }
 
     public IEnumerator Starte(GameObject dungeonContainter)
     {
-
-        //Random.InitState(999); //seedowanie do zapisu danego układu WAŻNEE!!!! poprawić przy kolizjach (np 999)
-
+        Random.InitState(seed.GetHashCode());  //seedowanie do zapisu danego układu WAŻNEE!!!! poprawić przy kolizjach (np 999)
 
         DungeonContainter = dungeonContainter;
 
@@ -51,19 +50,19 @@ public class Generator : MonoBehaviour
         {
 
             var randomPassage = passages[Random.Range(0, passages.Length)];
-            var passage = (Module)Instantiate(randomPassage, new Vector3(2,  30, 1), Quaternion.identity);
+            var passage = (Module)Instantiate(randomPassage, new Vector3(2, 30, 1), Quaternion.identity);
             passage.transform.SetParent(DungeonContainter.transform);
             var passageConnector = passage.GetConnectors().ElementAt(Random.Range(0, passage.GetConnectors().Length));
-            
+
             AddDoor(selectedAvailableConnector, true);
             Connect(selectedAvailableConnector, passageConnector);
 
             yield return new WaitForSeconds(waitTime);
 
             var passageExitConnector = passage.GetConnectors().ElementAt(Random.Range(0, passage.GetConnectors().Length));
-                  
 
-            Module randomRoom ;
+
+            Module randomRoom;
             if (i == roomCount)
             {
                 randomRoom = BossRoom;
@@ -73,11 +72,11 @@ public class Generator : MonoBehaviour
             {
                 randomRoom = Rooms[Random.Range(0, Rooms.Length)];
             }
-            var room = (Module)Instantiate(randomRoom, new Vector3(2,  30, 1), Quaternion.identity);
+            var room = (Module)Instantiate(randomRoom, new Vector3(2, 30, 1), Quaternion.identity);
             room.transform.SetParent(DungeonContainter.transform);
             var roomConnector = room.GetConnectors().ElementAt(Random.Range(0, room.GetConnectors().Length));
 
-            
+
 
             if (i == 4)
             {
@@ -89,12 +88,12 @@ public class Generator : MonoBehaviour
             }
             room.index = i;
 
-            if(room.GetComponent<EnemySpawning>().maxEnemies == 0) 
+            if (room.GetComponent<EnemySpawning>().maxEnemies == 0)
             {
                 room.GetComponent<EnemySpawning>().maxEnemies = 2;
             }
-            
-            
+
+
             AddDoor(passageExitConnector, false);
             Connect(passageExitConnector, roomConnector);
 
@@ -187,7 +186,7 @@ public class Generator : MonoBehaviour
 
         collided = false;
         //ClearLog();
-        
+
         StartCoroutine(Starte(DungeonContainter));
     }
     // public void ClearLog()

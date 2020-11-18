@@ -16,11 +16,11 @@ public class DetectCollisions : MonoBehaviour
 
         Debug.DrawRay(col.contacts[0].point, col.contacts[0].normal);
         
-        // if (col.gameObject.layer != 12 && col.gameObject.layer != 11)
-        // {
-        //     //Debug.Log(col.gameObject.name);
-        //     generator.ChangeCollisionState();
-        // }
+        if (col.gameObject.layer != 12 && col.gameObject.layer != 11)
+        {
+            //Debug.Log(col.gameObject.name);
+            generator.ChangeCollisionState();
+        }
     }
 
     
