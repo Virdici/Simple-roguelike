@@ -1395,8 +1395,10 @@ MonoBehaviour:
   controller: {fileID: 5213996992032627754}
   animator: {fileID: 5213996992032627755}
   speed: 5
+  runMultiplier: 2
   smoothTime: 0.1
   cam: {fileID: 0}
+  isGrounded: 0
   groundDistance: 0.1
   groundCheck: {fileID: 8130654045095826306}
   groundMask:
@@ -2883,7 +2885,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8130654045704140514}
   - component: {fileID: 8130654045704140515}
-  - component: {fileID: 8130654045704140516}
+  - component: {fileID: 7889322274586065997}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -2919,7 +2921,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 39941934548707793, guid: 43b5900e7dbc22342a86edf8f0a53ffb, type: 3}
---- !u!114 &8130654045704140516
+--- !u!114 &7889322274586065997
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2928,9 +2930,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8130654045704140513}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a838bf0ad627b84488941b1a7cbfb0be, type: 3}
+  m_Script: {fileID: 11500000, guid: d9209f6f17928e74093a89adac2c29c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  active: 0
 --- !u!1 &8130654045963672537
 GameObject:
   m_ObjectHideFlags: 0

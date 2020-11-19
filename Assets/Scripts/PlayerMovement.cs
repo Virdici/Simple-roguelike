@@ -27,13 +27,10 @@ public class PlayerMovement : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         Cursor.lockState = CursorLockMode.Locked;
-
     }
 
     void Update()
     {
-
-
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
 
@@ -52,10 +49,9 @@ public class PlayerMovement : MonoBehaviour
             {
                 controller.Move(moveDirection.normalized * speed * runMultiplier * Time.deltaTime);
                 vertical *= 2;
-                horizontal *= 2;
+                horizontal *=  2;
                 animator.SetTrigger("Run"); 
             }
-
         }
         if (velocity.y < 0)
         {
@@ -75,7 +71,6 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            // velocity = new Vector3(0, velocity.y, 0);
             animator.SetBool("isEvading", false);
             velocity = Vector3.zero;
         }
@@ -83,19 +78,11 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime * dashSpeed);
 
-        // animator.SetFloat("y", vertical, 1f, Time.deltaTime * 10f);
-        // animator.SetFloat("x", horizontal, 1f, Time.deltaTime * 10f);
         animator.SetFloat("y", vertical);
         animator.SetFloat("x", horizontal);
-
-
     }
-
     public void ResetPositionz()
     {
         ResetPosition = true;
     }
-
-
-
 }

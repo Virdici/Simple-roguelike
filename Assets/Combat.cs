@@ -12,13 +12,13 @@ public class Combat : MonoBehaviour
     public void activateHitBoxEvent()
     {
         active = true;
-        // Debug.Log("activated hitbox");
+        Debug.Log("activated hitbox");
     }
 
     public void deactivateHitBoxEvent()
     {
         active = false;
-        // Debug.Log("Deactivated hitbox");
+        Debug.Log("Deactivated hitbox");
 
     }
 }
