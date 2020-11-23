@@ -15,89 +15,103 @@ public class Enemy : MonoBehaviour
     public Animator animator;
     int minDistanceFromPlayer = 2;
     public float currentDistance;
-    private bool attacking = false;
+    public bool isAttacking = false;
     private float timer;
     private float timerLimit;
     private int randomAction;
-    [SerializeField]
     private bool canChase = true;
     private bool didHeal = false;
     private EnemyState state;
+    public bool isAnimationMovement = false;
+    public bool goodHealth = true;
     void Start()
     {
         Agent = GetComponent<NavMeshAgent>();
         defeated = false;
-        animator.applyRootMotion = false;
+        animator.applyRootMotion = true;
     }
     void Update()    //navmesh navigation working
     {
         currentDistance = Vector3.Distance(transform.position, Player.transform.position);
-        // switch (state)
-        // {
-        //     case EnemyState.idle:
-        //         DoIdle();
-        //         if (Player.CurrentRoomIndex == index && defeated != true && attacking != true)
-        //         {
-        //             state = EnemyState.chase;
-        //         }
-        //         break;
-        //     case EnemyState.chase:
-        //         DoChase();
-        //         if (currentDistance >= 2 && currentDistance <= 4)
-        //         {
-        //             state = EnemyState.lightAttack;
-        //         }
-        //         break;
-        //     case EnemyState.lightAttack:
-        //         DoLightAttack();
-        //         state = EnemyState.chase;
-        //         break;
-        //     case EnemyState.strongAttack:
-        //         DoChase();
-        //         break;
-        //     case EnemyState.retreat:
-        //         DoChase();
-        //         break;
-        //     case EnemyState.heal:
-        //         DoChase();
-        //         break;
-        // }
+        switch (state)
+        {
+            case EnemyState.idle:
+                DoIdle();
+                if (Player.CurrentRoomIndex == index && isAttacking == false)
+                {
+                    state = EnemyState.chase;
+                }
 
-        DoChase();
-        // if (Player.CurrentRoomIndex == index && defeated != true && attacking != true)
-        // {
-        //     currentDistance = Vector3.Distance(transform.position, Player.transform.position);
-        //     // if (currentDistance > minDistanceFromPlayer && canChase == true)
-        //     // {
-        //     //     DoChase();
-        //     // }
+                break;
+            case EnemyState.chase:
+                DoChase();
+                if (currentDistance >= 1 && currentDistance <= 2)
+                {
+                    if (Random.Range(0, 10) <= 6)
+                    {
+                        state = EnemyState.lightAttack;
+                    }
+                    else
+                    {
+                        state = EnemyState.strongAttack;
+                    }
+                }
+                if (!goodHealth)
+                {
+                    state = EnemyState.retreat;
+                }
 
-        //     // if (currentDistance < minDistanceFromPlayer)
-        //     // {
-        //     //     DoLightAttack();
-        //     // }
+                break;
+            case EnemyState.lightAttack:
+                DoLightAttack();
+                if (currentDistance > 2 && isAttacking == false)
+                {
+                    state = EnemyState.chase;
+                }
+                if (!goodHealth)
+                {
+                    state = EnemyState.retreat;
+                }
 
-        //     // if (GetComponent<Health>().CurrentHP <= 30)
-        //     // {
-        //     //     canChase = false;
-        //     //     DoRetreat();
-        //     // }
+                break;
+            case EnemyState.strongAttack:
+                DoStrongAttack();
+                if (currentDistance > 2)
+                {
+                    state = EnemyState.chase;
+                }
+                if (!goodHealth)
+                {
+                    state = EnemyState.retreat;
+                }
 
-        //     // if (currentDistance >= 10 && didHeal == false)
-        //     // {
-        //     //     DoHeal();
-        //     //     if(GetComponent<Health>().CurrentHP > 30) canChase = true;
-        //     // }
+                break;
+            case EnemyState.retreat:
+                DoRetreat();
+                if (currentDistance >= 12)
+                {
+                    state = EnemyState.heal;
+                }
+                break;
+            case EnemyState.heal:
+                DoHeal();
+                state = EnemyState.idle;
+                break;
+        }
 
-
-        // }
+        if (GetComponent<Health>().CurrentHP <= 40)
+        {
+            goodHealth = false;
+        }
+        else
+        {
+            goodHealth = true;
+        }
 
         if (defeated)
         {
             GameObject.Destroy(gameObject);
         }
-
-
     }
 
     public enum EnemyState
@@ -109,85 +123,67 @@ public class Enemy : MonoBehaviour
         retreat,
         heal
     }
-
     void DoIdle()
     {
-        Agent.isStopped = true;
-        animator.SetFloat("y", 0);
-        animator.SetFloat("x", 0);
-
+        animator.SetBool("isWalking", false);
+        animator.SetBool("isHealing", false);
     }
     void DoChase()
     {
-        // LookAtTarget();
-
-        animator.SetFloat("y", 1, 1f, Time.deltaTime * 10f);
-        var target = PlayerMarker.transform.position - transform.position;
-        var look = Quaternion.LookRotation(target);
-        transform.rotation = Quaternion.Lerp(transform.rotation, look, 3f * Time.deltaTime);
-        currentDistance = Vector3.Distance(transform.position, Player.transform.position);
-
-
+        LookAtTarget();
         Agent.SetDestination(PlayerMarker.transform.position);
+        animator.SetBool("isWalking", true);
+        Debug.Log("chase");
     }
-
     void DoLightAttack()
     {
-        StartCoroutine(LightAttackRoutine());
-    }
-
-    IEnumerator LightAttackRoutine()
-    {
         LookAtTarget();
-        animator.SetFloat("y", 0, 1f, Time.deltaTime * 10f);
+        animator.SetBool("isWalking", false);
         animator.SetTrigger("attackLight");
-
-        yield return null;
-
+        Debug.Log("punching");
     }
-
     void DoStrongAttack()
     {
         LookAtTarget();
-        animator.SetFloat("y", 0, 1f, Time.deltaTime * 10f);
+        isAttacking = true;
+        animator.SetBool("isWalking", false);
         animator.SetTrigger("attackStrong");
     }
-
-    void DoRetreat(float stateTime)
+    void DoRetreat()
     {
-        // animator.SetFloat("y", -1, 1f, Time.deltaTime * 10f);
-        StartCoroutine(RetreatRoutine(2f));
-    }
+        LookAway();
+        animator.SetBool("isWalking", false);
+        animator.SetBool("isRetreating", true);
 
-    IEnumerator RetreatRoutine(float stateTime)
-    {
-        animator.SetFloat("y", -1, 1f, Time.deltaTime * 10f);
-        yield return new WaitForSeconds(stateTime);
+        Debug.Log("retreat");
     }
-
     void DoHeal()
     {
-        animator.SetFloat("y", 0, 1f, Time.deltaTime * 10f);
-        animator.SetTrigger("heal");
+        animator.SetBool("isRetreating", false);
+        if (didHeal == false)
+        {
+            animator.SetBool("isHealing", true);
+        }
+
         Debug.Log("healing");
         didHeal = true;
     }
-
     void LookAtTarget()
     {
         var target = PlayerMarker.transform.position - transform.position;
         var look = Quaternion.LookRotation(target);
         transform.rotation = Quaternion.Lerp(transform.rotation, look, 3f * Time.deltaTime);
     }
-
-
+    void LookAway()
+    {
+        var target = PlayerMarker.transform.position - transform.position;
+        var look = Quaternion.LookRotation(-target);
+        transform.rotation = Quaternion.Lerp(transform.rotation, look, 3f * Time.deltaTime);
+    }
     public void HealEvent()
     {
         GetComponent<Health>().CurrentHP += 60;
     }
-
-
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.tag == "Player")
@@ -195,216 +191,37 @@ public class Enemy : MonoBehaviour
             defeated = true;
         }
     }
-
     private void OnAnimatorMove()
     {
-        Agent.velocity = animator.deltaPosition / Time.deltaTime;
+        if (isAnimationMovement)
+            Agent.velocity = animator.deltaPosition / Time.deltaTime;
+    }
+    void StartAnimationMovementEvent()
+    {
+        isAnimationMovement = true;
+    }
+    void StopAnimationMovementEvent()
+    {
+        isAnimationMovement = false;
+    }
+    void StopWalkingEvent()
+    {
+        Agent.isStopped = true;
+        animator.SetBool("isWalking", false);
+
+    }
+    void ContinueWalkingEvent()
+    {
+        Agent.isStopped = false;
+        animator.SetBool("isWalking", true);
+    }
+    void StartAttack()
+    {
+        isAttacking = true;
+    }
+    void StopAttack()
+    {
+        isAttacking = false;
+        animator.SetBool("isLightAttack", false);
     }
 }
-
-
-
-// void Update()    //navmesh navigation working with some random actions NOT GOOD
-//     {
-//         if (Player.CurrentRoomIndex == index && defeated != true && attacking != true)
-//         {
-//             var target = PlayerMarker.transform.position - transform.position;
-//             var look = Quaternion.LookRotation(target);
-//             transform.rotation = Quaternion.Lerp(transform.rotation, look, 3f * Time.deltaTime);
-//             currentDistance = Vector3.Distance(transform.position, Player.transform.position);
-
-//             Agent.SetDestination(PlayerMarker.transform.position);
-
-//             if (Vector3.Distance(transform.position, Player.transform.position) <= minDistanceFromPlayer)
-//             {
-//                 Agent.isStopped = true;
-//                 // animator.SetBool("isWalking", false);
-//                 animator.SetFloat("y", 0, 1f, Time.deltaTime * 10f);
-//                 animator.SetTrigger("attackLight");
-
-//             }
-//             else
-//             {
-//                 Agent.isStopped = false;
-//                 // animator.SetBool("isWalking", true);
-//                 if (timer <= timerLimit)
-//                 {
-//                     timer += 1 * Time.deltaTime;
-//                     switch (randomAction)
-//                     {
-//                         case var expression when (randomAction < 10 ):
-//                             animator.SetFloat("y", 1, 1f, Time.deltaTime * 10f);
-//                             // Debug.Log("forward");
-//                             break;
-//                         case var expression when (randomAction > 10 && randomAction < 12):
-//                             animator.SetFloat("x", 1, 1f, Time.deltaTime * 10f);
-//                             // Debug.Log("right");
-
-//                             break;
-//                         case var expression when (randomAction > 12 && randomAction < 14):
-//                             animator.SetFloat("y", -1, 1f, Time.deltaTime * 10f);
-//                             // Debug.Log("back");
-
-//                             break;
-//                         case var expression when (randomAction > 14 && randomAction < 16):
-//                             animator.SetFloat("x", -1, 1f, Time.deltaTime * 10f);
-//                             // Debug.Log("left");
-
-//                             break;
-//                     }
-//                 }
-//                 else
-//                 {
-//                     randomAction = Random.Range(0,16);
-//                     if(randomAction>10)
-//                     {
-//                         timerLimit = Random.Range(4,8);
-//                     }
-//                     else
-//                     {
-//                         timerLimit = Random.Range(2,4);
-//                     }
-//                     timer = 0;
-
-//                 }
-//             }
-//         }
-
-//         if (defeated)
-//         {
-//             GameObject.Destroy(gameObject);
-//         }
-
-//         if (Input.GetKeyDown(KeyCode.C)) //enemy dash
-//         {
-//             currentDashTime = 0f;
-//             currentDashTime = 0;
-//             Agent.enabled = false;
-//             attacking = true;
-
-//         }
-
-//         if (currentDashTime < maxDashTime * 2)
-//         {
-//             Rigidbody.AddForce(transform.forward / 2, ForceMode.Impulse);
-//             currentDashTime += dashStoppingSpeed;
-//         }
-//         else
-//         {
-//             Agent.enabled = true;
-//             Rigidbody.velocity = Vector3.zero;
-//             attacking = false;
-//         }
-
-//     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// using System.Collections;
-// using System.Collections.Generic;
-// using System.Linq;
-// using UnityEngine;
-// using UnityEngine.AI;
-
-// public class Enemy : MonoBehaviour
-// {
-//     public bool defeated = false;
-//     public Player Player;
-//     public GameObject PlayerMarker;
-//     public int index;
-//     public Rigidbody Rigidbody;
-//     public NavMeshAgent Agent;
-//     public Animator animator;
-//     int minDistanceFromPlayer = 5;
-//     public float currentDistance;
-//     private bool attacking = false;
-//     private float timer;
-//     private float timerLimit;
-//     private int randomAction;
-//     void Start()
-//     {
-//         Agent = GetComponent<NavMeshAgent>();
-//         defeated = false;
-//     }
-//     void Update()    //navmesh navigation working
-//     {
-//         if (Player.CurrentRoomIndex == index && defeated != true && attacking != true)
-//         {
-//             var target = PlayerMarker.transform.position - transform.position;
-//             var look = Quaternion.LookRotation(target);
-//             transform.rotation = Quaternion.Lerp(transform.rotation, look, 3f * Time.deltaTime);
-//             currentDistance = Vector3.Distance(transform.position, Player.transform.position);
-
-//             Agent.SetDestination(PlayerMarker.transform.position);
-
-//             if (Vector3.Distance(transform.position, Player.transform.position) <= minDistanceFromPlayer)
-//             {
-//                 Agent.isStopped = true;
-//                 // animator.SetBool("isWalking", false);
-//                 animator.SetFloat("y", 0, 1f, Time.deltaTime * 10f);
-//                 animator.SetTrigger("attackLight");
-
-//             }
-//             else
-//             {
-//                 Agent.isStopped = false;
-//                 animator.SetFloat("y", 1, 1f, Time.deltaTime * 10f);
-
-//                 // animator.SetBool("isWalking", true);
-
-//             }
-//         }
-
-//         if (defeated)
-//         {
-//             GameObject.Destroy(gameObject);
-//         }
-
-//     }
-
-
-
-
-
-//     private void OnCollisionEnter(Collision collision)
-//     {
-//         if (collision.transform.tag == "Player")
-//         {
-//             defeated = true;
-//             //transform.GetComponentInChildren<GameObject>().GetComponent<Renderer>().material.color = Color.red;
-//             //Agent.SetDestination(transform.position);
-//         }
-//     }
-
-//     private void OnAnimatorMove()
-//     {
-//         Agent.velocity = animator.deltaPosition / Time.deltaTime;
-//     }
-// }
