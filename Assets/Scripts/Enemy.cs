@@ -13,24 +13,35 @@ public class Enemy : MonoBehaviour
     public Rigidbody Rigidbody;
     public NavMeshAgent Agent;
     public Animator animator;
-    int minDistanceFromPlayer = 2;
     public float currentDistance;
     public bool isAttacking = false;
-    private float timer;
-    private float timerLimit;
-    private int randomAction;
-    private bool canChase = true;
-    private bool didHeal = false;
-    private EnemyState state;
+    public bool didSpecial = false;
+    protected EnemyState state;
     public bool isAnimationMovement = false;
     public bool goodHealth = true;
-    void Start()
+    public float defenceMultiplier = 1f;
+    protected int attackPropability;
+    protected int lightAttackPropability = 6;
+    public virtual void Start()
     {
         Agent = GetComponent<NavMeshAgent>();
         defeated = false;
         animator.applyRootMotion = true;
     }
-    void Update()    //navmesh navigation working
+    public virtual void Update()
+    {
+        FSM();
+        if (GetComponent<Health>().CurrentHP <= 40)
+        {
+            goodHealth = false;
+        }
+        else
+        {
+            goodHealth = true;
+        }
+        attackPropability = Random.Range(0, 10);
+    }
+    public virtual void FSM()
     {
         currentDistance = Vector3.Distance(transform.position, Player.transform.position);
         switch (state)
@@ -41,13 +52,12 @@ public class Enemy : MonoBehaviour
                 {
                     state = EnemyState.chase;
                 }
-
                 break;
             case EnemyState.chase:
                 DoChase();
                 if (currentDistance >= 1 && currentDistance <= 2)
                 {
-                    if (Random.Range(0, 10) <= 6)
+                    if (attackPropability <= lightAttackPropability)
                     {
                         state = EnemyState.lightAttack;
                     }
@@ -56,11 +66,10 @@ public class Enemy : MonoBehaviour
                         state = EnemyState.strongAttack;
                     }
                 }
-                if (!goodHealth)
+                if (!goodHealth && !didSpecial)
                 {
                     state = EnemyState.retreat;
                 }
-
                 break;
             case EnemyState.lightAttack:
                 DoLightAttack();
@@ -68,11 +77,10 @@ public class Enemy : MonoBehaviour
                 {
                     state = EnemyState.chase;
                 }
-                if (!goodHealth)
+                if (!goodHealth && !didSpecial)
                 {
                     state = EnemyState.retreat;
                 }
-
                 break;
             case EnemyState.strongAttack:
                 DoStrongAttack();
@@ -80,40 +88,24 @@ public class Enemy : MonoBehaviour
                 {
                     state = EnemyState.chase;
                 }
-                if (!goodHealth)
+                if (!goodHealth && !didSpecial)
                 {
                     state = EnemyState.retreat;
                 }
-
                 break;
             case EnemyState.retreat:
                 DoRetreat();
                 if (currentDistance >= 12)
                 {
-                    state = EnemyState.heal;
+                    state = EnemyState.special;
                 }
                 break;
-            case EnemyState.heal:
-                DoHeal();
+            case EnemyState.special: //heal
+                DoSpecial();
                 state = EnemyState.idle;
                 break;
         }
-
-        if (GetComponent<Health>().CurrentHP <= 40)
-        {
-            goodHealth = false;
-        }
-        else
-        {
-            goodHealth = true;
-        }
-
-        if (defeated)
-        {
-            GameObject.Destroy(gameObject);
-        }
     }
-
     public enum EnemyState
     {
         idle,
@@ -121,107 +113,105 @@ public class Enemy : MonoBehaviour
         lightAttack,
         strongAttack,
         retreat,
-        heal
+        special,
+        backoff
     }
-    void DoIdle()
+    protected virtual void DoIdle()
     {
         animator.SetBool("isWalking", false);
         animator.SetBool("isHealing", false);
     }
-    void DoChase()
+    protected virtual void DoChase()
     {
         LookAtTarget();
         Agent.SetDestination(PlayerMarker.transform.position);
         animator.SetBool("isWalking", true);
-        Debug.Log("chase");
     }
-    void DoLightAttack()
+    protected virtual void DoLightAttack()
     {
         LookAtTarget();
         animator.SetBool("isWalking", false);
         animator.SetTrigger("attackLight");
-        Debug.Log("punching");
     }
-    void DoStrongAttack()
+    protected virtual void DoStrongAttack()
     {
         LookAtTarget();
-        isAttacking = true;
         animator.SetBool("isWalking", false);
         animator.SetTrigger("attackStrong");
     }
-    void DoRetreat()
+    protected virtual void DoRetreat()
     {
         LookAway();
         animator.SetBool("isWalking", false);
         animator.SetBool("isRetreating", true);
-
-        Debug.Log("retreat");
     }
-    void DoHeal()
+    protected virtual void DoSpecial()
     {
         animator.SetBool("isRetreating", false);
-        if (didHeal == false)
+        if (didSpecial == false)
         {
             animator.SetBool("isHealing", true);
         }
-
-        Debug.Log("healing");
-        didHeal = true;
+        didSpecial = true;
     }
-    void LookAtTarget()
+    protected virtual void LookAtTarget()
     {
         var target = PlayerMarker.transform.position - transform.position;
         var look = Quaternion.LookRotation(target);
         transform.rotation = Quaternion.Lerp(transform.rotation, look, 3f * Time.deltaTime);
     }
-    void LookAway()
+    protected virtual void LookAway()
     {
         var target = PlayerMarker.transform.position - transform.position;
         var look = Quaternion.LookRotation(-target);
         transform.rotation = Quaternion.Lerp(transform.rotation, look, 3f * Time.deltaTime);
     }
-    public void HealEvent()
+    protected virtual void HealEvent()
     {
         GetComponent<Health>().CurrentHP += 60;
     }
-    private void OnCollisionEnter(Collision collision)
+    protected virtual void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.tag == "Player")
         {
             defeated = true;
         }
     }
-    private void OnAnimatorMove()
+    protected virtual void OnAnimatorMove()
     {
         if (isAnimationMovement)
             Agent.velocity = animator.deltaPosition / Time.deltaTime;
     }
-    void StartAnimationMovementEvent()
+    protected virtual void StartAnimationMovementEvent()
     {
         isAnimationMovement = true;
     }
-    void StopAnimationMovementEvent()
+    protected virtual void StopAnimationMovementEvent()
     {
         isAnimationMovement = false;
     }
-    void StopWalkingEvent()
+    protected virtual void StopWalkingEvent()
     {
         Agent.isStopped = true;
         animator.SetBool("isWalking", false);
-
     }
-    void ContinueWalkingEvent()
+    protected virtual void ContinueWalkingEvent()
     {
         Agent.isStopped = false;
         animator.SetBool("isWalking", true);
     }
-    void StartAttack()
+    protected virtual void StartAttack()
     {
         isAttacking = true;
+        Agent.isStopped = true;
+        animator.SetBool("isWalking", false);
+        isAnimationMovement = true;
     }
-    void StopAttack()
+    protected virtual void StopAttack()
     {
         isAttacking = false;
-        animator.SetBool("isLightAttack", false);
+        Agent.isStopped = false;
+        animator.SetBool("isWalking", true);
+        isAnimationMovement = false;
     }
 }
