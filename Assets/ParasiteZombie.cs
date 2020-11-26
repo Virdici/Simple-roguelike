@@ -4,19 +4,11 @@ using UnityEngine;
 
 public class ParasiteZombie : Enemy
 {
-  
+    int screemChance;
+    public BoxCollider Detector;
     public override void Update()
     {
         FSM();
-        if (GetComponent<Health>().CurrentHP <= 60)
-        {
-            goodHealth = false;
-        }
-        else
-        {
-            goodHealth = true;
-        }
-
     }
     public override void FSM()  //naprawić randomowy atak, brak animacji wycofania i ragu
     {
@@ -32,30 +24,15 @@ public class ParasiteZombie : Enemy
                 break;
             case EnemyState.chase:
                 DoChase();
-                if (currentDistance > 1 && currentDistance < 2)
+                if (currentDistance > 0 && currentDistance < 2)
                 {
                     state = EnemyState.lightAttack;
-                   
-                }
-                if (!goodHealth && !didSpecial)
-                {
-                    state = EnemyState.special;
                 }
                 break;
             case EnemyState.lightAttack:
                 DoLightAttack();
-                if (currentDistance > 2 && isAttacking == false)
-                {
                     state = EnemyState.chase;
-                }
-                if (!goodHealth && !didSpecial)
-                {
-                    state = EnemyState.special;
-                }
-                break;
-            case EnemyState.special: //scream
-                DoSpecial();
-                state = EnemyState.idle;
+
                 break;
         }
     }
@@ -64,14 +41,9 @@ public class ParasiteZombie : Enemy
     {
         animator.SetBool("isWalking", false);
     }
-    protected override void DoSpecial()
+
+    public void detectPlayer()
     {
-        animator.SetTrigger("startRage");
-        if (didSpecial == false)
-        {
-            animator.speed = 1.4f;
-            Agent.speed = 2.4f;
-        }
-        didSpecial = true;
     }
+
 }

@@ -5,7 +5,6 @@ using UnityEngine;
 public class Combat : MonoBehaviour
 {
 
-    public Health health;
     public Animator animator;
     public bool active;
 

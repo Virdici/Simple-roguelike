@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
     public bool goodHealth = true;
     public float defenceMultiplier = 1f;
     protected int attackPropability;
-    protected int lightAttackPropability = 6;
+    protected int lightAttackPropability = 1;
     public virtual void Start()
     {
         Agent = GetComponent<NavMeshAgent>();
@@ -112,6 +112,7 @@ public class Enemy : MonoBehaviour
         chase,
         lightAttack,
         strongAttack,
+        strongAttack2,
         retreat,
         special,
         backoff
@@ -123,9 +124,9 @@ public class Enemy : MonoBehaviour
     }
     protected virtual void DoChase()
     {
+        animator.SetBool("isWalking", true);
         LookAtTarget();
         Agent.SetDestination(PlayerMarker.transform.position);
-        animator.SetBool("isWalking", true);
     }
     protected virtual void DoLightAttack()
     {
@@ -138,6 +139,12 @@ public class Enemy : MonoBehaviour
         LookAtTarget();
         animator.SetBool("isWalking", false);
         animator.SetTrigger("attackStrong");
+    }
+    protected virtual void DoStrongAttack2()
+    {
+        LookAtTarget();
+        animator.SetBool("isWalking", false);
+        animator.SetTrigger("attackStrong2");
     }
     protected virtual void DoRetreat()
     {
