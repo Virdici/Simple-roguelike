@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour
         Agent = GetComponent<NavMeshAgent>();
         defeated = false;
         animator.applyRootMotion = true;
+        Physics.IgnoreLayerCollision(12, 18);
     }
     public virtual void Update()
     {
@@ -115,7 +116,8 @@ public class Enemy : MonoBehaviour
         strongAttack2,
         retreat,
         special,
-        backoff
+        backoff,
+        reposition
     }
     protected virtual void DoIdle()
     {
@@ -160,6 +162,13 @@ public class Enemy : MonoBehaviour
             animator.SetBool("isHealing", true);
         }
         didSpecial = true;
+    }
+
+    protected virtual void DoReposition()
+    {
+        animator.SetBool("isRepositioning", true);
+        Vector3 repositionTo = transform.position + ((transform.position - Player.transform.position) * 1);
+        Agent.SetDestination(repositionTo);
     }
     protected virtual void LookAtTarget()
     {

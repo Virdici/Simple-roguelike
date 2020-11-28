@@ -7,7 +7,7 @@ public class Brute : Enemy
     public override void Update()
     {
         FSM();
-        Debug.Log(GetComponent<Health>().CurrentHP * 100 / GetComponent<Health>().HP);
+        //Debug.Log(GetComponent<Health>().CurrentHP * 100 / GetComponent<Health>().HP);
         if (GetComponent<Health>().CurrentHP <= (40))
         {
             goodHealth = false;

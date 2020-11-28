@@ -5,7 +5,6 @@ using UnityEngine;
 public class Combat : MonoBehaviour
 {
 
-    public Animator animator;
     public bool active;
 
     public void activateHitBoxEvent()

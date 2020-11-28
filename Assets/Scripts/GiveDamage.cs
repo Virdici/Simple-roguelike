@@ -8,7 +8,6 @@ public class GiveDamage : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.gameObject.layer == 18 && GetComponentInParent<Combat>().active)
         {
             Debug.Log("hit " + other.gameObject.transform.root.name);
