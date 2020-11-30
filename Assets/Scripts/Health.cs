@@ -15,14 +15,15 @@ public class Health : MonoBehaviour
     public void TakeDamage(int Damage)
     {
         CurrentHP -= Damage;
-        //healthBar.sizeDelta = new Vector2(CurrentHP, healthBar.sizeDelta.y);
+        healthBar.sizeDelta = new Vector2(CurrentHP, healthBar.sizeDelta.y);
         Debug.Log(CurrentHP);
 
 
     }
-    // Update is called once per frame
     void Update()
     {
-      if(CurrentHP <= 0) Object.Destroy(gameObject);
+        healthBar.sizeDelta = new Vector2(CurrentHP, healthBar.sizeDelta.y);
+
+        if (CurrentHP <= 0) Object.Destroy(gameObject);
     }
 }

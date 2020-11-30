@@ -37,7 +37,7 @@ public class MawJLaygo : Enemy
                 }
                 if (goodDistance)
                 {
-                    if (lightAttackPropability <= 10)
+                    if (lightAttackPropability <= 0)
                     {
                         state = EnemyState.lightAttack;
                     }

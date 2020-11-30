@@ -16,8 +16,6 @@ public class Projectile : MonoBehaviour
     {
         if (other.gameObject.layer == 12 && GetComponentInParent<Combat>().active && other.gameObject.tag == "Player")
         {
-            Debug.Log("hit " + other.gameObject.transform.root.name + "  " + other.gameObject.tag.ToString());
-            Debug.Log(other.gameObject.name);
             other.GetComponentInParent<Health>().TakeDamage(damage);
         }
         if(other.gameObject.tag != "Enemy")

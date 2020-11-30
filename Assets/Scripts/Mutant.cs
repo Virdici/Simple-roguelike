@@ -87,8 +87,6 @@ public class Mutant : Enemy
         animator.SetTrigger("startRage");
         if (didSpecial == false)
         {
-            // animator.speed = 1.4f;
-            // Agent.speed = 2.4f;
             animator.speed = 2.2f;
             Agent.speed = 3.5f;
         }
