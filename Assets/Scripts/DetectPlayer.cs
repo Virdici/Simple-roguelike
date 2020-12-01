@@ -12,14 +12,10 @@ public class DetectPlayer : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        
-
         if (other.gameObject.tag == "Player")
         {
             var player = (Player)GameObject.FindObjectOfType<Player>();
             player.CurrentRoomIndex = roomIndex;
         }
-
-        
     }
 }

@@ -31,7 +31,7 @@ public class MainMenu : MonoBehaviour
 
         while (GameController.IsDoneLoading != true)
         {
-            Debug.Log(operation.progress);
+            // Debug.Log(operation.progress);
             yield return null;
         }
     }

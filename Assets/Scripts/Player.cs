@@ -5,9 +5,6 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public int CurrentRoomIndex;
-    public GameObject CurrentRoom;
-    public bool defeated = false;
-
     public Animator animator;
     PlayerMovement movement;
 

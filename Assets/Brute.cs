@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Brute : Enemy
 {
+    public override void Start() {
+        lightAttackPropability = 7;
+    }
     public override void Update()
     {
         FSM();
@@ -50,19 +53,24 @@ public class Brute : Enemy
                 break;
             case EnemyState.lightAttack:
                 DoLightAttack();
-                state = EnemyState.idle;
+                if (currentDistance > 2)
+                {
+                    state = EnemyState.chase;
+                }
                 break;
             case EnemyState.strongAttack:
                 DoStrongAttack();
-                state = EnemyState.idle;
-                break;
-            case EnemyState.strongAttack2:
-                DoStrongAttack2();
-                state = EnemyState.idle;
+                if (currentDistance > 2)
+                {
+                    state = EnemyState.chase;
+                }
                 break;
             case EnemyState.special: //jump attack
                 DoSpecial();
-                state = EnemyState.idle;
+                if (currentDistance > 2)
+                {
+                    state = EnemyState.chase;
+                }
                 break;
         }
     }
@@ -76,5 +84,13 @@ public class Brute : Enemy
         LookAtTarget();
         animator.SetBool("isWalking", false);
         animator.SetTrigger("attackJump");
+    }
+
+    protected override void StopAttack()
+    {
+        isAttacking = false;
+        Agent.isStopped = false;
+        animator.SetBool("isWalking", true);
+        isAnimationMovement = false;
     }
 }

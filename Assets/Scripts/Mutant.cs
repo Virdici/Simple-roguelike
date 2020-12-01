@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Mutant : Enemy
 {
-    
+    public override void Start() {
+        lightAttackPropability = 1;
+    }
     public override void Update()
     {
         FSM();

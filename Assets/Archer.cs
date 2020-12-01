@@ -32,7 +32,7 @@ public class Archer : Enemy
                 {
                     state = EnemyState.reposition;
                 }
-                if (goodDistance)
+                if (goodDistance && Player.CurrentRoomIndex == index)
                 {
                     state = EnemyState.lightAttack;
                 }
@@ -85,7 +85,7 @@ public class Archer : Enemy
     }
     public void ShootArrow()
     {
-        var fireballObj = Instantiate(arrow, firingPlace.transform.position, Quaternion.identity);
-        fireballObj.GetComponent<Rigidbody>().AddForce(transform.forward * 30, ForceMode.Impulse);
+        var arrowObj = Instantiate(arrow, firingPlace.transform.position, Quaternion.identity);
+        arrowObj.GetComponent<Rigidbody>().AddForce(transform.forward * 30, ForceMode.Impulse);
     }
 }

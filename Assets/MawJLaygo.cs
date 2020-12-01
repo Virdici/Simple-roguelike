@@ -7,9 +7,11 @@ public class MawJLaygo : Enemy
     private bool goodDistance;
     public GameObject fireball;
     public GameObject fireArea;
-
     public GameObject firingPlace;
 
+    public override void Start() {
+        lightAttackPropability = 8;
+    }
     public override void Update()
     {
         FSM();
@@ -35,9 +37,9 @@ public class MawJLaygo : Enemy
                 {
                     state = EnemyState.reposition;
                 }
-                if (goodDistance)
+                if (goodDistance && Player.CurrentRoomIndex == index)
                 {
-                    if (lightAttackPropability <= 0)
+                    if (attackPropability <= lightAttackPropability)
                     {
                         state = EnemyState.lightAttack;
                     }
