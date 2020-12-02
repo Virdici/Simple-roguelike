@@ -40,10 +40,6 @@ public class Generator : MonoBehaviour
 
     public IEnumerator Starte(GameObject dungeonContainter)
     {
-        //Random.InitState(seed.GetHashCode());  //seedowanie do zapisu danego układu WAŻNEE!!!! poprawić przy kolizjach (np 999) 
-        //Debug.Log(Random.state.ToString());
-        // r = new System.Random(seed.GetHashCode());
-
         postMan = GameObject.Find("Sender").GetComponent<ScenePostMan>();
         Debug.Log(postMan.seed);
         r = new System.Random(postMan.seed.GetHashCode());
@@ -57,17 +53,13 @@ public class Generator : MonoBehaviour
         var availableConnectors = new List<Connector>(firstModule.GetConnectors());
         playerObject.transform.position = new Vector3(firstModule.transform.position.x, firstModule.transform.position.y + 1, firstModule.transform.position.z);
         playerObject.transform.rotation = Quaternion.identity;
-        // var selectedAvailableConnector = availableConnectors.ElementAt(Random.Range(0, availableConnectors.Count));
         var selectedAvailableConnector = availableConnectors.ElementAt(r.Next(0, availableConnectors.Count));
         int i = 1;
         while (i <= roomCount)
         {
-
-            // var randomPassage = passages[Random.Range(0, passages.Length)];
             var randomPassage = passages[r.Next(0, passages.Length)];
             var passage = (Module)Instantiate(randomPassage, new Vector3(2, 30, 1), Quaternion.identity);
             passage.transform.SetParent(DungeonContainter.transform);
-            // var passageConnector = passage.GetConnectors().ElementAt(Random.Range(0, passage.GetConnectors().Length));
             var passageConnector = passage.GetConnectors().ElementAt(r.Next(0, passage.GetConnectors().Length));
 
             AddDoor(selectedAvailableConnector, true);
@@ -75,7 +67,6 @@ public class Generator : MonoBehaviour
 
             yield return new WaitForSeconds(waitTime);
 
-            // var passageExitConnector = passage.GetConnectors().ElementAt(Random.Range(0, passage.GetConnectors().Length));
             var passageExitConnector = passage.GetConnectors().ElementAt(r.Next(0, passage.GetConnectors().Length));
 
 
@@ -92,10 +83,7 @@ public class Generator : MonoBehaviour
             // }
             var room = (Module)Instantiate(randomRoom, new Vector3(2, 30, 1), Quaternion.identity);
             room.transform.SetParent(DungeonContainter.transform);
-            // var roomConnector = room.GetConnectors().ElementAt(Random.Range(0, room.GetConnectors().Length));
             var roomConnector = room.GetConnectors().ElementAt(r.Next(0, room.GetConnectors().Length));
-
-
 
             if (i == 4)
             {
@@ -118,7 +106,6 @@ public class Generator : MonoBehaviour
 
             yield return new WaitForSeconds(waitTime);
 
-            // selectedAvailableConnector = DungeonContainter.GetComponentsInChildren<Connector>().ToList().ElementAt(Random.Range(0, DungeonContainter.GetComponentsInChildren<Connector>().Length));
             selectedAvailableConnector = DungeonContainter.GetComponentsInChildren<Connector>().ToList().ElementAt(r.Next(0, DungeonContainter.GetComponentsInChildren<Connector>().Length));
             i++;
         }
@@ -128,7 +115,6 @@ public class Generator : MonoBehaviour
     }
     private void AddDoor(Connector connector, bool reverse)
     {
-        // var door = (Door)Instantiate(Door, new Vector3(200, Random.Range(1, 400) * 30, 1), transform.rotation);
         var door = (Door)Instantiate(Door, new Vector3(200, r.Next(1, 400) * 30, 1), transform.rotation);
         door.transform.SetParent(DungeonContainter.transform);
         PlaceDoor(connector, door.GetConnectors().FirstOrDefault(), reverse);
@@ -177,7 +163,6 @@ public class Generator : MonoBehaviour
             var newSeal = (Module)Instantiate(Seal, new Vector3(2, UnityEngine.Random.Range(1, 400) * 30, 1), transform.rotation);
             newSeal.transform.SetParent(DungeonContainter.transform);
             var secondModuleConnectors = newSeal.GetConnectors();
-            // var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(UnityEngine.Random.Range(0, secondModuleConnectors.Length));
             var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(r.Next(0, secondModuleConnectors.Length));
             Connect(end, connectorToConnect);
         }

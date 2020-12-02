@@ -28,6 +28,7 @@ public class GameController : MonoBehaviour
         playerObject = GameObject.Find("PlayerObject").GetComponent<PlayerMovement>();
         postMan = GameObject.Find("Sender").GetComponent<ScenePostMan>();
 
+        maxLevel = postMan.levels;
         DoneLoading = IsDoneLoading;
         // Physics.IgnoreLayerCollision(11, 16);
         // Physics.IgnoreLayerCollision(12, 16);
@@ -54,11 +55,15 @@ public class GameController : MonoBehaviour
             currentLevel++;
         }
 
-        
 
-        if (currentLevel == 3)
+        if (currentLevel == maxLevel)
         {
             SceneManager.LoadSceneAsync(2);
+        }
+
+        if(playerObject == null)
+        {
+            SceneManager.LoadSceneAsync(3);
         }
 
         DoneLoading = IsDoneLoading;
