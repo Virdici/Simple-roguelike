@@ -46,19 +46,19 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-        // if (Enemies.GetComponentsInChildren<Enemy>().Length == 0 && DoneLoading)
-        // {
-        //     GameController.IsDoneLoading = false;
-        //     generator.NewDung();
-        //     playerObject.ResetPositionz();
-        //     currentLevel++;
-        // }
+        if (Enemies.GetComponentsInChildren<Enemy>().Length == 0 && DoneLoading)
+        {
+            GameController.IsDoneLoading = false;
+            generator.NewDung();
+            playerObject.ResetPositionz();
+            currentLevel++;
+        }
 
         
 
         if (currentLevel == 3)
         {
-            // SceneManager.LoadSceneAsync(2);
+            SceneManager.LoadSceneAsync(2);
         }
 
         DoneLoading = IsDoneLoading;

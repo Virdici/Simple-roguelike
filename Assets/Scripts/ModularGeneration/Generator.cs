@@ -23,7 +23,10 @@ public class Generator : MonoBehaviour
     public float waitTime = 0.5f;
     public string seed = "aaasdddf";
     public GameController controller;
+    ScenePostMan postMan;
     System.Random r;
+
+    public int maxEnemies;
 
 
     private void Update()
@@ -40,9 +43,13 @@ public class Generator : MonoBehaviour
         //Random.InitState(seed.GetHashCode());  //seedowanie do zapisu danego układu WAŻNEE!!!! poprawić przy kolizjach (np 999) 
         //Debug.Log(Random.state.ToString());
         // r = new System.Random(seed.GetHashCode());
-        var postMan = GameObject.Find("Sender").GetComponent<ScenePostMan>();
+
+        postMan = GameObject.Find("Sender").GetComponent<ScenePostMan>();
         Debug.Log(postMan.seed);
         r = new System.Random(postMan.seed.GetHashCode());
+        roomCount = postMan.roomCount;
+        maxEnemies = postMan.enemiesMaxCount;
+
         DungeonContainter = dungeonContainter;
 
         var firstModule = (Module)Instantiate(startingModule, dungeonContainter.transform.position, Quaternion.identity);
@@ -102,7 +109,7 @@ public class Generator : MonoBehaviour
 
             if (room.GetComponent<EnemySpawning>().maxEnemies == 0)
             {
-                room.GetComponent<EnemySpawning>().maxEnemies = 2;
+                room.GetComponent<EnemySpawning>().maxEnemies = maxEnemies;
             }
 
 
@@ -198,10 +205,10 @@ public class Generator : MonoBehaviour
         {
             GameObject.Destroy(child.gameObject);
         }
-
+        
         collided = false;
         //ClearLog();
-        seed +="a";
+        postMan.seed +="a";
 
         StartCoroutine(Starte(DungeonContainter));
     }

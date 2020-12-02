@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class MainMenu : MonoBehaviour
 {
+    public ScenePostMan postMan;
     public void StartGame()
     {
         StartCoroutine(LoadAsync());
