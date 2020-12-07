@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 18
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7368961222702287999
 Transform:
   m_ObjectHideFlags: 0
@@ -108,7 +108,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 18
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1821521848733309820
 Transform:
   m_ObjectHideFlags: 0
@@ -511,8 +511,10 @@ MonoBehaviour:
   enemy: {fileID: 484418832326403229, guid: 9a6de8829dae7b54991c951007bf5451, type: 3}
   boss: {fileID: 0}
   EnemyContainer: {fileID: 0}
+  BossContainer: {fileID: 0}
   Filter: {fileID: 3091412022732616462}
   maxEnemies: 0
+  isBossRoom: 0
 --- !u!64 &3465248823415998328
 MeshCollider:
   m_ObjectHideFlags: 0

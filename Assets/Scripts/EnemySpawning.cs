@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,6 +7,7 @@ using UnityEngine.AI;
 public class EnemySpawning : MonoBehaviour
 {
     public Enemy enemy;
+    public Enemy[] enemies;
     public Enemy boss;
     public GameObject EnemyContainer;
     public GameObject BossContainer;
@@ -32,7 +34,7 @@ public class EnemySpawning : MonoBehaviour
         SpawnMesh = Filter.transform.GetComponent<MeshFilter>().mesh;
         vertices = SpawnMesh.vertices;
 
-        for (int i = 0; i <= Random.Range(0, maxEnemies); i++)
+        for (int i = 0; i <= Random.Range(1, maxEnemies); i++)
         {
             Vector3 randVex = transform.TransformPoint(vertices[Random.Range(0, vertices.Length)]);
             Vector3 rand = new Vector3(randVex.x, randVex.y - 1, randVex.z);
@@ -46,7 +48,9 @@ public class EnemySpawning : MonoBehaviour
             }
             else
             { 
-                enem = (Enemy)Instantiate(enemy, rand, Quaternion.identity);
+                var randomEnemy = enemies[Random.Range(0, enemies.Length)]; 
+
+                enem = (Enemy)Instantiate(randomEnemy, rand, Quaternion.identity);
                 enem.transform.SetParent(EnemyContainer.transform);
                 enem.index = transform.GetComponentInParent<Module>().index;
                 transform.GetComponentInParent<Module>().Enemies.Add(enem);

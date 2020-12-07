@@ -36,7 +36,7 @@ public class Module : MonoBehaviour
 
     private void Update()
     {
-        DefeatedEnemies = Enemies.Where(e => e.defeated == true).Count();
+        DefeatedEnemies = Enemies.Where(e => e == null).Count();
         if (Enemies.Count == DefeatedEnemies)
         {
             AllenemiesDefeated = true;

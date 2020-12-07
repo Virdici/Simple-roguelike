@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using UnityEngine.AI;
+using System;
 
 public class Generator : MonoBehaviour
 {
@@ -14,29 +15,36 @@ public class Generator : MonoBehaviour
     public Door Door;
     public GameObject DungeonContainter;
     public GameObject playerObject;
-
     public Module[] Rooms;
     public Module BossRoom;
     public Module[] passages;
     public List<Connector> connectors;
     public int roomCount = 10;
-
     public float waitTime = 0.5f;
+    public string seed = "aaasdddf";
+    public GameController controller;
+    ScenePostMan postMan;
+    System.Random r;
+
+    public int maxEnemies;
+
+
     private void Update()
     {
         if (collided)
         {
             RenewIfCollided();
-            
         }
 
     }
 
     public IEnumerator Starte(GameObject dungeonContainter)
     {
-
-        //Random.InitState(999); //seedowanie do zapisu danego układu WAŻNEE!!!! poprawić przy kolizjach (np 999)
-
+        postMan = GameObject.Find("Sender").GetComponent<ScenePostMan>();
+        Debug.Log(postMan.seed);
+        r = new System.Random(postMan.seed.GetHashCode());
+        roomCount = postMan.roomCount;
+        maxEnemies = postMan.enemiesMaxCount;
 
         DungeonContainter = dungeonContainter;
 
@@ -45,39 +53,37 @@ public class Generator : MonoBehaviour
         var availableConnectors = new List<Connector>(firstModule.GetConnectors());
         playerObject.transform.position = new Vector3(firstModule.transform.position.x, firstModule.transform.position.y + 1, firstModule.transform.position.z);
         playerObject.transform.rotation = Quaternion.identity;
-        var selectedAvailableConnector = availableConnectors.ElementAt(Random.Range(0, availableConnectors.Count));
+        var selectedAvailableConnector = availableConnectors.ElementAt(r.Next(0, availableConnectors.Count));
         int i = 1;
         while (i <= roomCount)
         {
-
-            var randomPassage = passages[Random.Range(0, passages.Length)];
-            var passage = (Module)Instantiate(randomPassage, new Vector3(2,  30, 1), Quaternion.identity);
+            var randomPassage = passages[r.Next(0, passages.Length)];
+            var passage = (Module)Instantiate(randomPassage, new Vector3(2, 30, 1), Quaternion.identity);
             passage.transform.SetParent(DungeonContainter.transform);
-            var passageConnector = passage.GetConnectors().ElementAt(Random.Range(0, passage.GetConnectors().Length));
-            
+            var passageConnector = passage.GetConnectors().ElementAt(r.Next(0, passage.GetConnectors().Length));
+
             AddDoor(selectedAvailableConnector, true);
             Connect(selectedAvailableConnector, passageConnector);
 
             yield return new WaitForSeconds(waitTime);
 
-            var passageExitConnector = passage.GetConnectors().ElementAt(Random.Range(0, passage.GetConnectors().Length));
-                  
+            var passageExitConnector = passage.GetConnectors().ElementAt(r.Next(0, passage.GetConnectors().Length));
 
-            Module randomRoom ;
-            if (i == roomCount)
-            {
-                randomRoom = BossRoom;
-                randomRoom.GetComponent<EnemySpawning>().isBossRoom = true;
-            }
-            else
-            {
-                randomRoom = Rooms[Random.Range(0, Rooms.Length)];
-            }
-            var room = (Module)Instantiate(randomRoom, new Vector3(2,  30, 1), Quaternion.identity);
+
+            Module randomRoom;
+            // if (i == roomCount)
+            // {
+            //     randomRoom = BossRoom;
+            //     randomRoom.GetComponent<EnemySpawning>().isBossRoom = true;
+            // }
+            // else
+            // {
+                // randomRoom = Rooms[Random.Range(0, Rooms.Length)];
+                randomRoom = Rooms[r.Next(0, Rooms.Length)];
+            // }
+            var room = (Module)Instantiate(randomRoom, new Vector3(2, 30, 1), Quaternion.identity);
             room.transform.SetParent(DungeonContainter.transform);
-            var roomConnector = room.GetConnectors().ElementAt(Random.Range(0, room.GetConnectors().Length));
-
-            
+            var roomConnector = room.GetConnectors().ElementAt(r.Next(0, room.GetConnectors().Length));
 
             if (i == 4)
             {
@@ -89,18 +95,18 @@ public class Generator : MonoBehaviour
             }
             room.index = i;
 
-            if(room.GetComponent<EnemySpawning>().maxEnemies == 0) 
+            if (room.GetComponent<EnemySpawning>().maxEnemies == 0)
             {
-                room.GetComponent<EnemySpawning>().maxEnemies = 2;
+                room.GetComponent<EnemySpawning>().maxEnemies = maxEnemies;
             }
-            
-            
+
+
             AddDoor(passageExitConnector, false);
             Connect(passageExitConnector, roomConnector);
 
             yield return new WaitForSeconds(waitTime);
 
-            selectedAvailableConnector = DungeonContainter.GetComponentsInChildren<Connector>().ToList().ElementAt(Random.Range(0, DungeonContainter.GetComponentsInChildren<Connector>().Length));
+            selectedAvailableConnector = DungeonContainter.GetComponentsInChildren<Connector>().ToList().ElementAt(r.Next(0, DungeonContainter.GetComponentsInChildren<Connector>().Length));
             i++;
         }
         connectors = DungeonContainter.GetComponentsInChildren<Connector>().ToList();
@@ -109,7 +115,7 @@ public class Generator : MonoBehaviour
     }
     private void AddDoor(Connector connector, bool reverse)
     {
-        var door = (Door)Instantiate(Door, new Vector3(200, Random.Range(1, 400) * 30, 1), transform.rotation);
+        var door = (Door)Instantiate(Door, new Vector3(200, r.Next(1, 400) * 30, 1), transform.rotation);
         door.transform.SetParent(DungeonContainter.transform);
         PlaceDoor(connector, door.GetConnectors().FirstOrDefault(), reverse);
     }
@@ -118,14 +124,17 @@ public class Generator : MonoBehaviour
     {
         var newModule = DoorConnector.transform.parent;
         var objectToConnectVector = -ExitConnector.transform.forward;
-        var angle1 = Vector3.Angle(Vector3.forward, objectToConnectVector) * Mathf.Sign(objectToConnectVector.x);
-        var angle2 = Vector3.Angle(Vector3.forward, DoorConnector.transform.forward) * Mathf.Sign(DoorConnector.transform.forward.x);
-        newModule.RotateAround(DoorConnector.transform.position, Vector3.up, angle1 - angle2);
+
+        var desiredAngle = Vector3.Angle(Vector3.forward, objectToConnectVector) * Mathf.Sign(objectToConnectVector.x);
+        var actualAngle = Vector3.Angle(Vector3.forward, DoorConnector.transform.forward) * Mathf.Sign(DoorConnector.transform.forward.x);
+        newModule.RotateAround(DoorConnector.transform.position, Vector3.up, desiredAngle - actualAngle);
+
         var correctPosition = ExitConnector.transform.position - DoorConnector.transform.position;
         if (reverse)
         {
             newModule.Rotate(Vector3.up, 180f);
         }
+
         newModule.transform.position += correctPosition;
         Destroy(DoorConnector);
     }
@@ -157,7 +166,7 @@ public class Generator : MonoBehaviour
             var newSeal = (Module)Instantiate(Seal, new Vector3(2, UnityEngine.Random.Range(1, 400) * 30, 1), transform.rotation);
             newSeal.transform.SetParent(DungeonContainter.transform);
             var secondModuleConnectors = newSeal.GetConnectors();
-            var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(UnityEngine.Random.Range(0, secondModuleConnectors.Length));
+            var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(r.Next(0, secondModuleConnectors.Length));
             Connect(end, connectorToConnect);
         }
         GameController.IsDoneLoading = true;
@@ -184,10 +193,11 @@ public class Generator : MonoBehaviour
         {
             GameObject.Destroy(child.gameObject);
         }
-
+        
         collided = false;
         //ClearLog();
-        
+        postMan.seed +="a";
+
         StartCoroutine(Starte(DungeonContainter));
     }
     // public void ClearLog()

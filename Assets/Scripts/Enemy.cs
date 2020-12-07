@@ -6,151 +6,157 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-
     public bool defeated = false;
     public Player Player;
     public GameObject PlayerMarker;
     public int index;
-
-
     public Rigidbody Rigidbody;
     public NavMeshAgent Agent;
+    public Animator animator;
+    public float currentDistance;
+    public bool isAttacking = false;
+    public bool didSpecial = false;
+    protected EnemyState state;
+    public bool isAnimationMovement = false;
+    public bool goodHealth = true;
+    public float defenceMultiplier = 1f;
+    protected int attackPropability;
+    protected int lightAttackPropability;
 
-
-    int MaxDist = 5;
-    //int MinDist = 5;
-
-    public float dist;
-    public const float maxDashTime = 1f;
-    private float currentDashTime= maxDashTime;
-    private float dashStoppingSpeed = 0.05f;
-
-    private bool attacking = false;
-
-    void Start()
+    public virtual void Start()
     {
         Agent = GetComponent<NavMeshAgent>();
         defeated = false;
+        animator.applyRootMotion = true;
+        Physics.IgnoreLayerCollision(12, 18);
     }
-
-
-
-    // void Update()
-    // {
-
-    // if (Player.CurrentRoomIndex == index && defeated != true)
-    // {
-    //     var target = PlayerMarker.transform.position - transform.position;
-    //     target.y = 0;
-    //     var look = Quaternion.LookRotation(target);
-
-    //     Vector3 correctLook = new Vector3(look.eulerAngles.x,0,look.eulerAngles.z);
-
-    //     transform.rotation = Quaternion.Lerp(transform.rotation, look, 2f * Time.deltaTime);
-
-
-    //     if (Vector3.Distance(transform.position, Player.transform.position) >= MinDist)
-    //     {
-    //         var targetPosition = new Vector3(Player.transform.position.x, transform.position.y, Player.transform.position.z);
-    //         transform.position = Vector3.MoveTowards(transform.position, targetPosition, 3f * Time.deltaTime);
-    //         if (Vector3.Distance(transform.position, Player.transform.position) <= MaxDist)
-    //         {
-    //             transform.position = transform.position;
-    //         }
-    //     }
-    // }   working chase without navmesh
-
-
-
-
-    void Update()    //navmesh navigation working
+    public virtual void Update()
     {
-
-        if (Player.CurrentRoomIndex == index && defeated != true && attacking != true)
+    }
+    public virtual void FSM()
+    {
+    }
+    public enum EnemyState
+    {
+        idle,
+        chase,
+        lightAttack,
+        strongAttack,
+        strongAttack2,
+        retreat,
+        special,
+        backoff,
+        reposition
+    }
+    protected virtual void DoIdle()
+    {
+        animator.SetBool("isWalking", false);
+        animator.SetBool("isHealing", false);
+    }
+    protected virtual void DoChase()
+    {
+        animator.SetBool("isWalking", true);
+        LookAtTarget();
+        Agent.SetDestination(PlayerMarker.transform.position);
+    }
+    protected virtual void DoLightAttack()
+    {
+        LookAtTarget();
+        animator.SetBool("isWalking", false);
+        animator.SetTrigger("attackLight");
+    }
+    protected virtual void DoStrongAttack()
+    {
+        LookAtTarget();
+        animator.SetBool("isWalking", false);
+        animator.SetTrigger("attackStrong");
+    }
+    protected virtual void DoStrongAttack2()
+    {
+        LookAtTarget();
+        animator.SetBool("isWalking", false);
+        animator.SetTrigger("attackStrong2");
+    }
+    protected virtual void DoRetreat()
+    {
+        LookAway();
+        animator.SetBool("isWalking", false);
+        animator.SetBool("isRetreating", true);
+    }
+    protected virtual void DoSpecial()
+    {
+        animator.SetBool("isRetreating", false);
+        if (didSpecial == false)
         {
-            var target = PlayerMarker.transform.position - transform.position;
-            var look = Quaternion.LookRotation(target);
-            transform.rotation = Quaternion.Lerp(transform.rotation, look, 3f * Time.deltaTime);
-            dist = Vector3.Distance(transform.position, Player.transform.position);
-
-            
-            Agent.SetDestination(PlayerMarker.transform.position);
-
-            if (Vector3.Distance(transform.position, Player.transform.position) <= MaxDist)
-            {
-                Agent.isStopped = true;
-            }
-            else
-            {
-                Agent.isStopped = false;
-
-            }
-
-            
-
+            animator.SetBool("isHealing", true);
         }
-
-        if (defeated)
-        {
-            GameObject.Destroy(gameObject);
-        }
-
-        if (Input.GetKeyDown(KeyCode.C)) //enemy dash
-        {   
-            currentDashTime = 0f;
-            currentDashTime = 0;
-            Agent.enabled = false;
-            attacking = true;
-
-        }
-
-        if(currentDashTime < maxDashTime*2)
-        {
-            // var target = PlayerMarker.transform.position - transform.position;
-            // target.y = 0;
-            // var look = Quaternion.LookRotation(target);
-
-            // Vector3 direction = new Vector3(look.eulerAngles.x,0,look.eulerAngles.z);
-            // transform.rotation = Quaternion.Lerp(transform.rotation, look, 2f * Time.deltaTime);
-
-            // Vector3 movement = transform.forward * Time.deltaTime * 10f;
-
-            // Agent.Move(movement);
-
-            Rigidbody.AddForce(transform.forward/2,ForceMode.Impulse);
-            currentDashTime += dashStoppingSpeed;     
-        } else {
-            Agent.enabled = true;
-            Rigidbody.velocity = Vector3.zero;
-            attacking = false;
-
-        }
-        
+        didSpecial = true;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    protected virtual void DoReposition()
+    {
+        animator.SetBool("isRepositioning", true);
+        Vector3 repositionTo = transform.position + ((transform.position - Player.transform.position) * 1);
+        Agent.SetDestination(repositionTo);
+    }
+    protected virtual void LookAtTarget()
+    {
+        var target = PlayerMarker.transform.position - transform.position;
+        var look = Quaternion.LookRotation(target);
+        transform.rotation = Quaternion.Lerp(transform.rotation, look, 3f * Time.deltaTime);
+    }
+    protected virtual void LookAway()
+    {
+        var target = PlayerMarker.transform.position - transform.position;
+        var look = Quaternion.LookRotation(-target);
+        transform.rotation = Quaternion.Lerp(transform.rotation, look, 3f * Time.deltaTime);
+    }
+    protected virtual void HealEvent()
+    {
+        GetComponent<Health>().CurrentHP += 60;
+    }
+    protected virtual void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.tag == "Player")
         {
             defeated = true;
-            //transform.GetComponentInChildren<GameObject>().GetComponent<Renderer>().material.color = Color.red;
-            //Agent.SetDestination(transform.position);
-
-
         }
     }
-
-    //public void DealDamage(int damage)
-    //{
-    //    if (this.CurrentHP >= 0)
-    //    {
-    //        this.HP -= damage;
-    //    }
-    //    else
-    //    {
-    //        defeated = true;
-    //        //transform.GetComponentInChildren<GameObject>().GetComponent<Renderer>().material.color = Color.red;
-    //        Agent.SetDestination(transform.position);
-    //    }
-    //}
+    protected virtual void OnAnimatorMove()
+    {
+        if (isAnimationMovement)
+            Agent.velocity = animator.deltaPosition / Time.deltaTime;
+    }
+    protected virtual void StartAnimationMovementEvent()
+    {
+        isAnimationMovement = true;
+    }
+    protected virtual void StopAnimationMovementEvent()
+    {
+        isAnimationMovement = false;
+    }
+    protected virtual void StopWalkingEvent()
+    {
+        Agent.isStopped = true;
+        animator.SetBool("isWalking", false);
+    }
+    protected virtual void ContinueWalkingEvent()
+    {
+        Agent.isStopped = false;
+        animator.SetBool("isWalking", true);
+    }
+    protected virtual void StartAttack()
+    {
+        isAttacking = true;
+        Agent.isStopped = true;
+        animator.SetBool("isWalking", false);
+        isAnimationMovement = true;
+    }
+    protected virtual void StopAttack()
+    {
+        isAttacking = false;
+        Agent.isStopped = false;
+        animator.SetBool("isWalking", true);
+        isAnimationMovement = false;
+    }
 }
