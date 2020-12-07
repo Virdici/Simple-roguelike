@@ -351,8 +351,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 200722320}
-  m_LocalRotation: {x: -0.0062173405, y: 0.989134, z: -0.14018078, w: -0.04387038}
-  m_LocalPosition: {x: 0.50455266, y: 2.7805939, z: 10.952745}
+  m_LocalRotation: {x: 0.018058995, y: 0.9737155, z: -0.21124144, w: 0.0832415}
+  m_LocalPosition: {x: -1.0184187, y: 3.170765, z: 11.188861}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3494,6 +3494,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 685301222}
+  enemies: []
   boss: {fileID: 0}
   EnemyContainer: {fileID: 854273533}
   BossContainer: {fileID: 0}
@@ -3538,8 +3539,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentRoomIndex: 0
-  CurrentRoom: {fileID: 0}
-  defeated: 0
   animator: {fileID: 0}
 --- !u!114 &1461404904
 MonoBehaviour:
@@ -3936,6 +3935,8 @@ MonoBehaviour:
   roomCount: 3
   waitTime: 0.5
   seed: aaasdddf
+  controller: {fileID: 0}
+  maxEnemies: 0
 --- !u!114 &1675503647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3948,8 +3949,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a1cb531c420704d85e76a8ae3378ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  postMan: {fileID: 0}
   DoneLoading: 0
-  DungeonContainter: {fileID: 1996737142}
+  dungeonContainter: {fileID: 0}
   enemiesDefeated: 0
   Enemies: {fileID: 854273533}
   generator: {fileID: 1675503646}
@@ -5489,7 +5491,7 @@ PrefabInstance:
     - target: {fileID: 2851583949085176163, guid: d9767cf0218c7c746b0a0071d895f95c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3231628307302525913, guid: d9767cf0218c7c746b0a0071d895f95c,
         type: 3}
@@ -5640,6 +5642,16 @@ PrefabInstance:
       propertyPath: Player
       value: 
       objectReference: {fileID: 4075252322719204632}
+    - target: {fileID: 2217718702107537836, guid: 4d4a6540df62a274295628d44eb0658e,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2217718702107537836, guid: 4d4a6540df62a274295628d44eb0658e,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2217718702107537839, guid: 4d4a6540df62a274295628d44eb0658e,
         type: 3}
       propertyPath: m_Name
@@ -5744,7 +5756,7 @@ PrefabInstance:
     - target: {fileID: 4725360144921680305, guid: ab67a7af321f8d740b3386a774c8df2b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4725360144921680314, guid: ab67a7af321f8d740b3386a774c8df2b,
         type: 3}

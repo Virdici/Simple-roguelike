@@ -124,14 +124,17 @@ public class Generator : MonoBehaviour
     {
         var newModule = DoorConnector.transform.parent;
         var objectToConnectVector = -ExitConnector.transform.forward;
-        var angle1 = Vector3.Angle(Vector3.forward, objectToConnectVector) * Mathf.Sign(objectToConnectVector.x);
-        var angle2 = Vector3.Angle(Vector3.forward, DoorConnector.transform.forward) * Mathf.Sign(DoorConnector.transform.forward.x);
-        newModule.RotateAround(DoorConnector.transform.position, Vector3.up, angle1 - angle2);
+
+        var desiredAngle = Vector3.Angle(Vector3.forward, objectToConnectVector) * Mathf.Sign(objectToConnectVector.x);
+        var actualAngle = Vector3.Angle(Vector3.forward, DoorConnector.transform.forward) * Mathf.Sign(DoorConnector.transform.forward.x);
+        newModule.RotateAround(DoorConnector.transform.position, Vector3.up, desiredAngle - actualAngle);
+
         var correctPosition = ExitConnector.transform.position - DoorConnector.transform.position;
         if (reverse)
         {
             newModule.Rotate(Vector3.up, 180f);
         }
+
         newModule.transform.position += correctPosition;
         Destroy(DoorConnector);
     }
