@@ -24,20 +24,4 @@ public class Door : MonoBehaviour
     {
         index = i;
     }
-
-    private void Update()
-    {
-        
-        //    if(open == false)
-        //    {
-        //     animator.SetBool("opened", true);
-        //     open = true;
-        //    } else
-        //    {
-        //       animator.SetBool("opened", false);
-        //     open = false;
-
-        //    }
-        
-    }
 }

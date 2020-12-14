@@ -17,8 +17,6 @@ public class Health : MonoBehaviour
         CurrentHP -= Damage;
         healthBar.sizeDelta = new Vector2(CurrentHP, healthBar.sizeDelta.y);
         Debug.Log(CurrentHP);
-
-
     }
     void Update()
     {
