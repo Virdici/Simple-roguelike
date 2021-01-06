@@ -117,7 +117,9 @@ using UnityEngine.AI;
 public class test : MonoBehaviour
 {
 
-
+    private void Update() {
+        Debug.Log(transform.forward + "   "  + transform.position.x);
+    }
 
     
 }

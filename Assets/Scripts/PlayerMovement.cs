@@ -8,11 +8,9 @@ public class PlayerMovement : MonoBehaviour
     public float runMultiplier = 2;
     public float smoothTime = 0.1f;
     float currentVelocity;
-    public Transform cam;
+    public Transform MainCamera;
     public bool isGrounded;
     public float groundDistance = 0.4f;
-    public Transform groundCheck;
-    public LayerMask groundMask;
     Vector3 velocity;
     public float gravity = -9.81f;
     public const float maxDashTime = 2f;
@@ -22,7 +20,6 @@ public class PlayerMovement : MonoBehaviour
     float dashSpeed = 6;
     public float horizontal;
     public float vertical;
-    public bool isAttacking = false;
     private void Start()
     {
         animator = GetComponentInChildren<Animator>();
@@ -35,10 +32,9 @@ public class PlayerMovement : MonoBehaviour
         vertical = Input.GetAxis("Vertical");
 
         Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
-
         if (direction.magnitude >= 0.1f)
         {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + MainCamera.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref currentVelocity, smoothTime);
             transform.rotation = Quaternion.Euler(0, angle, 0);
 
@@ -53,10 +49,10 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetTrigger("Run"); 
             }
         }
-        if (velocity.y < 0)
-        {
-            velocity.y = -2f;
-        }
+        // if (velocity.y < 0)
+        // {
+        //     velocity.y = -2f;
+        // }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {

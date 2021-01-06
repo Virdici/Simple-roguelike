@@ -283,9 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cacf00ac9eb38734f97549d60f54d67a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allowedTypes: []
   startingConnector: 0
-  isDoor: 0
 --- !u!1 &5211634182555885316
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,9 +327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cacf00ac9eb38734f97549d60f54d67a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allowedTypes: []
   startingConnector: 0
-  isDoor: 0
 --- !u!1 &5251639752049281472
 GameObject:
   m_ObjectHideFlags: 0
@@ -460,10 +456,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54bb6b72acb536b4e8a2aeb5106483bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Enemies: []
+  Doors: []
   type: room
   index: 0
-  Doors: []
-  Enemies: []
   AllenemiesDefeated: 0
   DefeatedEnemies: 0
   PlacedSeals: 0
@@ -509,6 +505,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 484418832326403229, guid: 9a6de8829dae7b54991c951007bf5451, type: 3}
+  enemies: []
   boss: {fileID: 0}
   EnemyContainer: {fileID: 0}
   BossContainer: {fileID: 0}
@@ -548,16 +545,16 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 256
-  m_UseGeometry: 0
+  m_UseGeometry: 1
   m_DefaultArea: 0
   m_IgnoreNavMeshAgent: 1
   m_IgnoreNavMeshObstacle: 1
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.41333333
+  m_VoxelSize: 0.2
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: 23d8e1d897f11e149b80124116988a14, type: 2}
+  m_NavMeshData: {fileID: 0}
 --- !u!114 &7797546294888206840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -804,9 +801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cacf00ac9eb38734f97549d60f54d67a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allowedTypes: []
   startingConnector: 0
-  isDoor: 0
 --- !u!1 &8083147905986683188
 GameObject:
   m_ObjectHideFlags: 0

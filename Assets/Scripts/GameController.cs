@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
 {
     public ScenePostMan postMan;
     public static bool IsDoneLoading = false;
+    public Enemy[] enemiesList;
     public bool DoneLoading;
     public GameObject dungeonContainter;
 
@@ -26,9 +27,9 @@ public class GameController : MonoBehaviour
         Enemies = GameObject.Find("EnemiesContainer");
         generator = GetComponent<Generator>();
         playerObject = GameObject.Find("PlayerObject").GetComponent<PlayerMovement>();
-        postMan = GameObject.Find("Sender").GetComponent<ScenePostMan>();
+        // postMan = GameObject.Find("Sender").GetComponent<ScenePostMan>();
 
-        maxLevel = postMan.levels;
+       // maxLevel = postMan.levels;
         DoneLoading = IsDoneLoading;
         // Physics.IgnoreLayerCollision(11, 16);
         // Physics.IgnoreLayerCollision(12, 16);
@@ -69,4 +70,5 @@ public class GameController : MonoBehaviour
         DoneLoading = IsDoneLoading;
        
     }
+
 }

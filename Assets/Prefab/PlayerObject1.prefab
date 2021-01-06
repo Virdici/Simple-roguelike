@@ -1688,19 +1688,14 @@ MonoBehaviour:
   speed: 1.5
   runMultiplier: 2
   smoothTime: 0.1
-  cam: {fileID: 0}
+  MainCamera: {fileID: 0}
   isGrounded: 0
   groundDistance: 0.1
-  groundCheck: {fileID: 24510194166832667}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 256
   gravity: -4904951
   dashDistance: 2
   dashStoppingSpeed: 0.1
   horizontal: 0
   vertical: 0
-  isAttacking: 0
 --- !u!114 &4096348772269314481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1714,8 +1709,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentRoomIndex: 0
-  CurrentRoom: {fileID: 0}
-  defeated: 0
   animator: {fileID: 4096348772269314482}
 --- !u!95 &4096348772269314482
 Animator:
@@ -2352,16 +2345,16 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 10
+  m_Priority: 100
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 0}
+  m_LookAt: {fileID: 3716304418896349956}
+  m_Follow: {fileID: 3716304418896349956}
   m_CommonLens: 1
   m_Lens:
     FieldOfView: 40
     OrthographicSize: 10
     NearClipPlane: 0.1
-    FarClipPlane: 5000
+    FarClipPlane: 100
     Dutch: 0
     LensShift: {x: 0, y: 0}
   m_Transitions:
@@ -2454,17 +2447,17 @@ MonoBehaviour:
   m_TransparentLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_MinimumDistanceFromTarget: 1.01
+  m_MinimumDistanceFromTarget: 0.01
   m_AvoidObstacles: 1
   m_DistanceLimit: 0
   m_MinimumOcclusionTime: 0
-  m_CameraRadius: 0.1
+  m_CameraRadius: 0
   m_Strategy: 0
   m_MaximumEffort: 2
   m_SmoothingTime: 0.1
   m_Damping: 0.1
   m_DampingWhenOccluded: 0.1
-  m_OptimalTargetDistance: 2
+  m_OptimalTargetDistance: 0
 --- !u!114 &6297600146146376240
 MonoBehaviour:
   m_ObjectHideFlags: 0

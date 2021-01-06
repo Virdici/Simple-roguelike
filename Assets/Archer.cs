@@ -19,8 +19,8 @@ public class Archer : Enemy
         {
             goodDistance = true;
         }
-
     }
+    
     public override void FSM()
     {
         currentDistance = Vector3.Distance(transform.position, Player.transform.position);

@@ -14,12 +14,13 @@ public class DetectCollisions : MonoBehaviour
     private void OnCollisionEnter(Collision col)
     {
 
-        Debug.DrawRay(col.contacts[0].point, col.contacts[0].normal);
-        
-        if (col.gameObject.layer != 12 && col.gameObject.layer != 11)
+
+        // if (col.gameObject.layer == 16)
+        if (col.gameObject.layer != 12 && col.gameObject.layer != 11 )
         {
             //Debug.Log(col.gameObject.name);
-            generator.ChangeCollisionState();
+            // generator.ChangeCollisionState();
+            generator.RenewIfCollided();
         }
     }
 

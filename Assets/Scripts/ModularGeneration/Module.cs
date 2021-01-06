@@ -11,6 +11,11 @@ public class Module : MonoBehaviour
     public bool AllenemiesDefeated = false;
     public int DefeatedEnemies;
     public bool PlacedSeals = false;
+    public List<Connector> conns;
+
+    private void Start() {
+        conns = GetComponentsInChildren<Connector>().ToList();
+    }
     public Connector[] GetConnectors()
     {
         return GetComponentsInChildren<Connector>();
