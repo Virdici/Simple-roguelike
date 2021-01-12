@@ -35,6 +35,7 @@ public class Enemy : MonoBehaviour
     }
     public virtual void FSM()
     {
+        Debug.Log(state);
     }
     public enum EnemyState
     {
@@ -56,6 +57,8 @@ public class Enemy : MonoBehaviour
     protected virtual void DoChase()
     {
         animator.SetBool("isWalking", true);
+        animator.ResetTrigger("LightAttack");
+        animator.ResetTrigger("StrongAttack");
         LookAtTarget();
         Agent.SetDestination(PlayerMarker.transform.position);
     }

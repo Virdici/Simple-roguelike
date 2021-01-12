@@ -63,7 +63,7 @@ public class Generator : MonoBehaviour
 
             var room = (Module)Instantiate(randomRoom, new Vector3(2, 30, 1), Quaternion.identity, DungeonContainter.transform);
 
-            var roomConnector = room.GetConnectors().ElementAt(r.Next(0, room.GetConnectors().Length));
+            var roomConnector = room.GetConnectors().ElementAtOrDefault(r.Next(0, room.GetConnectors().Length));
 
             // if (i == 4)
             // {

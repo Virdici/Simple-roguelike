@@ -31,7 +31,8 @@ public class GameController : MonoBehaviour
 
        // maxLevel = postMan.levels;
         DoneLoading = IsDoneLoading;
-        // Physics.IgnoreLayerCollision(11, 16);
+        Physics.IgnoreLayerCollision(11, 16);
+        Physics.IgnoreLayerCollision(11, 0);
         // Physics.IgnoreLayerCollision(12, 16);
         // Physics.IgnoreLayerCollision(8, 16);
         // Physics.IgnoreLayerCollision(13, 16);

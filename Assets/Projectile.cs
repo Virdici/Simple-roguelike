@@ -18,7 +18,7 @@ public class Projectile : MonoBehaviour
     {
         Debug.Log(other.gameObject.name);
         
-        if (other.gameObject.layer == 12 && GetComponentInParent<Combat>().active && other.gameObject.tag == "Player")
+        if ((other.gameObject.layer == 18 || other.gameObject.layer == 12) && GetComponentInParent<Combat>().active && other.gameObject.tag == "Player")
         {
             other.GetComponentInParent<Health>().TakeDamage(damage);
         }

@@ -10,7 +10,7 @@ public class MawJLaygo : Enemy
     public GameObject firingPlace;
 
     public override void Start() {
-        lightAttackPropability = 8;
+        lightAttackPropability = 1;
     }
     public override void Update()
     {

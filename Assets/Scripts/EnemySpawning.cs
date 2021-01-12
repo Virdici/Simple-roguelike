@@ -37,7 +37,7 @@ public class EnemySpawning : MonoBehaviour
         SpawnMesh = Filter.transform.GetComponent<MeshFilter>().mesh;
         vertices = SpawnMesh.vertices;
 
-        for (int i = 0; i <= Random.Range(1, maxEnemies); i++)
+        for (int i = 0; i < Random.Range(1, maxEnemies); i++)
         {
             Vector3 randVex = transform.TransformPoint(vertices[Random.Range(0, vertices.Length)]);
             Vector3 rand = new Vector3(randVex.x, randVex.y - 1, randVex.z);

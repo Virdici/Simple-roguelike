@@ -10,7 +10,7 @@ public class Mutant : Enemy
     public override void Update()
     {
         FSM();
-        if (GetComponent<Health>().CurrentHP <= 60)
+        if (GetComponent<Health>().CurrentHP <= 50)
         {
             goodHealth = false;
         }

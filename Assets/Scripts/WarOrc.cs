@@ -20,6 +20,7 @@ public class WarOrc : Enemy
             goodHealth = true;
         }
         attackPropability = Random.Range(1, 10);
+
     }
     public override void FSM()
     {
@@ -28,7 +29,7 @@ public class WarOrc : Enemy
         {
             case EnemyState.idle:
                 DoIdle();
-                if (Player.CurrentRoomIndex == index && isAttacking == false)
+                if (Player.CurrentRoomIndex == index  && isAttacking == false)
                 {
                     state = EnemyState.chase;
                 }
@@ -55,7 +56,7 @@ public class WarOrc : Enemy
                 DoLightAttack();
                 if (currentDistance > 2 && isAttacking == false)
                 {
-                    state = EnemyState.chase;
+                    state = EnemyState.idle;
                 }
                 if (!goodHealth && !didSpecial)
                 {
@@ -66,7 +67,7 @@ public class WarOrc : Enemy
                 DoStrongAttack();
                 if (currentDistance > 2)
                 {
-                    state = EnemyState.chase;
+                    state = EnemyState.idle;
                 }
                 if (!goodHealth && !didSpecial)
                 {
@@ -85,5 +86,45 @@ public class WarOrc : Enemy
                 state = EnemyState.idle;
                 break;
         }
+
+        
     }
+
+    protected override void DoChase()
+    {
+        animator.ResetTrigger("LightAttack");
+        animator.ResetTrigger("StrongAttack");
+        animator.SetBool("isWalking", true);
+        LookAtTarget();
+        Agent.SetDestination(PlayerMarker.transform.position);
+    }
+    protected override void DoRetreat()
+    {
+        LookAway();
+        animator.SetBool("isWalking", false);
+        animator.SetBool("isRetreating", true);
+    }
+    protected override void DoSpecial()
+    {
+        animator.SetBool("isRetreating", false);
+      
+        // animator.SetBool("isHealing", true);
+        animator.SetTrigger("heal");
+       
+        didSpecial = true;
+
+        
+    }
+
+    // protected override void DoSpecial()
+    // {
+    //     animator.SetBool("isRetreating", false);
+    //     if (didSpecial == false)
+    //     {
+    //         animator.SetBool("isHealing", true);
+    //     }
+    //     didSpecial = true;
+
+        
+    // }
 }
