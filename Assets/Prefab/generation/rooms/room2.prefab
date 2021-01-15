@@ -32,8 +32,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 585397649246996611}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -154.74016, y: 75.86888, z: -168.25409}
+  m_LocalRotation: {x: -0.0011857256, y: -0.00025328592, z: -0.003214266, w: 0.99999416}
+  m_LocalPosition: {x: -154.76076, y: 75.86896, z: -168.24649}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 4724537505442516159}
@@ -74,7 +74,7 @@ Transform:
   - {fileID: 6029560587298886358}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.136, y: -0.029000001, z: -0.36800003}
 --- !u!33 &3817868544784735644
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -183,9 +183,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eac28bfdd36a34eb00e9411208d569, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boss: {fileID: 0}
   EnemyContainer: {fileID: 0}
+  BossContainer: {fileID: 0}
   Filter: {fileID: 1060110970066077202}
   maxEnemies: 0
+  gameController: {fileID: 0}
+  isBossRoom: 0
 --- !u!64 &4835306045237932214
 MeshCollider:
   m_ObjectHideFlags: 0

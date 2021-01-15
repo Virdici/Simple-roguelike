@@ -52,7 +52,6 @@ public class Enemy : MonoBehaviour
     protected virtual void DoIdle()
     {
         animator.SetBool("isWalking", false);
-        animator.SetBool("isHealing", false);
     }
     protected virtual void DoChase()
     {

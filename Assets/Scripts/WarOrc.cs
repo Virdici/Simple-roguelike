@@ -92,8 +92,8 @@ public class WarOrc : Enemy
 
     protected override void DoChase()
     {
-        animator.ResetTrigger("LightAttack");
-        animator.ResetTrigger("StrongAttack");
+        animator.ResetTrigger("attackStrong");
+        animator.ResetTrigger("attackLight");
         animator.SetBool("isWalking", true);
         LookAtTarget();
         Agent.SetDestination(PlayerMarker.transform.position);

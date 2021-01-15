@@ -7,8 +7,6 @@ using UnityEngine.AI;
 
 public class EnemySpawning : MonoBehaviour
 {
-    public Enemy enemy;
-    public Enemy[] enemies;
     public Enemy boss;
     public GameObject EnemyContainer;
     public GameObject BossContainer;
