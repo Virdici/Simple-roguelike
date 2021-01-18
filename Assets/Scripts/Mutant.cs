@@ -5,7 +5,7 @@ using UnityEngine;
 public class Mutant : Enemy
 {
     public override void Start() {
-        lightAttackPropability = 1;
+        lightAttackPropability = 0;
     }
     public override void Update()
     {
@@ -95,5 +95,13 @@ public class Mutant : Enemy
         didSpecial = true;
     }
 
+    protected override void DoChase()
+    {
+        animator.SetBool("isWalking", true);
+        animator.ResetTrigger("attackLight");
+        animator.ResetTrigger("attackStrong");
+        LookAtTarget();
+        Agent.SetDestination(PlayerMarker.transform.position);
+    }
 
 }

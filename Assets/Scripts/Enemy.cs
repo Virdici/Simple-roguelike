@@ -149,14 +149,14 @@ public class Enemy : MonoBehaviour
     }
     protected virtual void StartAttack()
     {
-        isAttacking = true;
+        // isAttacking = true;
         Agent.isStopped = true;
         animator.SetBool("isWalking", false);
         isAnimationMovement = true;
     }
     protected virtual void StopAttack()
     {
-        isAttacking = false;
+        // isAttacking = false;
         Agent.isStopped = false;
         animator.SetBool("isWalking", true);
         isAnimationMovement = false;

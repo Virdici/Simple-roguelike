@@ -9,10 +9,10 @@ using System;
 
 public class Generator : MonoBehaviour
 {
-    private float waitTime = 0.05f;
+    private float waitTime = 0.001f;
     ScenePostMan postMan;
     System.Random r;
-    private bool collided;
+    public bool collided;
     public Module startingModule;
     public Module[] Rooms;
     public Module[] passages;
@@ -21,6 +21,8 @@ public class Generator : MonoBehaviour
     public GameObject DungeonContainter;
     public GameObject playerObject;
     private List<Connector> connectors;
+    private bool canRenew;
+
     private void Update()
     {
         if (collided)
@@ -30,10 +32,10 @@ public class Generator : MonoBehaviour
     }
     public IEnumerator Starte(GameObject dungeonContainter)
     {
-        postMan = GameObject.Find("Sender").GetComponent<ScenePostMan>();
+        postMan = GameObject.Find("Sender1").GetComponent<ScenePostMan>();
         Debug.Log(postMan.seed);
         r = new System.Random(postMan.seed.GetHashCode());
-
+        collided = false;
         DungeonContainter = dungeonContainter;
 
         var firstModule = (Module)Instantiate(
@@ -41,18 +43,20 @@ public class Generator : MonoBehaviour
         var availableConnectors = new List<Connector>(firstModule.GetConnectors());
         playerObject.transform.position = new Vector3(firstModule.transform.position.x, firstModule.transform.position.y + 1, firstModule.transform.position.z);
         playerObject.transform.rotation = Quaternion.identity;
-        var selectedAvailableConnector = availableConnectors.ElementAt(r.Next(0, availableConnectors.Count));
+        var selectedAvailableConnector = availableConnectors.ElementAtOrDefault(r.Next(0, availableConnectors.Count));
         int i = 1;
         while (i <= postMan.roomCount)
         {
+            AddDoor(selectedAvailableConnector, true);
+
             var randomPassage = passages[r.Next(0, passages.Length)];
             var passage = (Module)Instantiate(randomPassage, new Vector3(2, 30, 1), Quaternion.identity, DungeonContainter.transform);
-            var passageConnector = passage.GetConnectors().ElementAt(r.Next(0, passage.GetConnectors().Length));
+            var passageConnector = passage.GetConnectors().ElementAtOrDefault(r.Next(0, passage.GetConnectors().Length));
 
-            AddDoor(selectedAvailableConnector, true);
             Connect(selectedAvailableConnector, passageConnector);
 
             yield return new WaitForSeconds(waitTime);
+
             var passageExitConnector = passage.GetConnectors().ElementAtOrDefault(r.Next(0, passage.GetConnectors().Length));
 
             AddDoor(passageExitConnector, false);
@@ -65,14 +69,6 @@ public class Generator : MonoBehaviour
 
             var roomConnector = room.GetConnectors().ElementAtOrDefault(r.Next(0, room.GetConnectors().Length));
 
-            // if (i == 4)
-            // {
-            //     room.GetComponent<Renderer>().material.color = Color.blue;
-            // }
-            // if (i == 10)
-            // {
-            //     room.GetComponent<Renderer>().material.color = Color.red;
-            // }
             room.index = i;
 
             if (room.GetComponent<EnemySpawning>().maxEnemies == 0)
@@ -90,6 +86,7 @@ public class Generator : MonoBehaviour
             i++;
         }
         connectors = DungeonContainter.GetComponentsInChildren<Connector>().ToList();
+        
         StartCoroutine(SealEnds());
 
     }
@@ -138,13 +135,13 @@ public class Generator : MonoBehaviour
     }
     private IEnumerator SealEnds()
     {
-        yield return new WaitForSecondsRealtime(0.05f);
+        yield return new WaitForSecondsRealtime(0.001f);
         var ends = DungeonContainter.transform.GetComponentsInChildren<Connector>();
         foreach (var end in ends)
         {
             var newSeal = (Module)Instantiate(Seal, new Vector3(2, UnityEngine.Random.Range(1, 400) * 30, 1), transform.rotation, DungeonContainter.transform);
             var secondModuleConnectors = newSeal.GetConnectors();
-            var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAt(r.Next(0, secondModuleConnectors.Length));
+            var connectorToConnect = secondModuleConnectors.FirstOrDefault(x => x.startingConnector) ?? secondModuleConnectors.ElementAtOrDefault(r.Next(0, secondModuleConnectors.Length));
             Connect(end, connectorToConnect);
         }
         GameController.IsDoneLoading = true;
@@ -157,26 +154,29 @@ public class Generator : MonoBehaviour
 
     public void RenewIfCollided()
     {
-        GameController.IsDoneLoading = false;
-        StopAllCoroutines();
+        // if (canRenew)
+        // {
+            GameController.IsDoneLoading = false;
+            StopAllCoroutines();
 
-        foreach (Transform child in DungeonContainter.transform)
-        {
-            GameObject.Destroy(child.gameObject);
-        }
+            foreach (Transform child in DungeonContainter.transform)
+            {
+                GameObject.Destroy(child.gameObject);
+            }
 
-        GameObject EnemyContainer = GameObject.Find("EnemiesContainer");
+            GameObject EnemyContainer = GameObject.Find("EnemiesContainer");
 
-        foreach (Transform child in EnemyContainer.transform)
-        {
-            GameObject.Destroy(child.gameObject);
-        }
+            foreach (Transform child in EnemyContainer.transform)
+            {
+                GameObject.Destroy(child.gameObject);
+            }
 
-        collided = false;
-        ClearLog();
-        postMan.seed += "a";
+            collided = false;
+            ClearLog();
+            postMan.seed += "a";
 
-        StartCoroutine(Starte(DungeonContainter));
+            StartCoroutine(Starte(DungeonContainter));
+        // }
     }
     public void ClearLog()
     {
@@ -198,6 +198,7 @@ public class Generator : MonoBehaviour
             GameObject.Destroy(child.gameObject);
         }
         collided = false;
+        postMan.seed += "a";
         StartCoroutine(Starte(DungeonContainter));
     }
 }

@@ -16,7 +16,8 @@ public class GameController : MonoBehaviour
     public GameObject Enemies;
 
     public Generator generator;
-    public PlayerMovement playerObject;
+    public PlayerMovement playerObjectMovement;
+    public Player player;
     public int currentLevel = 1;
     public int maxLevel = 5;
     
@@ -27,13 +28,12 @@ public class GameController : MonoBehaviour
         dungeonContainter = GameObject.Find("DungeonContainer");
         Enemies = GameObject.Find("EnemiesContainer");
         generator = GetComponent<Generator>();
-        playerObject = GameObject.Find("PlayerObject").GetComponent<PlayerMovement>();
-        // postMan = GameObject.Find("Sender").GetComponent<ScenePostMan>();
+        playerObjectMovement = GameObject.Find("PlayerObject").GetComponent<PlayerMovement>();
+        postMan = GameObject.Find("Sender1").GetComponent<ScenePostMan>();
 
        // maxLevel = postMan.levels;
         DoneLoading = IsDoneLoading;
         Physics.IgnoreLayerCollision(11, 16);
-        Physics.IgnoreLayerCollision(11, 0);
         // Physics.IgnoreLayerCollision(12, 16);
         // Physics.IgnoreLayerCollision(8, 16);
         // Physics.IgnoreLayerCollision(13, 16);
@@ -54,32 +54,23 @@ public class GameController : MonoBehaviour
         {
             GameController.IsDoneLoading = false;
             generator.NewDung();
-            playerObject.ResetPositionz();
+            playerObjectMovement.ResetPositionz();
+            player.CurrentRoomIndex = 0;
             currentLevel++;
         }
 
 
-        if (currentLevel == maxLevel)
+        if (currentLevel == postMan.levels)
         {
             SceneManager.LoadSceneAsync(2);
         }
 
-        if(playerObject == null)
+        if(playerObjectMovement == null)
         {
             SceneManager.LoadSceneAsync(3);
         }
 
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            if(!paused)
-            {
-                Time.timeScale = 0;
-            }
-            else
-            {
-                Time.timeScale = 1.0f;
-            }
-        }
+        
         DoneLoading = IsDoneLoading;
        
     }

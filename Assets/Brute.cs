@@ -28,7 +28,7 @@ public class Brute : Enemy
         {
             case EnemyState.idle:
                 DoIdle();
-                if (Player.CurrentRoomIndex == index && currentDistance > 2 && isAttacking == false)
+                if (Player.CurrentRoomIndex == index && currentDistance > 2 )
                 {
                     state = EnemyState.chase;
                 }
