@@ -20,7 +20,8 @@ public class GameController : MonoBehaviour
     public Player player;
     public int currentLevel = 1;
     public int maxLevel = 5;
-    
+    public GameObject pauseMenu;
+
     private bool paused = false;
 
     void Start()
@@ -29,9 +30,9 @@ public class GameController : MonoBehaviour
         Enemies = GameObject.Find("EnemiesContainer");
         generator = GetComponent<Generator>();
         playerObjectMovement = GameObject.Find("PlayerObject").GetComponent<PlayerMovement>();
-        postMan = GameObject.Find("Sender1").GetComponent<ScenePostMan>();
-
-       // maxLevel = postMan.levels;
+        postMan = GameObject.Find("Sender").GetComponent<ScenePostMan>();
+        Cursor.visible = false;
+        // maxLevel = postMan.levels;
         DoneLoading = IsDoneLoading;
         Physics.IgnoreLayerCollision(11, 16);
         // Physics.IgnoreLayerCollision(12, 16);
@@ -65,14 +66,37 @@ public class GameController : MonoBehaviour
             SceneManager.LoadSceneAsync(2);
         }
 
-        if(playerObjectMovement == null)
+        if (playerObjectMovement == null)
         {
             SceneManager.LoadSceneAsync(3);
         }
 
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (paused)
+            {
+                
+                Time.timeScale = 1.0f;
+                pauseMenu.gameObject.SetActive(false);
+                Cursor.visible = false;
+                paused = false;
+            }
+            else
+            {
+                Time.timeScale = 0.0f;
+                pauseMenu.gameObject.SetActive(true);
+                Cursor.visible = true;
+                paused = true;
+
+            }
+        }
+
+
+
+
+
         DoneLoading = IsDoneLoading;
-       
+
     }
 
 }

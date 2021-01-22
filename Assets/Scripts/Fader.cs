@@ -24,7 +24,7 @@ public class Fader : MonoBehaviour
         if (GameController.IsDoneLoading == true)
         {
             
-                image.color = Color.Lerp(image.color, image.color = new Color(image.color.r, image.color.g, image.color.b, 0f), fadeSpeed * Time.deltaTime * 3);
+            image.color = Color.Lerp(image.color, image.color = new Color(image.color.r, image.color.g, image.color.b, 0f), fadeSpeed * Time.deltaTime * 3);
            
         }
 

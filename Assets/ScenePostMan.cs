@@ -16,12 +16,21 @@ public class ScenePostMan : MonoBehaviour
     public int roomCount;
     public int enemiesMaxCount;
     public int levels;
+    private static ScenePostMan original;
     private void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
+        // DontDestroyOnLoad(this.gameObject);
         SeedText.characterLimit = 8;
         SeedText.text = RandomString(8);
         Levels.text = "3";
+        
+        if (original != this )
+          {
+              if( original != null )
+                  Destroy(original.gameObject);
+              DontDestroyOnLoad(gameObject);
+              original = this;
+          }
     }
 
     private void Update()

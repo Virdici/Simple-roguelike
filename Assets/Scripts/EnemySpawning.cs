@@ -94,15 +94,10 @@ public class EnemySpawning : MonoBehaviour
     {
         if (GameController.IsDoneLoading && !placed && transform.GetComponentInParent<Module>().index != 0)
         {
-            if (GetComponent<Module>().index == 16)
-            {
-                SpawnSix();
-            }
-            else
-            {
+            
                 Spawn();
 
-            }
+            
         }
     }
 }

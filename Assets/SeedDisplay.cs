@@ -10,7 +10,7 @@ public class SeedDisplay : MonoBehaviour
     void Start()
     {
         text = GetComponentInParent<Text>();
-        postMan = GameObject.Find("Sender1").GetComponent<ScenePostMan>();
+        postMan = GameObject.Find("Sender").GetComponent<ScenePostMan>();
         // text.text = postMan.seedFilled.ToString();
         text.text = postMan.seed.ToString();
     }

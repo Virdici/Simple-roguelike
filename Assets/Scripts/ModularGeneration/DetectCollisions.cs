@@ -16,7 +16,7 @@ public class DetectCollisions : MonoBehaviour
 
 
         // if (col.gameObject.layer == 16)
-        if (col.gameObject.layer != 12 && col.gameObject.layer != 11 )
+        if (col.gameObject.layer != 12 && col.gameObject.layer != 11 && col.gameObject.layer != 18)
         {
             Debug.Log(col.gameObject.name);
             generator.ChangeCollisionState();

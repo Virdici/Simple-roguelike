@@ -8,6 +8,10 @@ using System;
 public class MainMenu : MonoBehaviour
 {
     public ScenePostMan postMan;
+    public bool isPauseMenu;
+    private void Update() {
+        Cursor.visible = true;
+    }
     public void StartGame()
     {
         StartCoroutine(LoadAsync());
@@ -20,6 +24,9 @@ public class MainMenu : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.None;
+        if(!isPauseMenu)
+        Time.timeScale = 1.0f;
+
     }
 
     public void BackToMenu()

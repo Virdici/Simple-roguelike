@@ -516,7 +516,7 @@ GameObject:
   - component: {fileID: 3899993954582166573}
   - component: {fileID: 4052266564709413508}
   - component: {fileID: 2724669000050311571}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: room3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -627,7 +627,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Enemies: []
   Doors: []
-  type: 
+  type: room
   index: 0
   AllenemiesDefeated: 0
   DefeatedEnemies: 0
